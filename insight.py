@@ -5,13 +5,14 @@ from plots.grid_plots import show_samples
 from tensorflow.examples.tutorials.mnist import input_data
 from tqdm import tqdm
 from models.ifvae import IFVAE
+import random
 
 def main():
     flags = tf.flags
     flags.DEFINE_integer("latent_dim", 2, "Dimension of latent space.")
     flags.DEFINE_integer("batch_size", 128, "Batch size.")
     flags.DEFINE_integer("epochs", 500, "As it said")
-    flags.DEFINE_float("dropout", 0.5, "Dropout rate")
+    flags.DEFINE_float("dropout", 0.7, "Dropout rate")
     flags.DEFINE_integer("updates_per_epoch", 100, "Really just can set to 1 if you don't like mini-batch.")
     flags.DEFINE_string("data_dir", 'mnist', "Tensorflow demo data download position.")
     FLAGS = flags.FLAGS
@@ -30,7 +31,9 @@ def main():
 
         for _ in range(FLAGS.updates_per_epoch):
             x, _ = mnist.train.next_batch(FLAGS.batch_size)
-            loss = vae.update(x, corruption=0.2)
+            # Random Corruption
+            corrupt_rate = random.uniform(0.1, 0.6)
+            loss = vae.update(x, corruption=corrupt_rate)
             training_loss += loss
 
         training_loss /= FLAGS.updates_per_epoch
@@ -45,7 +48,7 @@ def main():
     corrupted_x = x*np.random.binomial([np.ones((FLAGS.batch_size, 784))], 1-FLAGS.dropout)[0]
     show_samples(corrupted_x, 10, 10, [28, 28], name='corrupted')
     # Rescale
-    corrupted_x = corrupted_x * (1.0/(1-0.8))
+    corrupted_x = corrupted_x * (1.0/(1-FLAGS.dropout))
 
     # Reconstructed
     samples = vae.inference(corrupted_x)
