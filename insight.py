@@ -11,7 +11,7 @@ def main():
     flags = tf.flags
     flags.DEFINE_integer("latent_dim", 2, "Dimension of latent space.")
     flags.DEFINE_integer("batch_size", 128, "Batch size.")
-    flags.DEFINE_integer("epochs", 500, "As it said")
+    flags.DEFINE_integer("epochs", 200, "As it said")
     flags.DEFINE_float("dropout", 0.8, "Dropout rate")
     flags.DEFINE_integer("updates_per_epoch", 100, "Really just can set to 1 if you don't like mini-batch.")
     flags.DEFINE_string("data_dir", 'mnist', "Tensorflow demo data download position.")

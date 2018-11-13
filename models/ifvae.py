@@ -27,12 +27,13 @@ class IFVAE(object):
         with tf.variable_scope('ifvae'):
             self.input = tf.placeholder(tf.float32, shape=[None, self._observation_dim], name='input')
             self.corruption = tf.placeholder(tf.float32)
+            self.sampling = tf.placeholder(tf.bool)
 
             mask1 = tf.nn.dropout(tf.ones_like(self.input), 1-self.corruption)
             mask2 = tf.nn.dropout(tf.ones_like(self.input), 1-self.corruption)
 
-            wc = self.input*mask1
-            hc = wc*mask2
+            wc = self.input * mask1
+            hc = wc * mask2
 
             with tf.variable_scope('network'):
                 self.wc_mean, self.wc_std, self.wc_obs_mean = self._network(wc)
@@ -55,7 +56,7 @@ class IFVAE(object):
                 else:
                     with tf.variable_scope('bernoulli'):
                         obj1 = self._bernoulli_log_likelihood(self.input * tf.floor(mask1), self.wc_obs_mean)
-                        obj2 = self._bernoulli_log_likelihood(self.input * tf.floor(mask1), self.hc_obs_mean)
+                        obj2 = self._bernoulli_log_likelihood(self.input * tf.floor(mask2), self.hc_obs_mean)
 
                 self._loss = (kl1 + kl2 + obj1 + obj2) / self._batch_size
 
@@ -77,7 +78,9 @@ class IFVAE(object):
             logvar = encoded[:, self._latent_dim:]
             std = tf.sqrt(tf.exp(logvar))
             epsilon = tf.random_normal([self._batch_size, self._latent_dim])
-            z = mean + std * epsilon
+            z = mean
+
+            z = tf.cond(self.sampling, lambda: z + std * epsilon, lambda: z)
 
         with tf.variable_scope('decoder'):
             decoded = self._decode(z, self._observation_dim)
@@ -106,11 +109,13 @@ class IFVAE(object):
         return log_like
 
     def update(self, x, corruption):
-        _, loss = self._sesh.run([self._train, self._loss], feed_dict={self.input: x, self.corruption: corruption})
+        _, loss = self._sesh.run([self._train, self._loss],
+                                 feed_dict={self.input: x, self.corruption: corruption, self.sampling: True})
         return loss
 
     def inference(self, x):
-        predict = self._sesh.run(self.wc_obs_mean, feed_dict={self.input: x, self.corruption: 0})
+        predict = self._sesh.run(self.wc_obs_mean,
+                                 feed_dict={self.input: x, self.corruption: 0, self.sampling: False})
         return predict
 
     def save_generator(self, path, prefix="in/generator"):
