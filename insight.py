@@ -11,7 +11,7 @@ def main():
     flags = tf.flags
     flags.DEFINE_integer("latent_dim", 8, "Dimension of latent space.")
     flags.DEFINE_integer("batch_size", 128, "Batch size.")
-    flags.DEFINE_integer("epochs", 1, "As it said")
+    flags.DEFINE_integer("epochs", 200, "As it said")
     flags.DEFINE_float("dropout", 0.9, "Dropout rate")
     flags.DEFINE_integer("updates_per_epoch", 100, "Really just can set to 1 if you don't like mini-batch.")
     flags.DEFINE_string("data_dir", 'mnist', "Tensorflow demo data download position.")
@@ -40,7 +40,7 @@ def main():
         s = "Loss: {:.4f}".format(training_loss)
         tbar.set_description(s)
 
-    # Original
+    # # Original
     x, _ = mnist.train.next_batch(FLAGS.batch_size)
     show_samples(x, 10, 10, [28, 28], name='original')
 
@@ -56,6 +56,11 @@ def main():
     # vae.save_generator('weights/vae_mnist/generator')
 
     # Recurrent Corruption Evaluation
+
+    import ipdb; ipdb.set_trace()
+    latent(mnist, vae, lim=4)
+
+def latent(mnist, vae, lim=6):
     corruptions = []
     rescales = []
     corruption = np.ones((1, 784))
@@ -67,13 +72,15 @@ def main():
     x = np.tile(x, (9, 1))
 
     corrupted_x = x * np.array(corruptions).reshape(9, 784)
-    show_samples(corrupted_x, 3, 3, [28, 28], name='recurrent_evaluation')
+    show_samples(corrupted_x, 3, 3, [28, 28], name='recurrent_corrupt')
     corrupted_x = corrupted_x * np.array(rescales).reshape(-1, 1)
     uncertainty = vae.uncertainty(corrupted_x)
     np.savetxt('mean.csv', uncertainty[0], delimiter=',')
     np.savetxt('std.csv', uncertainty[1], delimiter=',')
-    import ipdb; ipdb.set_trace()
-    latent_distribution_ellipse(uncertainty[0][:, 0:2], 6*uncertainty[1][:, 0:2], name="Unknown")
+    latent_distribution_ellipse(uncertainty[0][:, 0:2], 6*uncertainty[1][:, 0:2], 0.74,
+                                lim=lim, name="recurrent_latent")
+    samples = vae.inference(corrupted_x)
+    show_samples(samples, 3, 3, [28, 28], name='recurrent_predict')
 
 
 if __name__ == '__main__':
