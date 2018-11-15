@@ -47,18 +47,20 @@ class IFVAE(object):
 
                 if self._observation_distribution == 'Gaussian':
                     with tf.variable_scope('gaussian'):
-                        obj1 = self._gaussian_log_likelihood(self.input*tf.floor(mask1),
+                        obj1 = self._gaussian_log_likelihood(self.input * tf.floor(mask1),
                                                              self.wc_obs_mean,
                                                              self._observation_std)
-                        obj2 = self._gaussian_log_likelihood(self.input*tf.floor(mask2),
+                        obj2 = self._gaussian_log_likelihood(self.input * tf.floor(mask2),
                                                              self.hc_obs_mean,
                                                              self._observation_std)
                 else:
                     with tf.variable_scope('bernoulli'):
-                        obj1 = self._bernoulli_log_likelihood(self.input * tf.floor(mask1), self.wc_obs_mean)
-                        obj2 = self._bernoulli_log_likelihood(self.input * tf.floor(mask2), self.hc_obs_mean)
+                        obj1 = self._bernoulli_log_likelihood(self.input * tf.floor(mask1) * (1 - tf.floor(mask1)),
+                                                              self.wc_obs_mean * tf.floor(mask1) * (1 - tf.floor(mask1)))
+                        obj2 = self._bernoulli_log_likelihood(self.input * tf.floor(mask1) * tf.floor(mask2),
+                                                              self.hc_obs_mean * tf.floor(mask1) * tf.floor(mask2))
 
-                self._loss = (kl1 + kl2 + obj1 + obj2) / self._batch_size
+                self._loss = (kl1 + kl2 + obj1 + obj2) / self._batch_size * (1 - self.corruption)
 
             with tf.variable_scope('optimizer'):
                 optimizer = tf.train.RMSPropOptimizer(learning_rate=self._learning_rate)
@@ -117,6 +119,12 @@ class IFVAE(object):
         predict = self._sesh.run(self.wc_obs_mean,
                                  feed_dict={self.input: x, self.corruption: 0, self.sampling: False})
         return predict
+
+    def uncertainty(self, x):
+        gaussian_parameters = self._sesh.run([self.wc_mean, self.wc_std],
+                                             feed_dict={self.input: x, self.corruption: 0, self.sampling: False})
+
+        return gaussian_parameters
 
     def save_generator(self, path, prefix="in/generator"):
         variables = tf.trainable_variables()
