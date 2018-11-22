@@ -1,11 +1,15 @@
-from layers.coders import fc_mnist_encoder, fc_mnist_decoder
-import tensorflow as tf
+import random
+
 import numpy as np
-from plots.grid_plots import show_samples, latent_distribution_ellipse
+import tensorflow as tf
 from tensorflow.examples.tutorials.mnist import input_data
 from tqdm import tqdm
-from models.ifvae import IFVAE
-import random
+
+from demo_models.vae import VAE
+from demo_models.ifvae import IFVAE
+from layers.coders import fc_mnist_encoder, fc_mnist_decoder
+from plots.grid_plots import show_samples, latent_distribution_ellipse
+
 
 def main():
     flags = tf.flags
@@ -74,6 +78,10 @@ def latent(mnist, vae, lim=6):
     corrupted_x = x * np.array(corruptions).reshape(9, 784)
     show_samples(corrupted_x, 3, 3, [28, 28], name='recurrent_corrupt')
     corrupted_x = corrupted_x * np.array(rescales).reshape(-1, 1)
+
+    np.save('sample_corruption.npy', corrupted_x)
+    #corrupted_x = np.load('sample_corruption.npy')
+
     uncertainty = vae.uncertainty(corrupted_x)
     np.savetxt('mean.csv', uncertainty[0], delimiter=',')
     np.savetxt('std.csv', uncertainty[1], delimiter=',')

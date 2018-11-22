@@ -1,8 +1,10 @@
 import re
+import numpy as np
 import tensorflow as tf
+from tensorflow.contrib.distributions import Bernoulli
 
 
-class IFVAE(object):
+class VAE(object):
 
     def __init__(self, latent_dim, batch_size, encoder, decoder,
                  observation_dim=784,
@@ -24,43 +26,46 @@ class IFVAE(object):
 
     def _build_graph(self):
 
-        with tf.variable_scope('ifvae'):
-            self.input = tf.placeholder(tf.float32, shape=[None, self._observation_dim], name='input')
+        with tf.variable_scope('vae'):
+            self.input = tf.placeholder(tf.float32, shape=[None, self._observation_dim])
             self.corruption = tf.placeholder(tf.float32)
             self.sampling = tf.placeholder(tf.bool)
 
-            mask1 = tf.nn.dropout(tf.ones_like(self.input), 1-self.corruption)
-            mask2 = tf.nn.dropout(tf.ones_like(self.input), 1-self.corruption)
+            mask1 = tf.nn.dropout(tf.ones_like(self.input), 1 - self.corruption)
 
             wc = self.input * mask1
-            hc = wc * mask2
 
-            with tf.variable_scope('network'):
-                self.wc_mean, self.wc_std, self.wc_obs_mean = self._network(wc)
-            with tf.variable_scope('network', reuse=True):
-                self.hc_mean, self.hc_std, self.hc_obs_mean = self._network(hc)
+            with tf.variable_scope('encoder'):
+                encoded = self._encode(wc, self._latent_dim)
+
+            with tf.variable_scope('latent'):
+                self.mean = encoded[:, :self._latent_dim]
+                logvar = encoded[:, self._latent_dim:]
+                self.stddev = tf.sqrt(tf.exp(logvar))
+                epsilon = tf.random_normal([self._batch_size, self._latent_dim])
+                self.z = tf.cond(self.sampling, lambda: self.mean + self.stddev * epsilon, lambda: self.mean)
+
+            with tf.variable_scope('decoder'):
+                decoded = self._decode(self.z, self._observation_dim)
+                self.obs_mean = decoded
+                if self._observation_distribution == 'Gaussian':
+                    obs_epsilon = tf.random_normal([self._batch_size, self._observation_dim])
+                    self.sample = self.obs_mean + self._observation_std * obs_epsilon
+                else:
+                    self.sample = Bernoulli(probs=self.obs_mean).sample()
 
             with tf.variable_scope('loss'):
                 with tf.variable_scope('kl-divergence'):
-                    kl1 = self._kl_diagnormal_stdnormal(self.wc_mean, self.wc_std, self.hc_mean, self.hc_std)
-                    kl2 = self._kl_diagnormal_stdnormal(self.hc_mean, self.hc_std, tf.zeros_like(self.hc_mean), tf.ones_like(self.hc_std))
+                    kl = self._kl_diagnormal_stdnormal(self.mean, logvar)
 
                 if self._observation_distribution == 'Gaussian':
                     with tf.variable_scope('gaussian'):
-                        obj1 = self._gaussian_log_likelihood(self.input * tf.floor(mask1),
-                                                             self.wc_obs_mean,
-                                                             self._observation_std)
-                        obj2 = self._gaussian_log_likelihood(self.input * tf.floor(mask2),
-                                                             self.hc_obs_mean,
-                                                             self._observation_std)
+                        obj = self._gaussian_log_likelihood(self.input, self.obs_mean, self._observation_std)
                 else:
                     with tf.variable_scope('bernoulli'):
-                        obj1 = self._bernoulli_log_likelihood(self.input * tf.floor(mask1) * (1 - tf.floor(mask1)),
-                                                              self.wc_obs_mean * tf.floor(mask1) * (1 - tf.floor(mask1)))
-                        obj2 = self._bernoulli_log_likelihood(self.input * tf.floor(mask1) * tf.floor(mask2),
-                                                              self.hc_obs_mean * tf.floor(mask1) * tf.floor(mask2))
+                        obj = self._bernoulli_log_likelihood(self.input, self.obs_mean)
 
-                self._loss = (kl1 + kl2 + obj1 + obj2) / self._batch_size * (1 - self.corruption)
+                self._loss = (kl + obj) / self._batch_size
 
             with tf.variable_scope('optimizer'):
                 optimizer = tf.train.RMSPropOptimizer(learning_rate=self._learning_rate)
@@ -71,31 +76,11 @@ class IFVAE(object):
             init = tf.global_variables_initializer()
             self._sesh.run(init)
 
-    def _network(self, x):
-        with tf.variable_scope('encoder'):
-            encoded = self._encode(x, self._latent_dim)
-
-        with tf.variable_scope('latent'):
-            mean = encoded[:, :self._latent_dim]
-            logvar = encoded[:, self._latent_dim:]
-            std = tf.sqrt(tf.exp(logvar))
-            epsilon = tf.random_normal([self._batch_size, self._latent_dim])
-            z = mean
-
-            z = tf.cond(self.sampling, lambda: z + std * epsilon, lambda: z)
-
-        with tf.variable_scope('decoder'):
-            decoded = self._decode(z, self._observation_dim)
-            obs_mean = decoded
-
-        return mean, std, obs_mean#, sample
-
     @staticmethod
-    def _kl_diagnormal_stdnormal(mu_1, std_1, mu_2=0, std_2=1):
+    def _kl_diagnormal_stdnormal(mu, log_var):
 
-        kl = tf.reduce_sum(tf.log(std_2) - tf.log(std_1)
-                           + tf.divide((tf.square(std_1) + tf.square(mu_1-mu_2)), 2*tf.square(std_2))
-                           - 0.5)
+        var = tf.exp(log_var)
+        kl = 0.5 * tf.reduce_sum(tf.square(mu) + var - 1. - log_var)
         return kl
 
     @staticmethod
@@ -116,12 +101,12 @@ class IFVAE(object):
         return loss
 
     def inference(self, x):
-        predict = self._sesh.run(self.wc_obs_mean,
+        predict = self._sesh.run(self.obs_mean,
                                  feed_dict={self.input: x, self.corruption: 0, self.sampling: False})
         return predict
 
     def uncertainty(self, x):
-        gaussian_parameters = self._sesh.run([self.wc_mean, self.wc_std],
+        gaussian_parameters = self._sesh.run([self.mean, self.stddev],
                                              feed_dict={self.input: x, self.corruption: 0, self.sampling: False})
 
         return gaussian_parameters
