@@ -115,7 +115,7 @@ class CDAE(object):
         return self.sess.run(self.decode_bias)
 
 
-def cdae(matrix_train, embeded_matrix=np.empty((0)), iteration=100, lam=80, rank=200, corruption=0.8, seed=1, **unused):
+def cdae(matrix_train, embeded_matrix=np.empty((0)), iteration=100, lam=80, rank=200, corruption=0.2, seed=1, **unused):
     progress = WorkSplitter()
     matrix_input = matrix_train
     if embeded_matrix.shape[0] > 0:

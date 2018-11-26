@@ -5,23 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0388e4b0-6a26-46c6-8d3d-c585814fb1c3" name="Default Changelist" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/models/ifvae.py" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/vae/events.out.tfevents.1543252672.wuga-System-Product-Name" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/vae/events.out.tfevents.1543253661.wuga-System-Product-Name" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/vae/events.out.tfevents.1543253738.wuga-System-Product-Name" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/vae/events.out.tfevents.1543253782.wuga-System-Product-Name" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/vae/events.out.tfevents.1543253832.wuga-System-Product-Name" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/vae/events.out.tfevents.1543253954.wuga-System-Product-Name" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/vae/events.out.tfevents.1543254072.wuga-System-Product-Name" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/vae/events.out.tfevents.1543254165.wuga-System-Product-Name" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/vae/events.out.tfevents.1543254453.wuga-System-Product-Name" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/latent/B_VAE-CF_100.npy" afterPath="$PROJECT_DIR$/latent/B_VAE-CF_100.npy" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/latent/U_VAE-CF_100.npy" afterPath="$PROJECT_DIR$/latent/U_VAE-CF_100.npy" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/latent/U_WRMF_100.npy" afterPath="$PROJECT_DIR$/latent/U_WRMF_100.npy" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/latent/V_VAE-CF_100.npy" afterPath="$PROJECT_DIR$/latent/V_VAE-CF_100.npy" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/latent/V_WRMF_100.npy" afterPath="$PROJECT_DIR$/latent/V_WRMF_100.npy" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/main.py" afterPath="$PROJECT_DIR$/main.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/models/cdae.py" afterPath="$PROJECT_DIR$/models/cdae.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/models/ifvae.py" afterPath="$PROJECT_DIR$/models/ifvae.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/models/vae.py" afterPath="$PROJECT_DIR$/models/vae.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -79,8 +65,8 @@
       <file leaf-file-name="cdae.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/models/cdae.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1846">
-              <caret line="128" column="35" lean-forward="false" selection-start-line="128" selection-start-column="35" selection-end-line="128" selection-end-column="35" />
+            <state relative-caret-position="1481">
+              <caret line="117" column="100" lean-forward="false" selection-start-line="117" selection-start-column="100" selection-end-line="117" selection-end-column="100" />
               <folding />
             </state>
           </provider>
@@ -89,8 +75,8 @@
       <file leaf-file-name="autorec.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/models/autorec.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="104">
-              <caret line="39" column="88" lean-forward="false" selection-start-line="39" selection-start-column="12" selection-end-line="39" selection-end-column="88" />
+            <state relative-caret-position="748">
+              <caret line="59" column="52" lean-forward="true" selection-start-line="59" selection-start-column="52" selection-end-line="59" selection-end-column="52" />
               <folding>
                 <element signature="e#0#23#0" expanded="true" />
               </folding>
@@ -98,11 +84,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ifvae.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="ifvae.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/models/ifvae.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="667">
-              <caret line="164" column="18" lean-forward="true" selection-start-line="164" selection-start-column="18" selection-end-line="164" selection-end-column="18" />
+            <state relative-caret-position="514">
+              <caret line="203" column="29" lean-forward="true" selection-start-line="203" selection-start-column="29" selection-end-line="203" selection-end-column="29" />
               <folding>
                 <element signature="e#0#9#0" expanded="true" />
               </folding>
@@ -113,8 +99,8 @@
       <file leaf-file-name="main.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/main.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="344">
-              <caret line="100" column="69" lean-forward="true" selection-start-line="100" selection-start-column="69" selection-end-line="100" selection-end-column="69" />
+            <state relative-caret-position="582">
+              <caret line="118" column="87" lean-forward="false" selection-start-line="118" selection-start-column="87" selection-end-line="118" selection-end-column="87" />
               <folding>
                 <element signature="e#0#18#0" expanded="true" />
               </folding>
@@ -132,11 +118,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="bpr.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="bpr.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/models/bpr.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="894">
-              <caret line="156" column="28" lean-forward="false" selection-start-line="156" selection-start-column="28" selection-end-line="156" selection-end-column="28" />
+            <state relative-caret-position="393">
+              <caret line="134" column="79" lean-forward="true" selection-start-line="134" selection-start-column="79" selection-end-line="134" selection-end-column="79" />
               <folding>
                 <element signature="e#0#23#0" expanded="true" />
               </folding>
@@ -159,8 +145,8 @@
       <file leaf-file-name="vae.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/models/vae.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-353">
-              <caret line="112" column="25" lean-forward="false" selection-start-line="112" selection-start-column="25" selection-end-line="112" selection-end-column="25" />
+            <state relative-caret-position="514">
+              <caret line="178" column="29" lean-forward="true" selection-start-line="178" selection-start-column="29" selection-end-line="178" selection-end-column="29" />
               <folding>
                 <element signature="e#0#9#0" expanded="true" />
               </folding>
@@ -229,15 +215,15 @@
         <option value="$PROJECT_DIR$/demo_models/ifvae.py" />
         <option value="$PROJECT_DIR$/demo_models/vae.py" />
         <option value="$PROJECT_DIR$/insight.py" />
-        <option value="$PROJECT_DIR$/models/cdae.py" />
         <option value="$PROJECT_DIR$/models/pop.py" />
         <option value="$PROJECT_DIR$/models/bpr.py" />
         <option value="$PROJECT_DIR$/models/wrmf.py" />
         <option value="$PROJECT_DIR$/models/autorec.py" />
         <option value="$PROJECT_DIR$/models/predictor.py" />
-        <option value="$PROJECT_DIR$/main.py" />
-        <option value="$PROJECT_DIR$/models/vae.py" />
         <option value="$PROJECT_DIR$/models/ifvae.py" />
+        <option value="$PROJECT_DIR$/models/vae.py" />
+        <option value="$PROJECT_DIR$/models/cdae.py" />
+        <option value="$PROJECT_DIR$/main.py" />
       </list>
     </option>
   </component>
@@ -346,9 +332,8 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="1920" y="-4" width="2497" height="1092" extended-state="6" />
-    <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.07676603" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.07676603" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -741,24 +726,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/models/cdae.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1846">
-          <caret line="128" column="35" lean-forward="false" selection-start-line="128" selection-start-column="35" selection-end-line="128" selection-end-column="35" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/models/bpr.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="894">
-          <caret line="156" column="28" lean-forward="false" selection-start-line="156" selection-start-column="28" selection-end-line="156" selection-end-column="28" />
-          <folding>
-            <element signature="e#0#23#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/demo_models/ifvae.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -777,42 +744,60 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/main.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="344">
-          <caret line="100" column="69" lean-forward="true" selection-start-line="100" selection-start-column="69" selection-end-line="100" selection-end-column="69" />
-          <folding>
-            <element signature="e#0#18#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/models/autorec.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="104">
-          <caret line="39" column="88" lean-forward="false" selection-start-line="39" selection-start-column="12" selection-end-line="39" selection-end-column="88" />
+        <state relative-caret-position="748">
+          <caret line="59" column="52" lean-forward="true" selection-start-line="59" selection-start-column="52" selection-end-line="59" selection-end-column="52" />
           <folding>
             <element signature="e#0#23#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/models/vae.py">
+    <entry file="file://$PROJECT_DIR$/models/ifvae.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-353">
-          <caret line="112" column="25" lean-forward="false" selection-start-line="112" selection-start-column="25" selection-end-line="112" selection-end-column="25" />
+        <state relative-caret-position="514">
+          <caret line="203" column="29" lean-forward="true" selection-start-line="203" selection-start-column="29" selection-end-line="203" selection-end-column="29" />
           <folding>
             <element signature="e#0#9#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/models/ifvae.py">
+    <entry file="file://$PROJECT_DIR$/models/vae.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="667">
-          <caret line="164" column="18" lean-forward="true" selection-start-line="164" selection-start-column="18" selection-end-line="164" selection-end-column="18" />
+        <state relative-caret-position="514">
+          <caret line="178" column="29" lean-forward="true" selection-start-line="178" selection-start-column="29" selection-end-line="178" selection-end-column="29" />
           <folding>
             <element signature="e#0#9#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/models/cdae.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1481">
+          <caret line="117" column="100" lean-forward="false" selection-start-line="117" selection-start-column="100" selection-end-line="117" selection-end-column="100" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/main.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="582">
+          <caret line="118" column="87" lean-forward="false" selection-start-line="118" selection-start-column="87" selection-end-line="118" selection-end-column="87" />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/models/bpr.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="393">
+          <caret line="134" column="79" lean-forward="true" selection-start-line="134" selection-start-column="79" selection-end-line="134" selection-end-column="79" />
+          <folding>
+            <element signature="e#0#23#0" expanded="true" />
           </folding>
         </state>
       </provider>

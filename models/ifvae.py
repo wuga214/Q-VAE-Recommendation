@@ -199,7 +199,8 @@ class IFVAE(object):
         return self._sesh.run(self.decode_bias)
 
 
-def ifvae(matrix_train, embeded_matrix=np.empty((0)), iteration=100, lam=80, rank=200, seed=1, **unused):
+def ifvae(matrix_train, embeded_matrix=np.empty((0)), iteration=100,
+          lam=80, rank=200, corruption=0.2, seed=1, **unused):
     progress = WorkSplitter()
     matrix_input = matrix_train
     if embeded_matrix.shape[0] > 0:
@@ -208,7 +209,7 @@ def ifvae(matrix_train, embeded_matrix=np.empty((0)), iteration=100, lam=80, ran
     m, n = matrix_input.shape
     model = IFVAE(n, rank, 100, lamb=lam, observation_distribution="Gaussian")
 
-    model.train_model(matrix_input, 0.2, iteration)
+    model.train_model(matrix_input, corruption, iteration)
 
     RQ = model.get_RQ(matrix_input)
     Y = model.get_Y()

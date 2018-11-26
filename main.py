@@ -5,6 +5,8 @@ import time
 from utils.io import load_numpy, load_pandas, load_csv
 from utils.argcheck import check_float_positive, check_int_positive, shape
 from models.wrmf import als
+from models.autorec import autorec
+from models.cdae import cdae
 from models.vae import vae_cf
 from models.ifvae import ifvae
 from models.predictor import predict,predict_batch
@@ -12,6 +14,8 @@ from evaluation.metrics import evaluate
 
 
 models = {
+    "AutoRec": autorec,
+    "CDAE": cdae,
     "VAE-CF": vae_cf,
     "WRMF": als,
     "IFVAE": ifvae,
@@ -112,7 +116,7 @@ if __name__ == "__main__":
     parser.add_argument('-l', dest='lamb', type=check_float_positive, default=100)
     parser.add_argument('-r', dest='rank', type=check_int_positive, default=100)
     parser.add_argument('-f', dest='root', type=check_float_positive, default=1)
-    parser.add_argument('-c', dest='corruption', type=check_float_positive, default=0.8)
+    parser.add_argument('-c', dest='corruption', type=check_float_positive, default=0.2)
     parser.add_argument('-s', dest='seed', type=check_int_positive, default=1)
     parser.add_argument('-m', dest='model', default="WRMF")
     parser.add_argument('-d', dest='path', default="datax/")
