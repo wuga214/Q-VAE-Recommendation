@@ -1,4 +1,5 @@
 import re
+import random
 import numpy as np
 import tensorflow as tf
 from tqdm import tqdm
@@ -166,7 +167,8 @@ class IFVAE(object):
         pbar = tqdm(range(epoch))
         for i in pbar:
             for step in range(len(batches)):
-                feed_dict = {self.input: batches[step].todense(), self.corruption: corruption, self.sampling: True}
+                corrupt_rate = random.uniform(0.1, 0.5)
+                feed_dict = {self.input: batches[step].todense(), self.corruption: corrupt_rate, self.sampling: True}
                 training = self._sesh.run([self._train], feed_dict=feed_dict)
 
     def get_batches(self, rating_matrix, batch_size):
