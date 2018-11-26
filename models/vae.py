@@ -119,7 +119,7 @@ class VAE(object):
     @staticmethod
     def _multinomial_log_likelihood(target, outputs, eps=1e-8):
         log_softmax_output = tf.nn.log_softmax(outputs)
-        log_like = -tf.reduce_sum(tf.reduce_sum(log_softmax_output * target, axis=1))
+        log_like = -tf.reduce_mean(tf.reduce_sum(log_softmax_output * target, axis=1))
         return log_like
 
     def inference(self, x):

@@ -6,6 +6,7 @@ from utils.io import load_numpy, load_pandas, load_csv
 from utils.argcheck import check_float_positive, check_int_positive, shape
 from models.wrmf import als
 from models.vae import vae_cf
+from models.ifvae import ifvae
 from models.predictor import predict,predict_batch
 from evaluation.metrics import evaluate
 
@@ -13,6 +14,7 @@ from evaluation.metrics import evaluate
 models = {
     "VAE-CF": vae_cf,
     "WRMF": als,
+    "IFVAE": ifvae,
 }
 
 
