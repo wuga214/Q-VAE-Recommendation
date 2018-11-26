@@ -44,13 +44,13 @@ class VAE(object):
                                              name="Weights")
                 encode_bias = tf.Variable(tf.constant(0., shape=[self._latent_dim*2]), name="Bias")
 
-                encoded = tf.nn.relu(tf.matmul(self._observation_dim, encode_weights) + encode_bias)
+                encoded = tf.nn.relu(tf.matmul(wc, encode_weights) + encode_bias)
 
             with tf.variable_scope('latent'):
                 self.mean = encoded[:, :self._latent_dim]
                 logvar = encoded[:, self._latent_dim:]
                 self.stddev = tf.sqrt(tf.exp(logvar))
-                epsilon = tf.random_normal([self._batch_size, self._latent_dim])
+                epsilon = tf.random_normal(tf.shape(self.stddev))
                 self.z = tf.cond(self.sampling, lambda: self.mean + self.stddev * epsilon, lambda: self.mean)
 
             with tf.variable_scope('decoder'):
@@ -63,7 +63,7 @@ class VAE(object):
 
                 self.obs_mean = decoded
                 if self._observation_distribution == 'Gaussian':
-                    obs_epsilon = tf.random_normal([self._batch_size, self._observation_dim])
+                    obs_epsilon = tf.random_normal(tf.shape(self.obs_mean))
                     self.sample = self.obs_mean + self._observation_std * obs_epsilon
                 else:
                     self.sample = Bernoulli(probs=self.obs_mean).sample()
@@ -181,7 +181,7 @@ def vae_cf(matrix_train, embeded_matrix=np.empty((0)), iteration=100, lam=80, ra
         matrix_input = vstack((matrix_input, embeded_matrix.T))
 
     m, n = matrix_input.shape
-    model = VAE(n, rank, 100, lamb=lam)
+    model = VAE(n, rank, 100, lamb=lam, observation_distribution="Multinomial")
 
     model.train_model(matrix_input, 0.2, iteration)
 
