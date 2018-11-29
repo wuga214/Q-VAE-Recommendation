@@ -11,7 +11,7 @@ from utils.io import load_numpy, save_dataframe_latex, save_dataframe_csv
 from utils.progress import WorkSplitter
 
 
-""" Example Param.csv File
+""" Example Params.csv File
 
 model,alpha,corruption,rank,iter,lam
 VAE-CF,1,0.2,100,300,0.0001

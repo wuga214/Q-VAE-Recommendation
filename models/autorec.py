@@ -57,9 +57,8 @@ class AutoRec(object):
             remaining_size -= batch_size
         return batches
 
-    def train_model(self, rating_matrix, epoch=100):
+    def train_model(self, rating_matrix, epoch=100, **unused):
         batches = self.get_batches(rating_matrix, self.batch_size)
-        summary_writer = tf.summary.FileWriter('auto_rec', graph=self.sess.graph)
 
         # Training
         pbar = tqdm(range(epoch))

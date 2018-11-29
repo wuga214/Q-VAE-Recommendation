@@ -85,7 +85,6 @@ class CDAE(object):
 
     def train_model(self, rating_matrix, corruption=0.8, epoch=100):
         batches = self.get_batches(rating_matrix, self.batch_size)
-        summary_writer = tf.summary.FileWriter('cdae', graph=self.sess.graph)
 
         # Training
         pbar = tqdm(range(epoch))

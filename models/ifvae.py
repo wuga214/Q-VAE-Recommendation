@@ -13,7 +13,7 @@ class IFVAE(object):
                  beta=0.2,
                  learning_rate=1e-4,
                  optimizer=tf.train.RMSPropOptimizer,
-                 observation_distribution="Bernoulli", # or Gaussian or Multinomial
+                 observation_distribution="Gaussian", # or Bernoulli or Multinomial
                  observation_std=0.01):
 
         self._lamb = lamb
@@ -161,7 +161,6 @@ class IFVAE(object):
 
     def train_model(self, rating_matrix, corruption, epoch=100):
         batches = self.get_batches(rating_matrix, self._batch_size)
-        summary_writer = tf.summary.FileWriter('ifvae', graph=self._sesh.graph)
 
         # Training
         pbar = tqdm(range(epoch))
