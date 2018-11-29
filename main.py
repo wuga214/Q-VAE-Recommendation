@@ -60,13 +60,13 @@ def main(args):
     if args.item == True:
         RQ, Yt, Bias = models[args.model](R_train, embeded_matrix=np.empty((0)),
                                           iteration=args.iter, rank=args.rank,
-                                          corruption=args.corruption,
+                                          corruption=args.corruption, gpu=args.gpu,
                                           lam=args.lamb, alpha=args.alpha, seed=args.seed, root=args.root)
         Y = Yt.T
     else:
         Y, RQt, Bias = models[args.model](R_train.T, embeded_matrix=np.empty((0)),
                                           iteration=args.iter, rank=args.rank,
-                                          corruption=args.corruption,
+                                          corruption=args.corruption, gpu=args.gpu,
                                           lam=args.lamb, alpha=args.alpha, seed=args.seed, root=args.root)
         RQ = RQt.T
 
@@ -86,12 +86,12 @@ def main(args):
 
     progress.section("Predict")
     prediction = predict(matrix_U=RQ,
-                               matrix_V=Y,
-                               bias=Bias,
-                               topK=args.topk,
-                               matrix_Train=R_train,
-                               measure=args.sim_measure,
-                               gpu=True)
+                         matrix_V=Y,
+                         bias=Bias,
+                         topK=args.topk,
+                         matrix_Train=R_train,
+                         measure=args.sim_measure,
+                         gpu=args.gpu)
     if args.validation:
         progress.section("Create Metrics")
         start_time = time.time()
@@ -123,6 +123,7 @@ if __name__ == "__main__":
     parser.add_argument('-t', dest='train', default='Rtrain.npz')
     parser.add_argument('-v', dest='valid', default='Rvalid.npz')
     parser.add_argument('-k', dest='topk', type=check_int_positive, default=50)
+    parser.add_argument('-gpu', dest='gpu', action='store_true')
     parser.add_argument('--similarity', dest='sim_measure', default='Cosine')
     parser.add_argument('--shape', help="CSR Shape", dest="shape", type=shape, nargs=2)
     args = parser.parse_args()

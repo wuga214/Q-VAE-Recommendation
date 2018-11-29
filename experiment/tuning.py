@@ -35,7 +35,7 @@ def hyper_parameter_tuning(train, validation, params, measure='Cosine', gpu_on=T
                                                                rank=rank,
                                                                lam=lam,
                                                                alpha=alpha,
-                                                               gpu_on=True)
+                                                               gpu_on=gpu_on)
                     Y = Yt.T
 
                     progress.subsection("Prediction")

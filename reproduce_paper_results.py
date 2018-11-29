@@ -43,7 +43,7 @@ def main(args):
         progress.section(json.dumps(row))
         row['metric'] = ['R-Precision', 'NDCG', 'Precision', 'Recall']
         row['topK'] = [5, 10, 15, 20, 30]
-        result = execute(R_train, R_valid, row, models[row['model']], measure="Cosine")
+        result = execute(R_train, R_valid, row, models[row['model']], measure="Cosine", gpu_on=args.gpu)
         frame.append(result)
 
     results = pd.concat(frame)
@@ -58,6 +58,7 @@ if __name__ == "__main__":
     parser.add_argument('-t', dest='train', default='Rtrain.npz')
     parser.add_argument('-v', dest='valid', default='Rtest.npz')
     parser.add_argument('-p', dest='param', default='Params.csv')
+    parser.add_argument('-gpu', dest='gpu', action='store_true')
     args = parser.parse_args()
 
     main(args)

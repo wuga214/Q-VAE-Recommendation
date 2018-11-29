@@ -30,7 +30,7 @@ def main(args):
 
     R_train = load_numpy(path=args.path, name=args.train)
     R_valid = load_numpy(path=args.path, name=args.valid)
-    df = hyper_parameter_tuning(R_train, R_valid, params, measure="Cosine")
+    df = hyper_parameter_tuning(R_train, R_valid, params, measure="Cosine", gpu_on=args.gpu)
     save_dataframe_latex(df, 'tables/', args.name)
     save_dataframe_csv(df, 'tables/', args.name)
 
@@ -41,6 +41,7 @@ if __name__ == "__main__":
     parser.add_argument('-d', dest='path', default="datax/")
     parser.add_argument('-t', dest='train', default='Rtrain.npz')
     parser.add_argument('-v', dest='valid', default='Rvalid.npz')
+    parser.add_argument('-gpu', dest='gpu', action='store_true')
     args = parser.parse_args()
 
     main(args)
