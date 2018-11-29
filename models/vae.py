@@ -93,9 +93,9 @@ class VAE(object):
             with tf.variable_scope('training-step'):
                 self._train = optimizer.minimize(self._loss)
 
-            self._sesh = tf.Session()
+            self.sess = tf.Session()
             init = tf.global_variables_initializer()
-            self._sesh.run(init)
+            self.sess.run(init)
 
     @staticmethod
     def _kl_diagnormal_stdnormal(mu, log_var):
@@ -123,12 +123,12 @@ class VAE(object):
         return log_like
 
     def inference(self, x):
-        predict = self._sesh.run(self.obs_mean,
+        predict = self.sess.run(self.obs_mean,
                                  feed_dict={self.input: x, self.corruption: 0, self.sampling: False})
         return predict
 
     def uncertainty(self, x):
-        gaussian_parameters = self._sesh.run([self.mean, self.stddev],
+        gaussian_parameters = self.sess.run([self.mean, self.stddev],
                                              feed_dict={self.input: x, self.corruption: 0, self.sampling: False})
 
         return gaussian_parameters
@@ -141,7 +141,7 @@ class VAE(object):
         for i in pbar:
             for step in range(len(batches)):
                 feed_dict = {self.input: batches[step].todense(), self.corruption: corruption, self.sampling: True}
-                training = self._sesh.run([self._train], feed_dict=feed_dict)
+                training = self.sess.run([self._train], feed_dict=feed_dict)
 
     def get_batches(self, rating_matrix, batch_size):
         remaining_size = rating_matrix.shape[0]
@@ -161,16 +161,16 @@ class VAE(object):
         RQ = []
         for step in range(len(batches)):
             feed_dict = {self.input: batches[step].todense(), self.corruption: 0, self.sampling: False}
-            embedding = self._sesh.run(self.z, feed_dict=feed_dict)
+            embedding = self.sess.run(self.z, feed_dict=feed_dict)
             RQ.append(embedding)
 
         return np.vstack(RQ)
 
     def get_Y(self):
-        return self._sesh.run(self.decode_weights)
+        return self.sess.run(self.decode_weights)
 
     def get_Bias(self):
-        return self._sesh.run(self.decode_bias)
+        return self.sess.run(self.decode_bias)
 
 
 def vae_cf(matrix_train, embeded_matrix=np.empty((0)),
@@ -188,7 +188,7 @@ def vae_cf(matrix_train, embeded_matrix=np.empty((0)),
     RQ = model.get_RQ(matrix_input)
     Y = model.get_Y()
     Bias = model.get_Bias()
-    model._sesh.close()
+    model.sess.close()
     tf.reset_default_graph()
 
     return RQ, Y, Bias

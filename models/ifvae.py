@@ -84,9 +84,9 @@ class IFVAE(object):
             with tf.variable_scope('training-step'):
                 self._train = optimizer.minimize(self._loss)
 
-            self._sesh = tf.Session()
+            self.sess = tf.Session()
             init = tf.global_variables_initializer()
-            self._sesh.run(init)
+            self.sess.run(init)
 
     def _network(self, x):
         with tf.variable_scope('encoder'):
@@ -144,17 +144,17 @@ class IFVAE(object):
         return log_like
 
     def update(self, x, corruption):
-        _, loss = self._sesh.run([self._train, self._loss],
+        _, loss = self.sess.run([self._train, self._loss],
                                  feed_dict={self.input: x, self.corruption: corruption, self.sampling: True})
         return loss
 
     def inference(self, x):
-        predict = self._sesh.run(self.wc_obs_mean,
+        predict = self.sess.run(self.wc_obs_mean,
                                  feed_dict={self.input: x, self.corruption: 0, self.sampling: False})
         return predict
 
     def uncertainty(self, x):
-        gaussian_parameters = self._sesh.run([self.wc_mean, self.wc_std],
+        gaussian_parameters = self.sess.run([self.wc_mean, self.wc_std],
                                              feed_dict={self.input: x, self.corruption: 0, self.sampling: False})
 
         return gaussian_parameters
@@ -168,7 +168,7 @@ class IFVAE(object):
             for step in range(len(batches)):
                 corrupt_rate = random.uniform(0.1, 0.5)
                 feed_dict = {self.input: batches[step].todense(), self.corruption: corrupt_rate, self.sampling: True}
-                training = self._sesh.run([self._train], feed_dict=feed_dict)
+                training = self.sess.run([self._train], feed_dict=feed_dict)
 
     def get_batches(self, rating_matrix, batch_size):
         remaining_size = rating_matrix.shape[0]
@@ -188,16 +188,16 @@ class IFVAE(object):
         RQ = []
         for step in range(len(batches)):
             feed_dict = {self.input: batches[step].todense(), self.corruption: 0, self.sampling: False}
-            embedding = self._sesh.run(self.wc_mean, feed_dict=feed_dict)
+            embedding = self.sess.run(self.wc_mean, feed_dict=feed_dict)
             RQ.append(embedding)
 
         return np.vstack(RQ)
 
     def get_Y(self):
-        return self._sesh.run(self.decode_weights)
+        return self.sess.run(self.decode_weights)
 
     def get_Bias(self):
-        return self._sesh.run(self.decode_bias)
+        return self.sess.run(self.decode_bias)
 
 
 def ifvae(matrix_train, embeded_matrix=np.empty((0)), iteration=100,
@@ -215,7 +215,7 @@ def ifvae(matrix_train, embeded_matrix=np.empty((0)), iteration=100,
     RQ = model.get_RQ(matrix_input)
     Y = model.get_Y()
     Bias = model.get_Bias()
-    model._sesh.close()
+    model.sess.close()
     tf.reset_default_graph()
 
     return RQ, Y, Bias
