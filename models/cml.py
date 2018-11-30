@@ -1,9 +1,13 @@
 import tensorflow as tf
 import numpy as np
 from tqdm import tqdm
-from scipy.sparse import lil_matrix
+from utils.progress import WorkSplitter, inhour
+from scipy.sparse import vstack, hstack, lil_matrix
 import pyximport; pyximport.install()
 from utils.cython.negative_sampler import get_negative_samples
+
+
+# Under construction...
 
 
 class CollaborativeMetricLearning(object):
@@ -132,3 +136,29 @@ class CollaborativeMetricLearning(object):
             batches.append([ui_pairs[:, 0], ui_pairs[:, 1], negative_samples])
 
         return batches
+
+
+    def get_RQ(self):
+        return self.sess.run(self.user_embeddings)
+
+    def get_Y(self):
+        return self.sess.run(self.item_embeddings)
+
+
+def cml(matrix_train, embeded_matrix=np.empty((0)), iteration=100, lam=80, rank=200, seed=1, **unused):
+    progress = WorkSplitter()
+    matrix_input = matrix_train
+    if embeded_matrix.shape[0] > 0:
+        matrix_input = vstack((matrix_input, embeded_matrix.T))
+
+    m, n = matrix_input.shape
+    model = CollaborativeMetricLearning(num_users=m, num_items=n, embed_dim=rank, cov_loss_weight=lam)
+
+    model.train_model(matrix_input, iteration)
+
+    RQ = model.get_RQ()
+    Y = model.get_Y().T
+    model.sess.close()
+    tf.reset_default_graph()
+
+    return RQ, Y, None

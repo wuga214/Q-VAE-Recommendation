@@ -11,7 +11,8 @@ sns.axes_style("white")
 
 def show_training_progress(df, metric='NDCG', name="epoch_vs_ndcg", save=True):
     fig, ax = plt.subplots(figsize=(8, 4))
-    ax = sns.lineplot(x='epoch', y=metric, hue='model', data=df)
+    #plt.axhline(y=0.165, color='r', linestyle='-')
+    ax = sns.lineplot(x='epoch', y=metric, hue='model', style="model", data=df)
     plt.tight_layout()
     if save:
         fig.savefig('figs/train/progress/'+name+'.png', bbox_inches="tight", pad_inches=0, format='png')

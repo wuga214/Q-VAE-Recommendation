@@ -38,7 +38,7 @@ def main(args):
     R_train = load_numpy(path=args.path, name=args.train)
     R_valid = load_numpy(path=args.path, name=args.valid)
 
-    results = converge(R_train, R_valid, df, epochs=10, gpu_on=args.gpu)
+    results = converge(R_train, R_valid, df, epochs=300, gpu_on=args.gpu)
 
     save_dataframe_latex(results, 'tables/', args.name)
     save_dataframe_csv(results, 'tables/', args.name)
