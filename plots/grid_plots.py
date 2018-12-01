@@ -8,6 +8,7 @@ from matplotlib.collections import PatchCollection
 import seaborn as sns
 sns.axes_style("white")
 
+
 def show_samples(images, row, col, image_shape, name="Unknown", save=True, shift=False):
     num_images = row*col
     if shift:

@@ -11,7 +11,6 @@ class VAE(object):
     def __init__(self, observation_dim, latent_dim, batch_size,
                  lamb=0.01,
                  beta=0.2,
-                 learning_rate=1e-4,
                  optimizer=tf.train.RMSPropOptimizer,
                  observation_distribution="Multinomial", # or Gaussian or Bernoulli
                  observation_std=0.01):
@@ -21,7 +20,6 @@ class VAE(object):
         self._latent_dim = latent_dim
         self._batch_size = batch_size
         self._observation_dim = observation_dim
-        self._learning_rate = learning_rate
         self._optimizer = optimizer
         self._observation_distribution = observation_distribution
         self._observation_std = observation_std
@@ -89,7 +87,7 @@ class VAE(object):
                 self._loss = self._beta * kl + obj + self._lamb * l2_loss
 
             with tf.variable_scope('optimizer'):
-                optimizer = tf.train.RMSPropOptimizer(learning_rate=self._learning_rate)
+                optimizer = tf.train.AdamOptimizer()
             with tf.variable_scope('training-step'):
                 self._train = optimizer.minimize(self._loss)
 
