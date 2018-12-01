@@ -24,7 +24,7 @@ def main(args):
         'root': [1.0],
         'topK': [5, 10, 15, 20, 50],
         'iter': 300,
-        'lam': [1e-6, 1e-5, 1e-4, 1e-3, 1e-2, 0.1, 1],
+        'lam': [1e-5, 1e-4, 1e-3],
         'metric': ['R-Precision', 'NDCG', 'Precision', 'Recall'],
     }
 

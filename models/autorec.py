@@ -3,6 +3,7 @@ import numpy as np
 from tqdm import tqdm
 from utils.progress import WorkSplitter, inhour
 from scipy.sparse import vstack, hstack
+from utils.regularizers import Regularizer
 
 
 class AutoRec(object):
@@ -11,11 +12,15 @@ class AutoRec(object):
                  embed_dim,
                  batch_size,
                  lamb=0.01,
+                 learning_rate=1e-4,
+                 optimizer=tf.train.RMSPropOptimizer,
                  **unused):
         self.input_dim = self.output_dim = input_dim
         self.embed_dim = embed_dim
         self.batch_size = batch_size
         self.lamb = lamb
+        self.learning_rate = learning_rate
+        self.optimizer = optimizer
         self.get_graph()
         self.sess = tf.Session()
         self.sess.run(tf.global_variables_initializer())
@@ -42,7 +47,7 @@ class AutoRec(object):
             self.loss = tf.reduce_mean(sigmoid_loss) + self.lamb*tf.reduce_mean(l2_loss)
 
         with tf.variable_scope('optimizer'):
-            self.optimizer = tf.train.AdamOptimizer().minimize(self.loss)
+            self.train = self.optimizer(learning_rate=self.learning_rate).minimize(self.loss)
 
     def get_batches(self, rating_matrix, batch_size):
         remaining_size = rating_matrix.shape[0]
@@ -65,7 +70,7 @@ class AutoRec(object):
         for i in pbar:
             for step in range(len(batches)):
                 feed_dict = {self.inputs: batches[step].todense()}
-                training = self.sess.run([self.optimizer], feed_dict=feed_dict)
+                training = self.sess.run([self.train], feed_dict=feed_dict)
 
     def get_RQ(self, rating_matrix):
         batches = self.get_batches(rating_matrix, self.batch_size)
@@ -84,14 +89,15 @@ class AutoRec(object):
         return self.sess.run(self.decode_bias)
 
 
-def autorec(matrix_train, embeded_matrix=np.empty((0)), iteration=100, lam=80, rank=200, seed=1, **unused):
+def autorec(matrix_train, embeded_matrix=np.empty((0)), iteration=100, lam=80, rank=200,
+            optimizer='RMSProp', seed=1, **unused):
     progress = WorkSplitter()
     matrix_input = matrix_train
     if embeded_matrix.shape[0] > 0:
         matrix_input = vstack((matrix_input, embeded_matrix.T))
 
     m, n = matrix_input.shape
-    model = AutoRec(n, rank, 100, lamb=lam)
+    model = AutoRec(n, rank, 100, lamb=lam, optimizer=Regularizer[optimizer])
 
     model.train_model(matrix_input, iteration)
 
