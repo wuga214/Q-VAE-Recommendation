@@ -11,7 +11,7 @@ class IFVAE(object):
     def __init__(self, observation_dim, latent_dim, batch_size,
                  lamb=0.01,
                  beta=0.2,
-                 optimizer=tf.train.RMSPropOptimizer,
+                 learning_rate=1e-4,
                  observation_distribution="Gaussian", # or Bernoulli or Multinomial
                  observation_std=0.01):
 
@@ -19,7 +19,7 @@ class IFVAE(object):
         self._latent_dim = latent_dim
         self._batch_size = batch_size
         self._observation_dim = observation_dim
-        self._optimizer = optimizer
+        self._learning_rate = learning_rate
         self._observation_distribution = observation_distribution
         self._observation_std = observation_std
         self._build_graph()
@@ -78,7 +78,7 @@ class IFVAE(object):
                 self._loss = ((kl1 + kl2 + obj1 + obj2) + self._lamb * l2_loss) * (1 - self.corruption)
 
             with tf.variable_scope('optimizer'):
-                optimizer = tf.train.AdamOptimizer()
+                optimizer = tf.train.RMSPropOptimizer(learning_rate=self._learning_rate)
             with tf.variable_scope('training-step'):
                 self._train = optimizer.minimize(self._loss)
 
