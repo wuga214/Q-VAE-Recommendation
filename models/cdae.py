@@ -17,14 +17,12 @@ class CDAE(object):
                  embed_dim,
                  batch_size,
                  lamb=0.01,
-                 learning_rate=1e-4,
                  **unused):
         self.input_dim = self.output_dim = input_dim
         self.user_dim = user_dim
         self.embed_dim = embed_dim
         self.batch_size = batch_size
         self.lamb = lamb
-        self.learning_rate = learning_rate
         self.get_graph()
         self.sess = tf.Session()
         self.sess.run(tf.global_variables_initializer())
@@ -69,7 +67,7 @@ class CDAE(object):
             self.loss = tf.reduce_mean(weighted_sigmoid_loss) + self.lamb * tf.reduce_mean(l2_loss)
 
         with tf.variable_scope('optimizer'):
-            self.optimizer = tf.train.RMSPropOptimizer(learning_rate=self.learning_rate).minimize(self.loss)
+            self.optimizer = tf.train.AdamOptimizer().minimize(self.loss)
 
     def get_batches(self, rating_matrix, batch_size):
         remaining_size = rating_matrix.shape[0]
