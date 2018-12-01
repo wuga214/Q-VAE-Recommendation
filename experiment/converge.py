@@ -8,6 +8,7 @@ from models.autorec import AutoRec
 from models.predictor import predict
 from evaluation.metrics import evaluate
 from utils.progress import WorkSplitter
+from utils.regularizers import Regularizer
 
 models = {
     "AutoRec": AutoRec,
@@ -21,9 +22,9 @@ def converge(Rtrain, Rtest, df, epochs=10, gpu_on=True):
     progress = WorkSplitter()
     m, n = Rtrain.shape
 
-    results = pd.DataFrame(columns=['model', 'rank', 'lambda', 'epoch'])
+    results = pd.DataFrame(columns=['model', 'rank', 'lambda', 'epoch', 'optimizer'])
 
-    for run in range(10):
+    for run in range(3):
 
         for idx, row in df.iterrows():
             row = row.to_dict()
@@ -33,9 +34,15 @@ def converge(Rtrain, Rtest, df, epochs=10, gpu_on=True):
             row['metric'] = ['NDCG', 'R-Precision']
             row['topK'] = [50]
             try:
-                model = models[row['model']](n, row['rank'], batch_size=100, lamb=row['lam'])
+                model = models[row['model']](n, row['rank'],
+                                             batch_size=100,
+                                             lamb=row['lam'],
+                                             optimizer=Regularizer[row['optimizer']])
             except:
-                model = models[row['model']](m, n, row['rank'], batch_size=100, lamb=row['lam'])
+                model = models[row['model']](m, n, row['rank'],
+                                             batch_size=100,
+                                             lamb=row['lam'],
+                                             optimizer=Regularizer[row['optimizer']])
 
             for i in range(epochs):
 
@@ -62,6 +69,7 @@ def converge(Rtrain, Rtest, df, epochs=10, gpu_on=True):
                     result_dict = {'model': row['model'],
                                    'rank': row['rank'],
                                    'lambda': row['lam'],
+                                   'optimizer': row['optimizer'],
                                    'epoch': i}
 
                     for name in result.keys():

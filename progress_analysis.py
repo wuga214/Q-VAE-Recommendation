@@ -43,16 +43,17 @@ def main(args):
     save_dataframe_latex(results, 'tables/', args.name)
     save_dataframe_csv(results, 'tables/', args.name)
 
-    show_training_progress(results, metric='NDCG', name="epoch_vs_ndcg")
+    show_training_progress(results, hue='optimizer', metric='NDCG', name="ifvae_epoch_vs_ndcg")
 
 if __name__ == "__main__":
     # Commandline arguments
-    parser = argparse.ArgumentParser(description="LRec")
+    parser = argparse.ArgumentParser(description="progress_analysis")
     parser.add_argument('-n', dest='name', default="convergence_analysis.csv")
     parser.add_argument('-d', dest='path', default="datax/")
     parser.add_argument('-t', dest='train', default='Rtrain.npz')
     parser.add_argument('-v', dest='valid', default='Rtest.npz')
     parser.add_argument('-p', dest='param', default='Params.csv')
+    parser.add_argument('-type', dest='type', default='optimizer')
     parser.add_argument('-gpu', dest='gpu', action='store_true')
     args = parser.parse_args()
 

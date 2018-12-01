@@ -1,5 +1,5 @@
-model,alpha,corruption,rank,iter,lam
-VAE-CF,1,0.2,100,300,0.0001
-AutoRec,1,0.2,50,300,0.000001
-CDAE,1,0.2,50,300,0.000001
-IFVAE,1,0.2,50,300,0.0001
+model,alpha,corruption,rank,iter,lam,optimizer
+VAE-CF,1,0.2,100,300,0.0001,RMSProp
+AutoRec,1,0.2,50,300,0.000001,RMSProp
+CDAE,1,0.2,50,300,0.000001,RMSProp
+IFVAE,1,0.2,50,300,0.0001,RMSProp

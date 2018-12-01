@@ -5,12 +5,16 @@ from tqdm import tqdm
 from tensorflow.contrib.distributions import Bernoulli
 from utils.progress import WorkSplitter, inhour
 from scipy.sparse import vstack, hstack
+from utils.regularizers import Regularizer
+
 
 class VAE(object):
 
     def __init__(self, observation_dim, latent_dim, batch_size,
                  lamb=0.01,
                  beta=0.2,
+                 learning_rate=1e-4,
+                 optimizer=tf.train.RMSPropOptimizer,
                  observation_distribution="Multinomial", # or Gaussian or Bernoulli
                  observation_std=0.01):
 
@@ -19,6 +23,8 @@ class VAE(object):
         self._latent_dim = latent_dim
         self._batch_size = batch_size
         self._observation_dim = observation_dim
+        self._learning_rate = learning_rate
+        self._optimizer = optimizer
         self._observation_distribution = observation_distribution
         self._observation_std = observation_std
         self._build_graph()
@@ -85,7 +91,7 @@ class VAE(object):
                 self._loss = self._beta * kl + obj + self._lamb * l2_loss
 
             with tf.variable_scope('optimizer'):
-                optimizer = tf.train.AdamOptimizer()
+                optimizer = self._optimizer(learning_rate=self._learning_rate)
             with tf.variable_scope('training-step'):
                 self._train = optimizer.minimize(self._loss)
 
@@ -170,14 +176,14 @@ class VAE(object):
 
 
 def vae_cf(matrix_train, embeded_matrix=np.empty((0)),
-           iteration=100, lam=80, rank=200, corruption=0.2, seed=1, **unused):
+           iteration=100, lam=80, rank=200, corruption=0.2, optimizer="RMSProp", seed=1, **unused):
     progress = WorkSplitter()
     matrix_input = matrix_train
     if embeded_matrix.shape[0] > 0:
         matrix_input = vstack((matrix_input, embeded_matrix.T))
 
     m, n = matrix_input.shape
-    model = VAE(n, rank, 100, lamb=lam, observation_distribution="Multinomial")
+    model = VAE(n, rank, 100, lamb=lam, observation_distribution="Multinomial", optimizer=Regularizer[optimizer])
 
     model.train_model(matrix_input, corruption, iteration)
 
