@@ -4,22 +4,9 @@ import argparse
 import time
 from utils.io import load_numpy, load_pandas, load_csv
 from utils.argcheck import check_float_positive, check_int_positive, shape
-from models.wrmf import als
-from models.autorec import autorec
-from models.cdae import cdae
-from models.vae import vae_cf
-from models.ifvae import ifvae
+from utils.modelnames import models
 from models.predictor import predict,predict_batch
 from evaluation.metrics import evaluate
-
-
-models = {
-    "AutoRec": autorec,
-    "CDAE": cdae,
-    "VAE-CF": vae_cf,
-    "WRMF": als,
-    "IFVAE": ifvae,
-}
 
 
 def main(args):
@@ -69,15 +56,6 @@ def main(args):
                                           corruption=args.corruption, gpu=args.gpu,
                                           lam=args.lamb, alpha=args.alpha, seed=args.seed, root=args.root)
         RQ = RQt.T
-
-    # Save Files
-    # progress.section("Save U-V Matrix")
-    # start_time = time.time()
-    # save_mxnet(matrix=RQ, path=args.path+mode+'/',
-    #            name='U_{0}_{1}_{2}'.format(args.rank, args.lamb, args.model))
-    # save_mxnet(matrix=Y, path=args.path+mode+'/',
-    #            name='V_{0}_{1}_{2}'.format(args.rank, args.lamb, args.model))
-    # print "Elapsed: {0}".format(inhour(time.time() - start_time))
 
     np.save('latent/U_{0}_{1}'.format(args.model, args.rank), RQ)
     np.save('latent/V_{0}_{1}'.format(args.model, args.rank), Y)
