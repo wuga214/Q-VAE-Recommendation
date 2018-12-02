@@ -4,6 +4,9 @@ from models.cdae import cdae
 from models.vae import vae_cf
 from models.ifvae import ifvae
 from models.autorec import autorec
+from models.bpr import bpr
+from models.wrmf import als
+from models.cml import cml
 from experiment.tuning import hyper_parameter_tuning
 from utils.io import load_numpy, save_dataframe_csv, load_yaml
 
@@ -12,7 +15,10 @@ models = {
     "AutoRec": autorec,
     "CDAE": cdae,
     "VAE-CF": vae_cf,
-    "IFVAE": ifvae
+    "IFVAE": ifvae,
+    "BPR": bpr,
+    "WRMF": als,
+    "CML": cml
 }
 
 
@@ -28,7 +34,7 @@ def main(args):
 if __name__ == "__main__":
     # Commandline arguments
     parser = argparse.ArgumentParser(description="LRec")
-    parser.add_argument('-n', dest='name', default="autorecs_tuning")
+    parser.add_argument('-n', dest='name', default="autorecs_tuning.csv")
     parser.add_argument('-d', dest='path', default="datax/")
     parser.add_argument('-t', dest='train', default='Rtrain.npz')
     parser.add_argument('-v', dest='valid', default='Rvalid.npz')
