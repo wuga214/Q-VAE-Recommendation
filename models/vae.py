@@ -176,7 +176,7 @@ class VAE(object):
 
 
 def vae_cf(matrix_train, embeded_matrix=np.empty((0)),
-           iteration=100, lam=80, rank=200, corruption=0.2, optimizer="RMSProp", seed=1, **unused):
+           iteration=100, lam=80, rank=200, corruption=0.5, optimizer="RMSProp", seed=1, **unused):
     progress = WorkSplitter()
     matrix_input = matrix_train
     if embeded_matrix.shape[0] > 0:

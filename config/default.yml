@@ -1,5 +1,7 @@
 parameters:
     models: POP
+    similarity: Cosine
+    corruption: [0]
     alpha: [1]
     rank: [50]
     root: [1.0]
