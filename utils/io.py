@@ -3,9 +3,9 @@ from scipy.sparse import save_npz, load_npz
 from scipy.sparse import csr_matrix
 import numpy as np
 import pandas as pd
-import config
 from tqdm import tqdm
 import pickle
+import yaml
 
 
 def save_dataframe_csv(df, path, name):
@@ -130,6 +130,6 @@ def load_pickle(path, name):
 def load_yaml(path):
     with open(path, 'r') as stream:
         try:
-            return config.load(stream)['parameters']
-        except config.YAMLError as exc:
+            return yaml.load(stream)['parameters']
+        except yaml.YAMLError as exc:
             print(exc)

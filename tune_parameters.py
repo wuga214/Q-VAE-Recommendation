@@ -5,7 +5,7 @@ from models.vae import vae_cf
 from models.ifvae import ifvae
 from models.autorec import autorec
 from experiment.tuning import hyper_parameter_tuning
-from utils.io import load_numpy, save_dataframe_latex, save_dataframe_csv, load_yaml
+from utils.io import load_numpy, save_dataframe_csv, load_yaml
 
 
 models = {
@@ -18,12 +18,11 @@ models = {
 
 def main(args):
     params = load_yaml(args.grid)
-    params['models'] = models[params['models']]
+    params['models'] = {params['models']: models[params['models']]}
 
     R_train = load_numpy(path=args.path, name=args.train)
     R_valid = load_numpy(path=args.path, name=args.valid)
     df = hyper_parameter_tuning(R_train, R_valid, params, measure="Cosine", gpu_on=args.gpu)
-    save_dataframe_latex(df, 'tables/', args.name)
     save_dataframe_csv(df, 'tables/', args.name)
 
 if __name__ == "__main__":
