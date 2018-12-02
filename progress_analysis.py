@@ -38,12 +38,12 @@ def main(args):
     R_train = load_numpy(path=args.path, name=args.train)
     R_valid = load_numpy(path=args.path, name=args.valid)
 
-    results = converge(R_train, R_valid, df, epochs=300, gpu_on=args.gpu)
+    results = converge(R_train, R_valid, df, epochs=1000, gpu_on=args.gpu)
 
     save_dataframe_latex(results, 'tables/', args.name)
     save_dataframe_csv(results, 'tables/', args.name)
 
-    show_training_progress(results, hue='optimizer', metric='NDCG', name="ifvae_epoch_vs_ndcg")
+    show_training_progress(results, hue='model', metric='NDCG', name="epoch_vs_ndcg")
 
 if __name__ == "__main__":
     # Commandline arguments

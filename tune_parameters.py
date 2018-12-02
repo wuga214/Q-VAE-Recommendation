@@ -5,7 +5,7 @@ from models.vae import vae_cf
 from models.ifvae import ifvae
 from models.autorec import autorec
 from experiment.tuning import hyper_parameter_tuning
-from utils.io import load_numpy, save_dataframe_latex, save_dataframe_csv
+from utils.io import load_numpy, save_dataframe_latex, save_dataframe_csv, load_yaml
 
 
 models = {
@@ -17,16 +17,8 @@ models = {
 
 
 def main(args):
-    params = {
-        'models': models,
-        'alpha': [1],
-        'rank': [50, 100],
-        'root': [1.0],
-        'topK': [5, 10, 15, 20, 50],
-        'iter': 300,
-        'lam': [1e-5, 1e-4, 1e-3],
-        'metric': ['R-Precision', 'NDCG', 'Precision', 'Recall'],
-    }
+    params = load_yaml(args.grid)
+    params['models'] = models[params['models']]
 
     R_train = load_numpy(path=args.path, name=args.train)
     R_valid = load_numpy(path=args.path, name=args.valid)
@@ -41,6 +33,7 @@ if __name__ == "__main__":
     parser.add_argument('-d', dest='path', default="datax/")
     parser.add_argument('-t', dest='train', default='Rtrain.npz')
     parser.add_argument('-v', dest='valid', default='Rvalid.npz')
+    parser.add_argument('-y', dest='grid', default='yaml/default.yml')
     parser.add_argument('-gpu', dest='gpu', action='store_true')
     args = parser.parse_args()
 

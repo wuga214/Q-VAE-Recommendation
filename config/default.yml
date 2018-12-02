@@ -1,0 +1,9 @@
+parameters:
+    models: POP
+    alpha: [1]
+    rank: [50]
+    root: [1.0]
+    topK: [5, 10, 15, 20, 50]
+    iter: 10
+    lam: [1]
+    metric: [R-Precision, NDCG, Precision, Recall]

@@ -48,7 +48,7 @@ def converge(Rtrain, Rtest, df, epochs=10, gpu_on=True):
 
                 model.train_model(Rtrain, corruption=row['corruption'], epoch=1)
 
-                if (i + 1) % 10 == 0:
+                if (i + 1) % 20 == 0:
 
                     RQ = model.get_RQ(Rtrain)
                     Y = model.get_Y()

@@ -3,6 +3,7 @@ from scipy.sparse import save_npz, load_npz
 from scipy.sparse import csr_matrix
 import numpy as np
 import pandas as pd
+import config
 from tqdm import tqdm
 import pickle
 
@@ -124,3 +125,11 @@ def load_pickle(path, name):
         data = pickle.load(handle)
 
     return data
+
+
+def load_yaml(path):
+    with open(path, 'r') as stream:
+        try:
+            return config.load(stream)['parameters']
+        except config.YAMLError as exc:
+            print(exc)

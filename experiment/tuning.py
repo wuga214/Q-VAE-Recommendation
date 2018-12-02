@@ -35,6 +35,7 @@ def hyper_parameter_tuning(train, validation, params, measure='Cosine', gpu_on=T
                                                                rank=rank,
                                                                lam=lam,
                                                                alpha=alpha,
+                                                               corruption=0.5,
                                                                gpu_on=gpu_on)
                     Y = Yt.T
 
