@@ -6,6 +6,9 @@ import pandas as pd
 from tqdm import tqdm
 import pickle
 import yaml
+from os import listdir
+from os.path import isfile, join
+from ast import literal_eval
 
 
 def save_dataframe_csv(df, path, name):
@@ -133,3 +136,17 @@ def load_yaml(path):
             return yaml.load(stream)['parameters']
         except yaml.YAMLError as exc:
             print(exc)
+
+
+def find_best_hyperparameters(folder_path, meatric):
+    csv_files = [join(folder_path, f) for f in listdir(folder_path)
+                 if isfile(join(folder_path, f)) and f.endswith('.csv')]
+    best_settings = []
+    for record in csv_files:
+        df = pd.read_csv(record)
+        df[meatric+'_Score'] = df[meatric].map(lambda x: literal_eval(x)[0])
+        best_settings.append(df.loc[df[meatric+'_Score'].idxmax()].to_dict())
+
+    df = pd.DataFrame(best_settings).drop(meatric+'_Score', axis=1)
+
+    return df

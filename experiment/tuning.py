@@ -9,7 +9,7 @@ from models.predictor import predict
 
 def hyper_parameter_tuning(train, validation, params, measure='Cosine', gpu_on=True):
     progress = WorkSplitter()
-    df = pd.DataFrame(columns=['model', 'rank', 'alpha', 'lambda', 'root', 'topK'])
+    df = pd.DataFrame(columns=['model', 'rank', 'alpha', 'lambda', 'iter', 'similarity', 'corruption', 'root', 'topK'])
 
     num_user = train.shape[0]
 
@@ -48,7 +48,9 @@ def hyper_parameter_tuning(train, validation, params, measure='Cosine', gpu_on=T
 
                     result = evaluate(prediction, validation, params['metric'], params['topK'])
 
-                    result_dict = {'model': algorithm, 'rank': rank, 'alpha': alpha, 'lambda': lam}
+                    result_dict = {'model': algorithm, 'rank': rank, 'alpha': alpha, 'lambda': lam,
+                                   'iter': params['iter'], 'similarity': params['similarity'],
+                                   'corruption': [params['corruption']]}
 
                     for name in result.keys():
                         result_dict[name] = [round(result[name][0], 4), round(result[name][1], 4)]

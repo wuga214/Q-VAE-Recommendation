@@ -1,26 +1,18 @@
 import json
 import pandas as pd
 import tensorflow as tf
-from models.cdae import CDAE
-from models.vae import VAE
-from models.ifvae import IFVAE
-from models.autorec import AutoRec
 from models.predictor import predict
 from evaluation.metrics import evaluate
 from utils.progress import WorkSplitter
 from utils.regularizers import Regularizer
-
-models = {
-    "AutoRec": AutoRec,
-    "CDAE": CDAE,
-    "VAE-CF": VAE,
-    "IFVAE": IFVAE
-}
+from utils.modelnames import autoencoders
 
 
 def converge(Rtrain, Rtest, df, epochs=10, gpu_on=True):
     progress = WorkSplitter()
     m, n = Rtrain.shape
+
+    valid_models = autoencoders.keys()
 
     results = pd.DataFrame(columns=['model', 'rank', 'lambda', 'epoch', 'optimizer'])
 
@@ -29,20 +21,26 @@ def converge(Rtrain, Rtest, df, epochs=10, gpu_on=True):
         for idx, row in df.iterrows():
             row = row.to_dict()
 
+            if row['model'] not in valid_models:
+                continue
+
             progress.section(json.dumps(row))
 
             row['metric'] = ['NDCG', 'R-Precision']
             row['topK'] = [50]
+            if 'optimizer' not in row.keys():
+                row['optimizer'] = 'RMSProp'
             try:
-                model = models[row['model']](n, row['rank'],
-                                             batch_size=100,
-                                             lamb=row['lam'],
-                                             optimizer=Regularizer[row['optimizer']])
+                model = autoencoders[row['model']](n, row['rank'],
+                                                   batch_size=100,
+                                                   lamb=row['lambda'],
+                                                   optimizer=Regularizer[row['optimizer']])
+
             except:
-                model = models[row['model']](m, n, row['rank'],
-                                             batch_size=100,
-                                             lamb=row['lam'],
-                                             optimizer=Regularizer[row['optimizer']])
+                model = autoencoders[row['model']](m, n, row['rank'],
+                                                   batch_size=100,
+                                                   lamb=row['lambda'],
+                                                   optimizer=Regularizer[row['optimizer']])
 
             for i in range(epochs):
 
@@ -68,7 +66,7 @@ def converge(Rtrain, Rtest, df, epochs=10, gpu_on=True):
                     # Note Finished yet
                     result_dict = {'model': row['model'],
                                    'rank': row['rank'],
-                                   'lambda': row['lam'],
+                                   'lambda': row['lambda'],
                                    'optimizer': row['optimizer'],
                                    'epoch': i}
 

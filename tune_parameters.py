@@ -1,25 +1,8 @@
 import numpy as np
 import argparse
-from models.cdae import cdae
-from models.vae import vae_cf
-from models.ifvae import ifvae
-from models.autorec import autorec
-from models.bpr import bpr
-from models.wrmf import als
-from models.cml import cml
 from experiment.tuning import hyper_parameter_tuning
 from utils.io import load_numpy, save_dataframe_csv, load_yaml
-
-
-models = {
-    "AutoRec": autorec,
-    "CDAE": cdae,
-    "VAE-CF": vae_cf,
-    "IFVAE": ifvae,
-    "BPR": bpr,
-    "WRMF": als,
-    "CML": cml
-}
+from utils.modelnames import models
 
 
 def main(args):

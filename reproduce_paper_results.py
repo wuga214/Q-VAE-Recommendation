@@ -2,12 +2,9 @@ import numpy as np
 import argparse
 import json
 import pandas as pd
-from models.cdae import cdae
-from models.vae import vae_cf
-from models.ifvae import ifvae
-from models.autorec import autorec
 from experiment.execute import execute
-from utils.io import load_numpy, save_dataframe_latex, save_dataframe_csv
+from utils.io import load_numpy, save_dataframe_latex, save_dataframe_csv, find_best_hyperparameters
+from utils.modelnames import models
 from utils.progress import WorkSplitter
 
 
@@ -22,17 +19,10 @@ IFVAE,1,0.2,50,300,0.0001
 """
 
 
-models = {
-    "AutoRec": autorec,
-    "CDAE": cdae,
-    "VAE-CF": vae_cf,
-    "IFVAE": ifvae
-}
-
 def main(args):
     progress = WorkSplitter()
 
-    df = pd.read_csv(args.path + args.param)
+    df = find_best_hyperparameters(args.param, 'NDCG')
 
     R_train = load_numpy(path=args.path, name=args.train)
     R_valid = load_numpy(path=args.path, name=args.valid)
@@ -43,7 +33,7 @@ def main(args):
         progress.section(json.dumps(row))
         row['metric'] = ['R-Precision', 'NDCG', 'Precision', 'Recall']
         row['topK'] = [5, 10, 15, 20, 30]
-        result = execute(R_train, R_valid, row, models[row['model']], measure="Cosine", gpu_on=args.gpu)
+        result = execute(R_train, R_valid, row, models[row['model']], measure=row['similarity'], gpu_on=args.gpu)
         frame.append(result)
 
     results = pd.concat(frame)
@@ -57,7 +47,7 @@ if __name__ == "__main__":
     parser.add_argument('-d', dest='path', default="datax/")
     parser.add_argument('-t', dest='train', default='Rtrain.npz')
     parser.add_argument('-v', dest='valid', default='Rtest.npz')
-    parser.add_argument('-p', dest='param', default='Params.csv')
+    parser.add_argument('-p', dest='param', default='tables/movielens1m')
     parser.add_argument('-gpu', dest='gpu', action='store_true')
     args = parser.parse_args()
 
