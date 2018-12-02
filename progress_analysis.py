@@ -14,7 +14,6 @@ def main(args):
 
     results = converge(R_train, R_valid, df, epochs=1000, gpu_on=args.gpu)
 
-    save_dataframe_latex(results, 'tables/', args.name)
     save_dataframe_csv(results, 'tables/', args.name)
 
     show_training_progress(results, hue='model', metric='NDCG', name="epoch_vs_ndcg")

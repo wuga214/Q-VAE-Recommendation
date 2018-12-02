@@ -5,7 +5,6 @@ import pandas as pd
 from experiment.execute import execute
 from utils.io import load_numpy, save_dataframe_latex, save_dataframe_csv, find_best_hyperparameters
 from utils.modelnames import models
-from utils.progress import WorkSplitter
 
 
 """ Example Params.csv File
@@ -20,7 +19,6 @@ IFVAE,1,0.2,50,300,0.0001
 
 
 def main(args):
-    progress = WorkSplitter()
 
     df = find_best_hyperparameters(args.param, 'NDCG')
 
@@ -30,14 +28,12 @@ def main(args):
     frame = []
     for idx, row in df.iterrows():
         row = row.to_dict()
-        progress.section(json.dumps(row))
         row['metric'] = ['R-Precision', 'NDCG', 'Precision', 'Recall']
         row['topK'] = [5, 10, 15, 20, 30]
         result = execute(R_train, R_valid, row, models[row['model']], measure=row['similarity'], gpu_on=args.gpu)
         frame.append(result)
 
     results = pd.concat(frame)
-    save_dataframe_latex(results, 'tables/', args.name)
     save_dataframe_csv(results, 'tables/', args.name)
 
 if __name__ == "__main__":

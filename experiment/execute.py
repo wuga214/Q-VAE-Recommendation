@@ -10,7 +10,11 @@ from models.predictor import predict
 def execute(train, test, params, model, measure='Cosine', gpu_on=True):
     progress = WorkSplitter()
 
-    df = pd.DataFrame(columns=['model', 'rank', 'alpha', 'lambda', 'iter', 'similarity', 'corruption', 'root', 'topK'])
+    columns = ['model', 'rank', 'alpha', 'lambda', 'iter', 'similarity', 'corruption', 'root', 'topK']
+
+    progress.section("\n".join([":".join((str(k), str(params[k]))) for k in columns]))
+
+    df = pd.DataFrame(columns=columns)
 
     RQ, Yt, Bias = model(train,
                          embeded_matrix=np.empty((0)),
