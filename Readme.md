@@ -1,5 +1,7 @@
 Inference Friendly Variational Auto-encoder for Recommendation
 ==============================================================
+![](https://img.shields.io/badge/linux-ubuntu-red.svg)
+![](https://img.shields.io/badge/Mac-OS-red.svg)
 
 ![](https://img.shields.io/badge/cuda-8.0-green.svg)
 ![](https://img.shields.io/badge/python-2.7-green.svg)
@@ -13,7 +15,6 @@ Inference Friendly Variational Auto-encoder for Recommendation
 ![](https://img.shields.io/badge/tqdm-4.11.2-blue.svg)
 ![](https://img.shields.io/badge/argparse-1.1-blue.svg)
 ![](https://img.shields.io/badge/tensorflow-1.4.0-blue.svg)
-![](https://img.shields.io/badge/mxnet-1.1.0-blue.svg)
 ![](https://img.shields.io/badge/matplotlib-3.0.0-blue.svg)
 
 Please Disable GPU usage in `main.py` if needed.
