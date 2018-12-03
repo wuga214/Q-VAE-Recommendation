@@ -46,7 +46,8 @@ def get_pmi_matrix_gpu(matrix, root):
     return sparse.vstack(pmi_matrix)
 
 
-def nceplrec(matrix_train, embeded_matrix=np.empty((0)), iteration=4, lam=80, rank=200, seed=1, root=1.1, **unused):
+def nceplrec(matrix_train, embeded_matrix=np.empty((0)), iteration=4,
+             lam=80, rank=200, seed=1, root=1.1, gpu_on=True, **unused):
     """
     Function used to achieve generalized projected lrec w/o item-attribute embedding
     :param matrix_train: user-item matrix with shape m*n
@@ -61,7 +62,10 @@ def nceplrec(matrix_train, embeded_matrix=np.empty((0)), iteration=4, lam=80, ra
         matrix_input = vstack((matrix_input, embeded_matrix.T))
 
     progress.subsection("Create PMI matrix")
-    pmi_matrix = get_pmi_matrix_gpu(matrix_input, root)
+    if gpu_on:
+        pmi_matrix = get_pmi_matrix_gpu(matrix_input, root)
+    else:
+        pmi_matrix = get_pmi_matrix(matrix_input, root)
 
     progress.subsection("Randomized SVD")
     start_time = time.time()

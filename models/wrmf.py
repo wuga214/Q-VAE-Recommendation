@@ -82,7 +82,7 @@ def als(matrix_train,
         lam=80,
         rank=200,
         alpha=100,
-        gpu=True,
+        gpu_on=True,
         seed=1,
         **unused):
     """
@@ -115,7 +115,7 @@ def als(matrix_train,
 
     for i in xrange(iteration):
         progress.subsubsection("Iteration: {0}".format(i))
-        solve(matrix_input.T, U, V, lam=lam, rank=rank, alpha=alpha, gpu=gpu)
-        solve(matrix_input, V, U, lam=lam, rank=rank, alpha=alpha, gpu=gpu)
+        solve(matrix_input.T, U, V, lam=lam, rank=rank, alpha=alpha, gpu=gpu_on)
+        solve(matrix_input, V, U, lam=lam, rank=rank, alpha=alpha, gpu=gpu_on)
 
     return U, V.T, None
