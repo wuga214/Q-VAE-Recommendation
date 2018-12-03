@@ -24,8 +24,13 @@ def execute(train, test, params, model, measure='Cosine', gpu_on=True):
                          alpha=params['alpha'],
                          corruption=params['corruption'],
                          root=params['root'],
-                         gpu_on=True)
+                         gpu_on=gpu_on)
     Y = Yt.T
+
+    np.save('latent/U_{0}_{1}'.format(params['model'], params['rank']), RQ)
+    np.save('latent/V_{0}_{1}'.format(params['model'], params['rank']), Y)
+    if Bias is not None:
+        np.save('latent/B_{0}_{1}'.format(params['model'], params['rank']), Bias)
 
     progress.subsection("Prediction")
 
