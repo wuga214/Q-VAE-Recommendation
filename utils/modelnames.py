@@ -5,6 +5,9 @@ from models.autorec import autorec, AutoRec
 from models.bpr import bpr
 from models.wrmf import als
 from models.cml import cml
+from models.puresvd import puresvd
+from models.nceplrec import nceplrec
+from models.plrec import plrec
 
 
 models = {
@@ -14,7 +17,10 @@ models = {
     "IFVAE": ifvae,
     "BPR": bpr,
     "WRMF": als,
-    "CML": cml
+    "CML": cml,
+    "PureSVD": puresvd,
+    "NCE-PLRec": nceplrec,
+    "PLRec": plrec
 }
 
 autoencoders = {

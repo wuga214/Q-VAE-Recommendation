@@ -7,5 +7,5 @@ parameters:
     root: [1.0]
     topK: [5, 10, 15, 20, 50]
     iter: 10
-    lam: [1, 10, 100, 1000, 10000]
+    lambda: [1, 10, 100, 1000, 10000]
     metric: [R-Precision, NDCG, Precision, Recall]

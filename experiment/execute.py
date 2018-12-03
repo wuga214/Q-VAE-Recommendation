@@ -23,6 +23,7 @@ def execute(train, test, params, model, measure='Cosine', gpu_on=True):
                          lam=params['lambda'],
                          alpha=params['alpha'],
                          corruption=params['corruption'],
+                         root=params['root'],
                          gpu_on=True)
     Y = Yt.T
 
