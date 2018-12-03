@@ -29,7 +29,7 @@ def main(args):
     for idx, row in df.iterrows():
         row = row.to_dict()
         row['metric'] = ['R-Precision', 'NDCG', 'Precision', 'Recall']
-        row['topK'] = [5, 10, 15, 20, 30]
+        row['topK'] = [5, 10, 15, 20, 50]
         result = execute(R_train, R_valid, row, models[row['model']], measure=row['similarity'], gpu_on=args.gpu)
         frame.append(result)
 

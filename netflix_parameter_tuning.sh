@@ -12,4 +12,4 @@ python tune_parameters.py -d data/netflix/ -n netflix/nceplrec.csv -y config/nce
 python tune_parameters.py -d data/netflix/ -n netflix/plrec.csv -y config/plrec.yml -gpu
 
 python getnetflix.py --implicit -r 0.7,0.3,0.0 -d data/netflix/ -f data/netflix/raw/training_set
-python reproduce_paper_results.py -d data/netflix/ -v Rvalid.npz -n netflix_test_result.csv -gpu
+python reproduce_paper_results.py -p tables/netflix -d data/netflix/ -v Rvalid.npz -n netflix_test_result.csv -gpu

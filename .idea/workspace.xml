@@ -4,7 +4,42 @@
     <bookmark url="file://$PROJECT_DIR$/models/ifvae.py" line="104" mnemonic="8" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0388e4b0-6a26-46c6-8d3d-c585814fb1c3" name="Default Changelist" comment="" />
+    <list default="true" id="0388e4b0-6a26-46c6-8d3d-c585814fb1c3" name="Default Changelist" comment="">
+      <change type="DELETED" beforePath="$PROJECT_DIR$/datax/Item-based/U_100_1.0_ALS" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/datax/Item-based/U_100_1.0_PLRec" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/datax/Item-based/U_100_100.0_ALS" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/datax/Item-based/U_100_100.0_PLRec" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/datax/Item-based/U_100_100.0_WPLRec" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/datax/Item-based/U_200_1.0_ALS" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/datax/Item-based/U_200_1.0_PLRec" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/datax/Item-based/U_200_1.0_WPLRec" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/datax/Item-based/U_200_100.0_ALS" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/datax/Item-based/U_300_100.0_ALS" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/datax/Item-based/U_300_100.0_WPLRec" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/datax/Item-based/U_50_0.01_ALS" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/datax/Item-based/U_50_0.01_PLRec" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/datax/Item-based/U_50_0.01_PmiPLRec" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/datax/Item-based/U_50_0.01_WPLRec" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/datax/Item-based/V_100_1.0_ALS" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/datax/Item-based/V_100_1.0_PLRec" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/datax/Item-based/V_100_100.0_ALS" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/datax/Item-based/V_100_100.0_PLRec" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/datax/Item-based/V_100_100.0_WPLRec" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/datax/Item-based/V_200_1.0_ALS" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/datax/Item-based/V_200_1.0_PLRec" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/datax/Item-based/V_200_1.0_WPLRec" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/datax/Item-based/V_200_100.0_ALS" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/datax/Item-based/V_300_100.0_ALS" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/datax/Item-based/V_300_100.0_WPLRec" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/datax/Item-based/V_50_0.01_ALS" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/datax/Item-based/V_50_0.01_PLRec" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/datax/Item-based/V_50_0.01_PmiPLRec" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/datax/Item-based/V_50_0.01_WPLRec" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/movielens_1m_parameter_tuning.sh" afterPath="$PROJECT_DIR$/movielens_1m_parameter_tuning.sh" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/movielens_20m_parameter_tuning.sh" afterPath="$PROJECT_DIR$/movielens_20m_parameter_tuning.sh" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/netflix_parameter_tuning.sh" afterPath="$PROJECT_DIR$/netflix_parameter_tuning.sh" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/reproduce_paper_results.py" afterPath="$PROJECT_DIR$/reproduce_paper_results.py" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -71,7 +106,7 @@
         <entry file="file://$PROJECT_DIR$/movielens_1m_parameter_tuning.sh">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="238">
-              <caret line="14" column="24" lean-forward="false" selection-start-line="14" selection-start-column="24" selection-end-line="14" selection-end-column="24" />
+              <caret line="14" column="72" lean-forward="false" selection-start-line="14" selection-start-column="72" selection-end-line="14" selection-end-column="72" />
               <folding />
             </state>
           </provider>
@@ -106,7 +141,7 @@
         <entry file="file://$PROJECT_DIR$/movielens_20m_parameter_tuning.sh">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="238">
-              <caret line="14" column="4" lean-forward="false" selection-start-line="14" selection-start-column="4" selection-end-line="14" selection-end-column="4" />
+              <caret line="14" column="37" lean-forward="false" selection-start-line="14" selection-start-column="37" selection-end-line="14" selection-end-column="37" />
               <folding />
             </state>
           </provider>
@@ -115,8 +150,8 @@
       <file leaf-file-name="netflix_parameter_tuning.sh" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/netflix_parameter_tuning.sh">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="153">
-              <caret line="9" column="80" lean-forward="false" selection-start-line="9" selection-start-column="80" selection-end-line="9" selection-end-column="80" />
+            <state relative-caret-position="238">
+              <caret line="14" column="72" lean-forward="false" selection-start-line="14" selection-start-column="72" selection-end-line="14" selection-end-column="72" />
               <folding />
             </state>
           </provider>
@@ -144,22 +179,24 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="movielens1m_test_result.csv" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/tables/movielens1m_test_result.csv">
+      <file leaf-file-name="reproduce_paper_results.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/reproduce_paper_results.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+            <state relative-caret-position="425">
+              <caret line="31" column="39" lean-forward="false" selection-start-line="31" selection-start-column="39" selection-end-line="31" selection-end-column="39" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="reproduce_paper_results.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/reproduce_paper_results.py">
+      <file leaf-file-name="execute.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/experiment/execute.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="238">
-              <caret line="20" column="15" lean-forward="false" selection-start-line="20" selection-start-column="15" selection-end-line="20" selection-end-column="15" />
-              <folding />
+            <state relative-caret-position="425">
+              <caret line="25" column="45" lean-forward="false" selection-start-line="25" selection-start-column="45" selection-end-line="25" selection-end-column="45" />
+              <folding>
+                <element signature="e#0#18#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -219,7 +256,6 @@
         <option value="$PROJECT_DIR$/utils/io.py" />
         <option value="$PROJECT_DIR$/main.py" />
         <option value="$PROJECT_DIR$/progress_analysis.py" />
-        <option value="$PROJECT_DIR$/reproduce_paper_results.py" />
         <option value="$PROJECT_DIR$/experiment/converge.py" />
         <option value="$PROJECT_DIR$/models/puresvd.py" />
         <option value="$PROJECT_DIR$/config/puresvd.yml" />
@@ -239,11 +275,12 @@
         <option value="$PROJECT_DIR$/experiment/tuning.py" />
         <option value="$PROJECT_DIR$/config/nceplrec.yml" />
         <option value="$PROJECT_DIR$/getnetflix.py" />
+        <option value="$PROJECT_DIR$/yahoo_parameter_tuning.sh" />
+        <option value="$PROJECT_DIR$/Readme.md" />
         <option value="$PROJECT_DIR$/netflix_parameter_tuning.sh" />
         <option value="$PROJECT_DIR$/movielens_1m_parameter_tuning.sh" />
         <option value="$PROJECT_DIR$/movielens_20m_parameter_tuning.sh" />
-        <option value="$PROJECT_DIR$/yahoo_parameter_tuning.sh" />
-        <option value="$PROJECT_DIR$/Readme.md" />
+        <option value="$PROJECT_DIR$/reproduce_paper_results.py" />
       </list>
     </option>
   </component>
@@ -371,7 +408,6 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="1920" y="-4" width="2497" height="1092" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
@@ -379,7 +415,7 @@
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.10004083" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.10004083" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32984293" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -686,16 +722,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/experiment/execute.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="425">
-          <caret line="25" column="45" lean-forward="false" selection-start-line="25" selection-start-column="45" selection-end-line="25" selection-end-column="45" />
-          <folding>
-            <element signature="e#0#18#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/utils/modelnames.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="272">
@@ -768,14 +794,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/reproduce_paper_results.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="20" column="15" lean-forward="false" selection-start-line="20" selection-start-column="15" selection-end-line="20" selection-end-column="15" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/config/plrec.yml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="136">
@@ -794,38 +812,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/netflix_parameter_tuning.sh">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="9" column="80" lean-forward="false" selection-start-line="9" selection-start-column="80" selection-end-line="9" selection-end-column="80" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/yahoo_parameter_tuning.sh">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="10" column="84" lean-forward="false" selection-start-line="10" selection-start-column="84" selection-end-line="10" selection-end-column="84" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tune_parameters.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="391">
-          <caret line="27" column="14" lean-forward="false" selection-start-line="27" selection-start-column="14" selection-end-line="27" selection-end-column="14" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/movielens_1m_parameter_tuning.sh">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="14" column="24" lean-forward="false" selection-start-line="14" selection-start-column="24" selection-end-line="14" selection-end-column="24" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Readme.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;MarkdownPreviewEditor]">
         <state split_layout="SPLIT">
@@ -839,10 +825,60 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/yahoo_parameter_tuning.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="10" column="84" lean-forward="false" selection-start-line="10" selection-start-column="84" selection-end-line="10" selection-end-column="84" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/netflix_parameter_tuning.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="238">
+          <caret line="14" column="72" lean-forward="false" selection-start-line="14" selection-start-column="72" selection-end-line="14" selection-end-column="72" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/movielens_1m_parameter_tuning.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="238">
+          <caret line="14" column="72" lean-forward="false" selection-start-line="14" selection-start-column="72" selection-end-line="14" selection-end-column="72" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/experiment/execute.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="425">
+          <caret line="25" column="45" lean-forward="false" selection-start-line="25" selection-start-column="45" selection-end-line="25" selection-end-column="45" />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/reproduce_paper_results.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="425">
+          <caret line="31" column="39" lean-forward="false" selection-start-line="31" selection-start-column="39" selection-end-line="31" selection-end-column="39" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tune_parameters.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="391">
+          <caret line="27" column="14" lean-forward="false" selection-start-line="27" selection-start-column="14" selection-end-line="27" selection-end-column="14" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/movielens_20m_parameter_tuning.sh">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="238">
-          <caret line="14" column="4" lean-forward="false" selection-start-line="14" selection-start-column="4" selection-end-line="14" selection-end-column="4" />
+          <caret line="14" column="37" lean-forward="false" selection-start-line="14" selection-start-column="37" selection-end-line="14" selection-end-column="37" />
           <folding />
         </state>
       </provider>
