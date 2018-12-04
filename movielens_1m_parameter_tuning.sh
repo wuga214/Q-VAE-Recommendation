@@ -12,4 +12,5 @@ python tune_parameters.py -d datax/ -n movielens1m/nceplrec.csv -y config/nceplr
 python tune_parameters.py -d datax/ -n movielens1m/plrec.csv -y config/plrec.yml -gpu
 
 python getmovielens.py --implicit -r 0.7,0.3,0.0 -d datax/ -n ml-1m/ratings.csv
-python reproduce_paper_results.py -p tables/movielens1m -d datax/ -v Rvalid.npz -n movielens1m_test_result.csv -gpu
+python reproduce_paper_results.py -p tables/movielens1m -d datax/ -v Rvalid.npz -n movielens1m_test_result_gpu.csv -gpu
+python reproduce_paper_results.py -p tables/movielens1m -d datax/ -v Rvalid.npz -n movielens1m_test_result_cpu.csv
