@@ -55,19 +55,18 @@ def solve(R, X, H, lam, rank, alpha, gpu):
     else:
         HT = H.T
         matrix_A = HT.dot(H) + (lam * sparse.identity(rank, dtype=np.float32)).toarray()
-
-        for i in tqdm(xrange(R.shape[1])):
-            vector_r = R[:, i]
-            vector_x = per_item_cpu(vector_r, matrix_A, H, HT, alpha)
-            y_i_cpu = vector_x
-            X[i] = y_i_cpu
-
+        func = partial(threadXi, R, X, matrix_A, H, HT, alpha)
+        pool = Pool(cpu_count()-1)
+        for _ in tqdm(pool.imap_unordered(func, range(R.shape[1])), total=R.shape[1]):
+            pass
+        pool.close()
 
 def threadXi(R, X, matrix_A, H, HT, alpha, i):
     vector_r = R[:, i]
     vector_x = per_item_cpu(vector_r, matrix_A, H, HT, alpha)
     y_i_cpu = vector_x
     X[i] = y_i_cpu
+
 
 
 def get_cold(matrix_csr):

@@ -47,20 +47,20 @@ def main(args):
     if args.item == True:
         RQ, Yt, Bias = models[args.model](R_train, embeded_matrix=np.empty((0)),
                                           iteration=args.iter, rank=args.rank,
-                                          corruption=args.corruption, gpu=args.gpu,
+                                          corruption=args.corruption, gpu_on=args.gpu,
                                           lam=args.lamb, alpha=args.alpha, seed=args.seed, root=args.root)
         Y = Yt.T
     else:
         Y, RQt, Bias = models[args.model](R_train.T, embeded_matrix=np.empty((0)),
                                           iteration=args.iter, rank=args.rank,
-                                          corruption=args.corruption, gpu=args.gpu,
+                                          corruption=args.corruption, gpu_on=args.gpu,
                                           lam=args.lamb, alpha=args.alpha, seed=args.seed, root=args.root)
         RQ = RQt.T
 
-    np.save('latent/U_{0}_{1}'.format(args.model, args.rank), RQ)
-    np.save('latent/V_{0}_{1}'.format(args.model, args.rank), Y)
-    if Bias is not None:
-        np.save('latent/B_{0}_{1}'.format(args.model, args.rank), Bias)
+    # np.save('latent/U_{0}_{1}'.format(args.model, args.rank), RQ)
+    # np.save('latent/V_{0}_{1}'.format(args.model, args.rank), Y)
+    # if Bias is not None:
+    #     np.save('latent/B_{0}_{1}'.format(args.model, args.rank), Bias)
 
     progress.section("Predict")
     prediction = predict(matrix_U=RQ,
