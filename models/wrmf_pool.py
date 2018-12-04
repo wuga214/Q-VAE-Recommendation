@@ -86,7 +86,7 @@ def get_cold(matrix_csr):
     return cold_rows, cold_cols
 
 
-def als(matrix_train,
+def als_pool(matrix_train,
         embeded_matrix=np.empty((0)),
         iteration=4,
         lam=80,
