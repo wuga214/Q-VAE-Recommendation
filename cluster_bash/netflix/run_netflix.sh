@@ -1,19 +1,19 @@
 #!/usr/bin/env bash
-sbatch --nodes=1 --time=96:00:00 --mem=32G --cpus=4 --gres=gpu:1 netflix_autorec.sh
-sbatch --nodes=1 --time=96:00:00 --mem=32G --cpus=4 --gres=gpu:1 netflix_bpr.sh
-sbatch --nodes=1 --time=96:00:00 --mem=32G --cpus=4 --gres=gpu:1 netflix_cml.sh
-sbatch --nodes=1 --time=96:00:00 --mem=32G --cpus=4 --gres=gpu:1 netflix_vae.sh
 sbatch --nodes=1 --time=24:00:00 --mem=32G --cpus=4 --gres=gpu:1 netflix_puresvd.sh
 sbatch --nodes=1 --time=48:00:00 --mem=32G --cpus=4 --gres=gpu:1 netflix_plrec.sh
 sbatch --nodes=1 --time=96:00:00 --mem=32G --cpus=4 --gres=gpu:1 netflix_nceplrec.sh
+sbatch --nodes=1 --time=96:00:00 --mem=32G --cpus=4 --gres=gpu:1 netflix_autorec.sh
+sbatch --nodes=1 --time=96:00:00 --mem=32G --cpus=4 --gres=gpu:1 netflix_bpr.sh
+sbatch --nodes=1 --time=96:00:00 --mem=32G --cpus=4 --gres=gpu:1 netflix_cml.sh
+sbatch --nodes=1 --time=96:00:00 --mem=32G --cpus=4 --gres=gpu:1 netflix_ifvae.sh
+sbatch --nodes=1 --time=96:00:00 --mem=32G --cpus=4 --gres=gpu:1 netflix_vae_part1.sh
+sbatch --nodes=1 --time=96:00:00 --mem=32G --cpus=4 --gres=gpu:1 netflix_vae_part2.sh
+sbatch --nodes=1 --time=96:00:00 --mem=32G --cpus=4 --gres=gpu:1 netflix_vae_part3.sh
+sbatch --nodes=1 --time=96:00:00 --mem=32G --cpus=4 --gres=gpu:1 netflix_vae_part4.sh
 sbatch --nodes=1 --time=96:00:00 --mem=32G --cpus=4 --gres=gpu:1 netflix_cdae_part1.sh
 sbatch --nodes=1 --time=96:00:00 --mem=32G --cpus=4 --gres=gpu:1 netflix_cdae_part2.sh
 sbatch --nodes=1 --time=96:00:00 --mem=32G --cpus=4 --gres=gpu:1 netflix_cdae_part3.sh
 sbatch --nodes=1 --time=96:00:00 --mem=32G --cpus=4 --gres=gpu:1 netflix_cdae_part4.sh
-sbatch --nodes=1 --time=96:00:00 --mem=32G --cpus=4 --gres=gpu:1 netflix_ifvae_part1.sh
-sbatch --nodes=1 --time=96:00:00 --mem=32G --cpus=4 --gres=gpu:1 netflix_ifvae_part2.sh
-sbatch --nodes=1 --time=96:00:00 --mem=32G --cpus=4 --gres=gpu:1 netflix_ifvae_part3.sh
-sbatch --nodes=1 --time=96:00:00 --mem=32G --cpus=4 --gres=gpu:1 netflix_ifvae_part4.sh
 sbatch --nodes=1 --time=96:00:00 --mem=32G --cpus=4 --gres=gpu:1 netflix_wrmf_part1.sh
 sbatch --nodes=1 --time=96:00:00 --mem=32G --cpus=4 --gres=gpu:1 netflix_wrmf_part2.sh
 sbatch --nodes=1 --time=96:00:00 --mem=32G --cpus=4 --gres=gpu:1 netflix_wrmf_part3.sh
