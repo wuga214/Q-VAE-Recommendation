@@ -5,43 +5,61 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0388e4b0-6a26-46c6-8d3d-c585814fb1c3" name="Default Changelist" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cluster_bash/movielens20m/20m_cdae_part2.sh" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cluster_bash/movielens20m/20m_cdae_part3.sh" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cluster_bash/movielens20m/20m_cdae_part4.sh" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cluster_bash/movielens20m/20m_vae_part2.sh" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cluster_bash/movielens20m/20m_vae_part3.sh" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cluster_bash/movielens20m/20m_vae_part4.sh" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cluster_bash/movielens20m/20m_wrmf_part1.sh" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cluster_bash/movielens20m/20m_wrmf_part10.sh" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cluster_bash/movielens20m/20m_wrmf_part11.sh" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cluster_bash/movielens20m/20m_wrmf_part12.sh" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cluster_bash/movielens20m/20m_wrmf_part4.sh" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cluster_bash/movielens20m/20m_wrmf_part5.sh" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cluster_bash/movielens20m/20m_wrmf_part6.sh" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cluster_bash/movielens20m/20m_wrmf_part7.sh" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cluster_bash/movielens20m/20m_wrmf_part8.sh" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cluster_bash/movielens20m/20m_wrmf_part9.sh" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cluster_bash/movielens20m/movielens_20m_wrmf_parameter_tuning_part1.sh" afterPath="" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/cluster_bash/movielens20m/movielens_20m_autorec_parameter_tuning.sh" afterPath="$PROJECT_DIR$/cluster_bash/movielens20m/20m_autorec.sh" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/cluster_bash/movielens20m/movielens_20m_bpr_parameter_tuning.sh" afterPath="$PROJECT_DIR$/cluster_bash/movielens20m/20m_bpr.sh" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/cluster_bash/movielens20m/movielens_20m_cdae_parameter_tuning.sh" afterPath="$PROJECT_DIR$/cluster_bash/movielens20m/20m_cdae_part1.sh" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/cluster_bash/movielens20m/movielens_20m_cml_parameter_tuning.sh" afterPath="$PROJECT_DIR$/cluster_bash/movielens20m/20m_cml.sh" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/cluster_bash/movielens20m/movielens_20m_ifvae_parameter_tuning.sh" afterPath="$PROJECT_DIR$/cluster_bash/movielens20m/20m_ifvae.sh" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/cluster_bash/movielens20m/movielens_20m_nceplrec_parameter_tuning.sh" afterPath="$PROJECT_DIR$/cluster_bash/movielens20m/20m_nceplrec.sh" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/cluster_bash/movielens20m/movielens_20m_plrec_parameter_tuning.sh" afterPath="$PROJECT_DIR$/cluster_bash/movielens20m/20m_plrec.sh" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/cluster_bash/movielens20m/movielens_20m_puresvd_parameter_tuning.sh" afterPath="$PROJECT_DIR$/cluster_bash/movielens20m/20m_puresvd.sh" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/cluster_bash/movielens20m/movielens_20m_vae_parameter_tuning.sh" afterPath="$PROJECT_DIR$/cluster_bash/movielens20m/20m_vae_part1.sh" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/cluster_bash/movielens20m/movielens_20m_wrmf_parameter_tuning.sh" afterPath="$PROJECT_DIR$/cluster_bash/movielens20m/20m_wrmf.sh" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/cluster_bash/movielens20m/movielens_20m_wrmf_parameter_tuning_part2.sh" afterPath="$PROJECT_DIR$/cluster_bash/movielens20m/20m_wrmf_part2.sh" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/cluster_bash/movielens20m/movielens_20m_wrmf_parameter_tuning_part3.sh" afterPath="$PROJECT_DIR$/cluster_bash/movielens20m/20m_wrmf_part3.sh" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/cluster_bash/netflix/netflix_ifvae_part1.sh" afterPath="$PROJECT_DIR$/cluster_bash/netflix/netflix_vae_part1.sh" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/cluster_bash/netflix/netflix_ifvae_part2.sh" afterPath="$PROJECT_DIR$/cluster_bash/netflix/netflix_vae_part2.sh" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/cluster_bash/netflix/netflix_ifvae_part3.sh" afterPath="$PROJECT_DIR$/cluster_bash/netflix/netflix_vae_part3.sh" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/cluster_bash/netflix/netflix_ifvae_part4.sh" afterPath="$PROJECT_DIR$/cluster_bash/netflix/netflix_vae_part4.sh" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/cluster_bash/netflix/netflix_vae.sh" afterPath="$PROJECT_DIR$/cluster_bash/netflix/netflix_ifvae.sh" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cluster_bash/movielens20m/run_movielens.sh" afterPath="$PROJECT_DIR$/cluster_bash/movielens20m/run_movielens.sh" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cluster_bash/netflix/run_netflix.sh" afterPath="$PROJECT_DIR$/cluster_bash/netflix/run_netflix.sh" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cluster_bash/movielens20m/20m_autorec.sh" afterPath="$PROJECT_DIR$/cluster_bash/movielens20m/20m_autorec.sh" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cluster_bash/movielens20m/20m_bpr.sh" afterPath="$PROJECT_DIR$/cluster_bash/movielens20m/20m_bpr.sh" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cluster_bash/movielens20m/20m_cdae_part1.sh" afterPath="$PROJECT_DIR$/cluster_bash/movielens20m/20m_cdae_part1.sh" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cluster_bash/movielens20m/20m_cdae_part2.sh" afterPath="$PROJECT_DIR$/cluster_bash/movielens20m/20m_cdae_part2.sh" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cluster_bash/movielens20m/20m_cdae_part3.sh" afterPath="$PROJECT_DIR$/cluster_bash/movielens20m/20m_cdae_part3.sh" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cluster_bash/movielens20m/20m_cdae_part4.sh" afterPath="$PROJECT_DIR$/cluster_bash/movielens20m/20m_cdae_part4.sh" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cluster_bash/movielens20m/20m_cml.sh" afterPath="$PROJECT_DIR$/cluster_bash/movielens20m/20m_cml.sh" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cluster_bash/movielens20m/20m_ifvae.sh" afterPath="$PROJECT_DIR$/cluster_bash/movielens20m/20m_ifvae.sh" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cluster_bash/movielens20m/20m_nceplrec.sh" afterPath="$PROJECT_DIR$/cluster_bash/movielens20m/20m_nceplrec.sh" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cluster_bash/movielens20m/20m_plrec.sh" afterPath="$PROJECT_DIR$/cluster_bash/movielens20m/20m_plrec.sh" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cluster_bash/movielens20m/20m_puresvd.sh" afterPath="$PROJECT_DIR$/cluster_bash/movielens20m/20m_puresvd.sh" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cluster_bash/movielens20m/20m_vae_part1.sh" afterPath="$PROJECT_DIR$/cluster_bash/movielens20m/20m_vae_part1.sh" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cluster_bash/movielens20m/20m_vae_part2.sh" afterPath="$PROJECT_DIR$/cluster_bash/movielens20m/20m_vae_part2.sh" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cluster_bash/movielens20m/20m_vae_part3.sh" afterPath="$PROJECT_DIR$/cluster_bash/movielens20m/20m_vae_part3.sh" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cluster_bash/movielens20m/20m_vae_part4.sh" afterPath="$PROJECT_DIR$/cluster_bash/movielens20m/20m_vae_part4.sh" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cluster_bash/movielens20m/20m_wrmf.sh" afterPath="$PROJECT_DIR$/cluster_bash/movielens20m/20m_wrmf.sh" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cluster_bash/movielens20m/20m_wrmf_part1.sh" afterPath="$PROJECT_DIR$/cluster_bash/movielens20m/20m_wrmf_part1.sh" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cluster_bash/movielens20m/20m_wrmf_part10.sh" afterPath="$PROJECT_DIR$/cluster_bash/movielens20m/20m_wrmf_part10.sh" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cluster_bash/movielens20m/20m_wrmf_part11.sh" afterPath="$PROJECT_DIR$/cluster_bash/movielens20m/20m_wrmf_part11.sh" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cluster_bash/movielens20m/20m_wrmf_part12.sh" afterPath="$PROJECT_DIR$/cluster_bash/movielens20m/20m_wrmf_part12.sh" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cluster_bash/movielens20m/20m_wrmf_part2.sh" afterPath="$PROJECT_DIR$/cluster_bash/movielens20m/20m_wrmf_part2.sh" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cluster_bash/movielens20m/20m_wrmf_part3.sh" afterPath="$PROJECT_DIR$/cluster_bash/movielens20m/20m_wrmf_part3.sh" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cluster_bash/movielens20m/20m_wrmf_part4.sh" afterPath="$PROJECT_DIR$/cluster_bash/movielens20m/20m_wrmf_part4.sh" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cluster_bash/movielens20m/20m_wrmf_part5.sh" afterPath="$PROJECT_DIR$/cluster_bash/movielens20m/20m_wrmf_part5.sh" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cluster_bash/movielens20m/20m_wrmf_part6.sh" afterPath="$PROJECT_DIR$/cluster_bash/movielens20m/20m_wrmf_part6.sh" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cluster_bash/movielens20m/20m_wrmf_part7.sh" afterPath="$PROJECT_DIR$/cluster_bash/movielens20m/20m_wrmf_part7.sh" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cluster_bash/movielens20m/20m_wrmf_part8.sh" afterPath="$PROJECT_DIR$/cluster_bash/movielens20m/20m_wrmf_part8.sh" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cluster_bash/movielens20m/20m_wrmf_part9.sh" afterPath="$PROJECT_DIR$/cluster_bash/movielens20m/20m_wrmf_part9.sh" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cluster_bash/netflix/netflix_autorec.sh" afterPath="$PROJECT_DIR$/cluster_bash/netflix/netflix_autorec.sh" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cluster_bash/netflix/netflix_bpr.sh" afterPath="$PROJECT_DIR$/cluster_bash/netflix/netflix_bpr.sh" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cluster_bash/netflix/netflix_cdae_part1.sh" afterPath="$PROJECT_DIR$/cluster_bash/netflix/netflix_cdae_part1.sh" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cluster_bash/netflix/netflix_cdae_part2.sh" afterPath="$PROJECT_DIR$/cluster_bash/netflix/netflix_cdae_part2.sh" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cluster_bash/netflix/netflix_cdae_part3.sh" afterPath="$PROJECT_DIR$/cluster_bash/netflix/netflix_cdae_part3.sh" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cluster_bash/netflix/netflix_cdae_part4.sh" afterPath="$PROJECT_DIR$/cluster_bash/netflix/netflix_cdae_part4.sh" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cluster_bash/netflix/netflix_cml.sh" afterPath="$PROJECT_DIR$/cluster_bash/netflix/netflix_cml.sh" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cluster_bash/netflix/netflix_ifvae.sh" afterPath="$PROJECT_DIR$/cluster_bash/netflix/netflix_ifvae.sh" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cluster_bash/netflix/netflix_nceplrec.sh" afterPath="$PROJECT_DIR$/cluster_bash/netflix/netflix_nceplrec.sh" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cluster_bash/netflix/netflix_plrec.sh" afterPath="$PROJECT_DIR$/cluster_bash/netflix/netflix_plrec.sh" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cluster_bash/netflix/netflix_puresvd.sh" afterPath="$PROJECT_DIR$/cluster_bash/netflix/netflix_puresvd.sh" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cluster_bash/netflix/netflix_vae_part1.sh" afterPath="$PROJECT_DIR$/cluster_bash/netflix/netflix_vae_part1.sh" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cluster_bash/netflix/netflix_vae_part2.sh" afterPath="$PROJECT_DIR$/cluster_bash/netflix/netflix_vae_part2.sh" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cluster_bash/netflix/netflix_vae_part3.sh" afterPath="$PROJECT_DIR$/cluster_bash/netflix/netflix_vae_part3.sh" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cluster_bash/netflix/netflix_vae_part4.sh" afterPath="$PROJECT_DIR$/cluster_bash/netflix/netflix_vae_part4.sh" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cluster_bash/netflix/netflix_wrmf_part1.sh" afterPath="$PROJECT_DIR$/cluster_bash/netflix/netflix_wrmf_part1.sh" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cluster_bash/netflix/netflix_wrmf_part10.sh" afterPath="$PROJECT_DIR$/cluster_bash/netflix/netflix_wrmf_part10.sh" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cluster_bash/netflix/netflix_wrmf_part11.sh" afterPath="$PROJECT_DIR$/cluster_bash/netflix/netflix_wrmf_part11.sh" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cluster_bash/netflix/netflix_wrmf_part12.sh" afterPath="$PROJECT_DIR$/cluster_bash/netflix/netflix_wrmf_part12.sh" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cluster_bash/netflix/netflix_wrmf_part2.sh" afterPath="$PROJECT_DIR$/cluster_bash/netflix/netflix_wrmf_part2.sh" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cluster_bash/netflix/netflix_wrmf_part3.sh" afterPath="$PROJECT_DIR$/cluster_bash/netflix/netflix_wrmf_part3.sh" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cluster_bash/netflix/netflix_wrmf_part4.sh" afterPath="$PROJECT_DIR$/cluster_bash/netflix/netflix_wrmf_part4.sh" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cluster_bash/netflix/netflix_wrmf_part5.sh" afterPath="$PROJECT_DIR$/cluster_bash/netflix/netflix_wrmf_part5.sh" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cluster_bash/netflix/netflix_wrmf_part6.sh" afterPath="$PROJECT_DIR$/cluster_bash/netflix/netflix_wrmf_part6.sh" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cluster_bash/netflix/netflix_wrmf_part7.sh" afterPath="$PROJECT_DIR$/cluster_bash/netflix/netflix_wrmf_part7.sh" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cluster_bash/netflix/netflix_wrmf_part8.sh" afterPath="$PROJECT_DIR$/cluster_bash/netflix/netflix_wrmf_part8.sh" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cluster_bash/netflix/netflix_wrmf_part9.sh" afterPath="$PROJECT_DIR$/cluster_bash/netflix/netflix_wrmf_part9.sh" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -99,101 +117,101 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="20m_wrmf_part1.sh" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/cluster_bash/movielens20m/20m_wrmf_part1.sh">
+      <file leaf-file-name="netflix_wrmf_part6.sh" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/cluster_bash/netflix/netflix_wrmf_part6.sh">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="34">
-              <caret line="2" column="26" lean-forward="false" selection-start-line="2" selection-start-column="26" selection-end-line="2" selection-end-column="26" />
+            <state relative-caret-position="0">
+              <caret line="0" column="19" lean-forward="false" selection-start-line="0" selection-start-column="19" selection-end-line="0" selection-end-column="19" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="20m_wrmf_part2.sh" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/cluster_bash/movielens20m/20m_wrmf_part2.sh">
+      <file leaf-file-name="run_netflix.sh" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/cluster_bash/netflix/run_netflix.sh">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="34">
-              <caret line="2" column="26" lean-forward="false" selection-start-line="2" selection-start-column="26" selection-end-line="2" selection-end-column="26" />
+            <state relative-caret-position="0">
+              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="20m_cdae_part2.sh" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/cluster_bash/movielens20m/20m_cdae_part2.sh">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="68">
-              <caret line="4" column="0" lean-forward="true" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="20m_cdae_part3.sh" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/cluster_bash/movielens20m/20m_cdae_part3.sh">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="51">
-              <caret line="3" column="99" lean-forward="false" selection-start-line="3" selection-start-column="99" selection-end-line="3" selection-end-column="99" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="20m_cdae_part4.sh" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/cluster_bash/movielens20m/20m_cdae_part4.sh">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="68">
-              <caret line="4" column="0" lean-forward="true" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="run_movielens.sh" pinned="false" current-in-tab="true">
+      <file leaf-file-name="run_movielens.sh" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/cluster_bash/movielens20m/run_movielens.sh">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="204">
-              <caret line="12" column="26" lean-forward="false" selection-start-line="8" selection-start-column="0" selection-end-line="28" selection-end-column="0" />
+              <caret line="12" column="31" lean-forward="false" selection-start-line="8" selection-start-column="0" selection-end-line="27" selection-end-column="83" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="20m_cdae_part1.sh" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/cluster_bash/movielens20m/20m_cdae_part1.sh">
+      <file leaf-file-name="20m_cml.sh" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/cluster_bash/movielens20m/20m_cml.sh">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="51">
-              <caret line="3" column="99" lean-forward="false" selection-start-line="3" selection-start-column="94" selection-end-line="3" selection-end-column="99" />
+              <caret line="3" column="0" lean-forward="true" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="20m_vae_part2.sh" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/cluster_bash/movielens20m/20m_vae_part2.sh">
+      <file leaf-file-name="netflix_wrmf_part12.sh" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/cluster_bash/netflix/netflix_wrmf_part12.sh">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="51">
-              <caret line="3" column="97" lean-forward="false" selection-start-line="3" selection-start-column="97" selection-end-line="3" selection-end-column="97" />
+            <state relative-caret-position="0">
+              <caret line="0" column="19" lean-forward="false" selection-start-line="0" selection-start-column="19" selection-end-line="0" selection-end-column="19" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="20m_vae_part3.sh" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/cluster_bash/movielens20m/20m_vae_part3.sh">
+      <file leaf-file-name="netflix_wrmf_part7.sh" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/cluster_bash/netflix/netflix_wrmf_part7.sh">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="68">
-              <caret line="4" column="0" lean-forward="true" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
+            <state relative-caret-position="0">
+              <caret line="0" column="19" lean-forward="false" selection-start-line="0" selection-start-column="19" selection-end-line="0" selection-end-column="19" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="20m_vae_part4.sh" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/cluster_bash/movielens20m/20m_vae_part4.sh">
+      <file leaf-file-name="netflix_wrmf_part8.sh" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/cluster_bash/netflix/netflix_wrmf_part8.sh">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="68">
-              <caret line="4" column="0" lean-forward="true" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
+            <state relative-caret-position="0">
+              <caret line="0" column="19" lean-forward="false" selection-start-line="0" selection-start-column="19" selection-end-line="0" selection-end-column="19" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="netflix_wrmf_part9.sh" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/cluster_bash/netflix/netflix_wrmf_part9.sh">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="0">
+              <caret line="0" column="19" lean-forward="false" selection-start-line="0" selection-start-column="19" selection-end-line="0" selection-end-column="19" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="netflix_wrmf_part10.sh" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/cluster_bash/netflix/netflix_wrmf_part10.sh">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="0">
+              <caret line="0" column="19" lean-forward="false" selection-start-line="0" selection-start-column="19" selection-end-line="0" selection-end-column="19" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="netflix_wrmf_part11.sh" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/cluster_bash/netflix/netflix_wrmf_part11.sh">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="0">
+              <caret line="0" column="19" lean-forward="false" selection-start-line="0" selection-start-column="19" selection-end-line="0" selection-end-column="19" />
               <folding />
             </state>
           </provider>
@@ -230,57 +248,57 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/cluster_bash/netflix/netflix_puresvd.sh" />
-        <option value="$PROJECT_DIR$/cluster_bash/netflix/netflix_plrec.sh" />
-        <option value="$PROJECT_DIR$/cluster_bash/netflix/netflix_nceplrec.sh" />
-        <option value="$PROJECT_DIR$/cluster_bash/netflix/netflix_cml.sh" />
-        <option value="$PROJECT_DIR$/cluster_bash/netflix/netflix_cdae.sh" />
-        <option value="$PROJECT_DIR$/cluster_bash/netflix/netflix_bpr.sh" />
+        <option value="$PROJECT_DIR$/cluster_bash/movielens20m/20m_cdae_part3.sh" />
+        <option value="$PROJECT_DIR$/cluster_bash/movielens20m/20m_cdae_part4.sh" />
+        <option value="$PROJECT_DIR$/cluster_bash/movielens20m/20m_cml.sh" />
+        <option value="$PROJECT_DIR$/cluster_bash/movielens20m/20m_ifvae.sh" />
+        <option value="$PROJECT_DIR$/cluster_bash/movielens20m/20m_nceplrec.sh" />
+        <option value="$PROJECT_DIR$/cluster_bash/movielens20m/20m_plrec.sh" />
+        <option value="$PROJECT_DIR$/cluster_bash/movielens20m/20m_puresvd.sh" />
+        <option value="$PROJECT_DIR$/cluster_bash/movielens20m/20m_vae_part1.sh" />
+        <option value="$PROJECT_DIR$/cluster_bash/movielens20m/20m_vae_part2.sh" />
+        <option value="$PROJECT_DIR$/cluster_bash/movielens20m/20m_vae_part3.sh" />
+        <option value="$PROJECT_DIR$/cluster_bash/movielens20m/20m_vae_part4.sh" />
+        <option value="$PROJECT_DIR$/cluster_bash/movielens20m/20m_wrmf.sh" />
+        <option value="$PROJECT_DIR$/cluster_bash/movielens20m/20m_wrmf_part1.sh" />
+        <option value="$PROJECT_DIR$/cluster_bash/movielens20m/20m_wrmf_part2.sh" />
+        <option value="$PROJECT_DIR$/cluster_bash/movielens20m/20m_wrmf_part3.sh" />
+        <option value="$PROJECT_DIR$/cluster_bash/movielens20m/20m_wrmf_part4.sh" />
+        <option value="$PROJECT_DIR$/cluster_bash/movielens20m/20m_wrmf_part5.sh" />
+        <option value="$PROJECT_DIR$/cluster_bash/movielens20m/20m_wrmf_part6.sh" />
+        <option value="$PROJECT_DIR$/cluster_bash/movielens20m/20m_wrmf_part7.sh" />
+        <option value="$PROJECT_DIR$/cluster_bash/movielens20m/20m_wrmf_part8.sh" />
+        <option value="$PROJECT_DIR$/cluster_bash/movielens20m/20m_wrmf_part9.sh" />
+        <option value="$PROJECT_DIR$/cluster_bash/movielens20m/20m_wrmf_part10.sh" />
+        <option value="$PROJECT_DIR$/cluster_bash/movielens20m/20m_wrmf_part11.sh" />
+        <option value="$PROJECT_DIR$/cluster_bash/movielens20m/20m_wrmf_part12.sh" />
         <option value="$PROJECT_DIR$/cluster_bash/netflix/netflix_autorec.sh" />
+        <option value="$PROJECT_DIR$/cluster_bash/netflix/netflix_bpr.sh" />
+        <option value="$PROJECT_DIR$/cluster_bash/netflix/netflix_cdae_part1.sh" />
         <option value="$PROJECT_DIR$/cluster_bash/netflix/netflix_cdae_part2.sh" />
         <option value="$PROJECT_DIR$/cluster_bash/netflix/netflix_cdae_part3.sh" />
-        <option value="$PROJECT_DIR$/cluster_bash/netflix/netflix_cdae_part1.sh" />
         <option value="$PROJECT_DIR$/cluster_bash/netflix/netflix_cdae_part4.sh" />
-        <option value="$PROJECT_DIR$/cluster_bash/netflix/netflix_ifvae_part2.sh" />
-        <option value="$PROJECT_DIR$/cluster_bash/netflix/netflix_ifvae_part3.sh" />
-        <option value="$PROJECT_DIR$/cluster_bash/netflix/netflix_ifvae_part4.sh" />
+        <option value="$PROJECT_DIR$/cluster_bash/netflix/netflix_cml.sh" />
         <option value="$PROJECT_DIR$/cluster_bash/netflix/netflix_ifvae.sh" />
+        <option value="$PROJECT_DIR$/cluster_bash/netflix/netflix_nceplrec.sh" />
+        <option value="$PROJECT_DIR$/cluster_bash/netflix/netflix_plrec.sh" />
+        <option value="$PROJECT_DIR$/cluster_bash/netflix/netflix_puresvd.sh" />
         <option value="$PROJECT_DIR$/cluster_bash/netflix/netflix_vae_part1.sh" />
         <option value="$PROJECT_DIR$/cluster_bash/netflix/netflix_vae_part2.sh" />
         <option value="$PROJECT_DIR$/cluster_bash/netflix/netflix_vae_part3.sh" />
         <option value="$PROJECT_DIR$/cluster_bash/netflix/netflix_vae_part4.sh" />
-        <option value="$PROJECT_DIR$/cluster_bash/netflix/run_netflix.sh" />
-        <option value="$PROJECT_DIR$/cluster_bash/movielens20m/movielens_20m_autorec_parameter_tuning.sh" />
-        <option value="$PROJECT_DIR$/cluster_bash/movielens20m/movielens_20m_bpr_parameter_tuning.sh" />
-        <option value="$PROJECT_DIR$/cluster_bash/movielens20m/movielens_20m_cdae_parameter_tuning.sh" />
-        <option value="$PROJECT_DIR$/cluster_bash/movielens20m/movielens_20m_cml_parameter_tuning.sh" />
-        <option value="$PROJECT_DIR$/cluster_bash/movielens20m/movielens_20m_ifvae_parameter_tuning.sh" />
-        <option value="$PROJECT_DIR$/cluster_bash/movielens20m/movielens_20m_nceplrec_parameter_tuning.sh" />
-        <option value="$PROJECT_DIR$/cluster_bash/movielens20m/movielens_20m_plrec_parameter_tuning.sh" />
-        <option value="$PROJECT_DIR$/cluster_bash/movielens20m/movielens_20m_puresvd_parameter_tuning.sh" />
-        <option value="$PROJECT_DIR$/cluster_bash/movielens20m/movielens_20m_vae_parameter_tuning.sh" />
-        <option value="$PROJECT_DIR$/cluster_bash/movielens20m/movielens_20m_wrmf_parameter_tuning.sh" />
-        <option value="$PROJECT_DIR$/cluster_bash/movielens20m/movielens_20m_wrmf_parameter_tuning_part1.sh" />
-        <option value="$PROJECT_DIR$/cluster_bash/movielens20m/movielens_20m_wrmf_parameter_tuning_part2.sh" />
-        <option value="$PROJECT_DIR$/cluster_bash/movielens20m/movielens_20m_wrmf_parameter_tuning_part3.sh" />
-        <option value="$PROJECT_DIR$/cluster_bash/movielens20m/movielens_20m_wrmf_parameter_tuning_part4.sh" />
-        <option value="$PROJECT_DIR$/cluster_bash/movielens20m/movielens_20m_wrmf_parameter_tuning_part5.sh" />
-        <option value="$PROJECT_DIR$/cluster_bash/movielens20m/movielens_20m_wrmf_parameter_tuning_part6.sh" />
-        <option value="$PROJECT_DIR$/cluster_bash/movielens20m/movielens_20m_wrmf_parameter_tuning_part7.sh" />
-        <option value="$PROJECT_DIR$/cluster_bash/movielens20m/movielens_20m_wrmf_parameter_tuning_part8.sh" />
-        <option value="$PROJECT_DIR$/cluster_bash/movielens20m/movielens_20m_wrmf_parameter_tuning_part9.sh" />
-        <option value="$PROJECT_DIR$/cluster_bash/movielens20m/movielens_20m_wrmf_parameter_tuning_part10.sh" />
-        <option value="$PROJECT_DIR$/cluster_bash/movielens20m/movielens_20m_wrmf_parameter_tuning_part11.sh" />
-        <option value="$PROJECT_DIR$/cluster_bash/movielens20m/movielens_20m_wrmf_parameter_tuning_part12.sh" />
-        <option value="$PROJECT_DIR$/cluster_bash/movielens20m/20m_vae_part2.sh" />
-        <option value="$PROJECT_DIR$/cluster_bash/movielens20m/20m_vae_part3.sh" />
-        <option value="$PROJECT_DIR$/cluster_bash/movielens20m/20m_vae_part4.sh" />
-        <option value="$PROJECT_DIR$/cluster_bash/movielens20m/20m_vae_part1.sh" />
-        <option value="$PROJECT_DIR$/cluster_bash/movielens20m/20m_cdae_part1.sh" />
-        <option value="$PROJECT_DIR$/cluster_bash/movielens20m/20m_cdae_part2.sh" />
-        <option value="$PROJECT_DIR$/cluster_bash/movielens20m/20m_cdae_part3.sh" />
-        <option value="$PROJECT_DIR$/cluster_bash/movielens20m/20m_cdae_part4.sh" />
-        <option value="$PROJECT_DIR$/cluster_bash/movielens20m/run_movielens.sh" />
+        <option value="$PROJECT_DIR$/cluster_bash/netflix/netflix_wrmf_part1.sh" />
+        <option value="$PROJECT_DIR$/cluster_bash/netflix/netflix_wrmf_part2.sh" />
+        <option value="$PROJECT_DIR$/cluster_bash/netflix/netflix_wrmf_part3.sh" />
+        <option value="$PROJECT_DIR$/cluster_bash/netflix/netflix_wrmf_part4.sh" />
+        <option value="$PROJECT_DIR$/cluster_bash/netflix/netflix_wrmf_part5.sh" />
+        <option value="$PROJECT_DIR$/cluster_bash/netflix/netflix_wrmf_part6.sh" />
+        <option value="$PROJECT_DIR$/cluster_bash/netflix/netflix_wrmf_part7.sh" />
+        <option value="$PROJECT_DIR$/cluster_bash/netflix/netflix_wrmf_part8.sh" />
+        <option value="$PROJECT_DIR$/cluster_bash/netflix/netflix_wrmf_part9.sh" />
+        <option value="$PROJECT_DIR$/cluster_bash/netflix/netflix_wrmf_part10.sh" />
+        <option value="$PROJECT_DIR$/cluster_bash/netflix/netflix_wrmf_part11.sh" />
+        <option value="$PROJECT_DIR$/cluster_bash/netflix/netflix_wrmf_part12.sh" />
       </list>
     </option>
   </component>
@@ -433,111 +451,391 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/cluster_bash/netflix/netflix_plrec.sh">
+    <entry file="file://$PROJECT_DIR$/cluster_bash/movielens20m/20m_ifvae.sh">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" column="26" lean-forward="false" selection-start-line="2" selection-start-column="26" selection-end-line="2" selection-end-column="26" />
+        <state relative-caret-position="0">
+          <caret line="0" column="19" lean-forward="false" selection-start-line="0" selection-start-column="19" selection-end-line="0" selection-end-column="19" />
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/cluster_bash/netflix/netflix_nceplrec.sh">
+    <entry file="file://$PROJECT_DIR$/cluster_bash/movielens20m/20m_nceplrec.sh">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" column="26" lean-forward="false" selection-start-line="2" selection-start-column="26" selection-end-line="2" selection-end-column="26" />
+        <state relative-caret-position="0">
+          <caret line="0" column="19" lean-forward="false" selection-start-line="0" selection-start-column="19" selection-end-line="0" selection-end-column="19" />
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/cluster_bash/netflix/netflix_cml.sh">
+    <entry file="file://$PROJECT_DIR$/cluster_bash/movielens20m/20m_plrec.sh">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" column="26" lean-forward="false" selection-start-line="2" selection-start-column="26" selection-end-line="2" selection-end-column="26" />
+        <state relative-caret-position="0">
+          <caret line="0" column="19" lean-forward="false" selection-start-line="0" selection-start-column="19" selection-end-line="0" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cluster_bash/movielens20m/20m_puresvd.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="19" lean-forward="false" selection-start-line="0" selection-start-column="19" selection-end-line="0" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cluster_bash/movielens20m/20m_vae_part1.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="19" lean-forward="false" selection-start-line="0" selection-start-column="19" selection-end-line="0" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cluster_bash/movielens20m/20m_vae_part2.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="19" lean-forward="false" selection-start-line="0" selection-start-column="19" selection-end-line="0" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cluster_bash/movielens20m/20m_vae_part3.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="19" lean-forward="false" selection-start-line="0" selection-start-column="19" selection-end-line="0" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cluster_bash/movielens20m/20m_vae_part4.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="19" lean-forward="false" selection-start-line="0" selection-start-column="19" selection-end-line="0" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cluster_bash/movielens20m/20m_wrmf.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="19" lean-forward="false" selection-start-line="0" selection-start-column="19" selection-end-line="0" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cluster_bash/movielens20m/20m_wrmf_part1.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="19" lean-forward="false" selection-start-line="0" selection-start-column="19" selection-end-line="0" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cluster_bash/movielens20m/20m_wrmf_part2.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="19" lean-forward="false" selection-start-line="0" selection-start-column="19" selection-end-line="0" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cluster_bash/movielens20m/20m_wrmf_part3.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="19" lean-forward="false" selection-start-line="0" selection-start-column="19" selection-end-line="0" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cluster_bash/movielens20m/20m_wrmf_part4.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="19" lean-forward="false" selection-start-line="0" selection-start-column="19" selection-end-line="0" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cluster_bash/movielens20m/20m_wrmf_part5.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="19" lean-forward="false" selection-start-line="0" selection-start-column="19" selection-end-line="0" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cluster_bash/movielens20m/20m_wrmf_part6.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="19" lean-forward="false" selection-start-line="0" selection-start-column="19" selection-end-line="0" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cluster_bash/movielens20m/20m_wrmf_part7.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="19" lean-forward="false" selection-start-line="0" selection-start-column="19" selection-end-line="0" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cluster_bash/movielens20m/20m_wrmf_part8.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="19" lean-forward="false" selection-start-line="0" selection-start-column="19" selection-end-line="0" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cluster_bash/movielens20m/20m_wrmf_part9.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="19" lean-forward="false" selection-start-line="0" selection-start-column="19" selection-end-line="0" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cluster_bash/movielens20m/20m_wrmf_part10.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="19" lean-forward="false" selection-start-line="0" selection-start-column="19" selection-end-line="0" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cluster_bash/movielens20m/20m_wrmf_part11.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="19" lean-forward="false" selection-start-line="0" selection-start-column="19" selection-end-line="0" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cluster_bash/movielens20m/20m_wrmf_part12.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="19" lean-forward="false" selection-start-line="0" selection-start-column="19" selection-end-line="0" selection-end-column="19" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/cluster_bash/netflix/netflix_autorec.sh">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="4" column="0" lean-forward="true" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
+        <state relative-caret-position="0">
+          <caret line="0" column="19" lean-forward="false" selection-start-line="0" selection-start-column="19" selection-end-line="0" selection-end-column="19" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/cluster_bash/netflix/netflix_bpr.sh">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" column="26" lean-forward="false" selection-start-line="2" selection-start-column="26" selection-end-line="2" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cluster_bash/netflix/netflix_wrmf_part3.sh">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="3" column="27" lean-forward="true" selection-start-line="3" selection-start-column="27" selection-end-line="3" selection-end-column="27" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cluster_bash/netflix/netflix_cdae_part2.sh">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="4" column="0" lean-forward="false" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cluster_bash/netflix/netflix_cdae_part3.sh">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="3" column="89" lean-forward="false" selection-start-line="3" selection-start-column="89" selection-end-line="3" selection-end-column="89" />
+        <state relative-caret-position="0">
+          <caret line="0" column="19" lean-forward="false" selection-start-line="0" selection-start-column="19" selection-end-line="0" selection-end-column="19" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/cluster_bash/netflix/netflix_cdae_part1.sh">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="3" column="89" lean-forward="false" selection-start-line="3" selection-start-column="89" selection-end-line="3" selection-end-column="89" />
+        <state relative-caret-position="0">
+          <caret line="0" column="19" lean-forward="false" selection-start-line="0" selection-start-column="19" selection-end-line="0" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cluster_bash/netflix/netflix_cdae_part2.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="19" lean-forward="false" selection-start-line="0" selection-start-column="19" selection-end-line="0" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cluster_bash/netflix/netflix_cdae_part3.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="19" lean-forward="false" selection-start-line="0" selection-start-column="19" selection-end-line="0" selection-end-column="19" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/cluster_bash/netflix/netflix_cdae_part4.sh">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="4" column="0" lean-forward="false" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
+        <state relative-caret-position="0">
+          <caret line="0" column="19" lean-forward="false" selection-start-line="0" selection-start-column="19" selection-end-line="0" selection-end-column="19" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/config/wrmf-part6.yml">
+    <entry file="file://$PROJECT_DIR$/cluster_bash/netflix/netflix_cml.sh">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="10" column="50" lean-forward="false" selection-start-line="10" selection-start-column="50" selection-end-line="10" selection-end-column="50" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/config/wrmf-part12.yml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="10" column="34" lean-forward="false" selection-start-line="10" selection-start-column="34" selection-end-line="10" selection-end-column="34" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cluster_bash/netflix/netflix_wrmf_part12.sh">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="3" column="95" lean-forward="false" selection-start-line="3" selection-start-column="92" selection-end-line="3" selection-end-column="95" />
+        <state relative-caret-position="0">
+          <caret line="0" column="19" lean-forward="false" selection-start-line="0" selection-start-column="19" selection-end-line="0" selection-end-column="19" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/cluster_bash/netflix/netflix_ifvae.sh">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="4" column="0" lean-forward="true" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
+        <state relative-caret-position="0">
+          <caret line="0" column="19" lean-forward="false" selection-start-line="0" selection-start-column="19" selection-end-line="0" selection-end-column="19" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/config/ifvae.yml">
+    <entry file="file://$PROJECT_DIR$/cluster_bash/netflix/netflix_nceplrec.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="19" lean-forward="false" selection-start-line="0" selection-start-column="19" selection-end-line="0" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cluster_bash/netflix/netflix_plrec.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="19" lean-forward="false" selection-start-line="0" selection-start-column="19" selection-end-line="0" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cluster_bash/netflix/netflix_puresvd.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="19" lean-forward="false" selection-start-line="0" selection-start-column="19" selection-end-line="0" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cluster_bash/netflix/netflix_vae_part1.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="19" lean-forward="false" selection-start-line="0" selection-start-column="19" selection-end-line="0" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cluster_bash/netflix/netflix_vae_part2.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="19" lean-forward="false" selection-start-line="0" selection-start-column="19" selection-end-line="0" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cluster_bash/netflix/netflix_vae_part3.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="19" lean-forward="false" selection-start-line="0" selection-start-column="19" selection-end-line="0" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cluster_bash/netflix/netflix_vae_part4.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="19" lean-forward="false" selection-start-line="0" selection-start-column="19" selection-end-line="0" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cluster_bash/netflix/netflix_wrmf_part1.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="19" lean-forward="false" selection-start-line="0" selection-start-column="19" selection-end-line="0" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cluster_bash/netflix/netflix_wrmf_part2.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="19" lean-forward="false" selection-start-line="0" selection-start-column="19" selection-end-line="0" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cluster_bash/netflix/netflix_wrmf_part3.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="19" lean-forward="false" selection-start-line="0" selection-start-column="19" selection-end-line="0" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cluster_bash/netflix/netflix_wrmf_part4.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="19" lean-forward="false" selection-start-line="0" selection-start-column="19" selection-end-line="0" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cluster_bash/netflix/netflix_wrmf_part5.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="19" lean-forward="false" selection-start-line="0" selection-start-column="19" selection-end-line="0" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cluster_bash/netflix/netflix_wrmf_part6.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="19" lean-forward="false" selection-start-line="0" selection-start-column="19" selection-end-line="0" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cluster_bash/netflix/netflix_wrmf_part7.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="19" lean-forward="false" selection-start-line="0" selection-start-column="19" selection-end-line="0" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cluster_bash/netflix/netflix_wrmf_part8.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="19" lean-forward="false" selection-start-line="0" selection-start-column="19" selection-end-line="0" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cluster_bash/netflix/netflix_wrmf_part9.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="19" lean-forward="false" selection-start-line="0" selection-start-column="19" selection-end-line="0" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cluster_bash/netflix/netflix_wrmf_part10.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="19" lean-forward="false" selection-start-line="0" selection-start-column="19" selection-end-line="0" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cluster_bash/netflix/netflix_wrmf_part11.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="19" lean-forward="false" selection-start-line="0" selection-start-column="19" selection-end-line="0" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cluster_bash/netflix/netflix_wrmf_part12.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="19" lean-forward="false" selection-start-line="0" selection-start-column="19" selection-end-line="0" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cluster_bash/netflix/run_netflix.sh">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
@@ -545,290 +843,18 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/cluster_bash/netflix/netflix_vae_part1.sh">
+    <entry file="file://$PROJECT_DIR$/cluster_bash/movielens20m/run_movielens.sh">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="4" column="0" lean-forward="true" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cluster_bash/netflix/netflix_vae_part2.sh">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="4" column="0" lean-forward="true" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cluster_bash/netflix/netflix_vae_part3.sh">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="4" column="0" lean-forward="true" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/config/wrmf-part2.yml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="4" column="17" lean-forward="false" selection-start-line="4" selection-start-column="17" selection-end-line="4" selection-end-column="17" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/config/vae-part4.yml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="10" column="50" lean-forward="false" selection-start-line="10" selection-start-column="50" selection-end-line="10" selection-end-column="50" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cluster_bash/netflix/netflix_vae_part4.sh">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="4" column="0" lean-forward="true" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cluster_bash/netflix/run_netflix.sh">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="493">
-          <caret line="29" column="0" lean-forward="true" selection-start-line="29" selection-start-column="0" selection-end-line="29" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cluster_bash/movielens20m/20m_autorec.sh">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" column="0" lean-forward="false" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="26" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cluster_bash/movielens20m/20m_bpr.sh">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" column="26" lean-forward="false" selection-start-line="2" selection-start-column="26" selection-end-line="2" selection-end-column="26" />
+        <state relative-caret-position="204">
+          <caret line="12" column="31" lean-forward="false" selection-start-line="8" selection-start-column="0" selection-end-line="27" selection-end-column="83" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/cluster_bash/movielens20m/20m_cml.sh">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" column="26" lean-forward="false" selection-start-line="2" selection-start-column="26" selection-end-line="2" selection-end-column="26" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cluster_bash/movielens20m/20m_ifvae.sh">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" column="26" lean-forward="false" selection-start-line="2" selection-start-column="26" selection-end-line="2" selection-end-column="26" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cluster_bash/movielens20m/20m_nceplrec.sh">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" column="26" lean-forward="false" selection-start-line="2" selection-start-column="26" selection-end-line="2" selection-end-column="26" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cluster_bash/movielens20m/20m_plrec.sh">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" column="26" lean-forward="false" selection-start-line="2" selection-start-column="26" selection-end-line="2" selection-end-column="26" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cluster_bash/movielens20m/20m_puresvd.sh">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" column="50" lean-forward="false" selection-start-line="2" selection-start-column="50" selection-end-line="2" selection-end-column="50" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cluster_bash/movielens20m/20m_wrmf_part3.sh">
-      <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="51">
-          <caret line="3" column="34" lean-forward="false" selection-start-line="3" selection-start-column="34" selection-end-line="3" selection-end-column="34" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cluster_bash/movielens20m/20m_wrmf_part4.sh">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="3" column="79" lean-forward="false" selection-start-line="3" selection-start-column="79" selection-end-line="3" selection-end-column="79" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cluster_bash/movielens20m/20m_wrmf_part5.sh">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="3" column="99" lean-forward="false" selection-start-line="3" selection-start-column="99" selection-end-line="3" selection-end-column="99" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cluster_bash/movielens20m/20m_wrmf_part6.sh">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="3" column="99" lean-forward="false" selection-start-line="3" selection-start-column="99" selection-end-line="3" selection-end-column="99" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cluster_bash/movielens20m/20m_wrmf_part7.sh">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="3" column="99" lean-forward="false" selection-start-line="3" selection-start-column="99" selection-end-line="3" selection-end-column="99" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cluster_bash/movielens20m/20m_wrmf_part8.sh">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="3" column="99" lean-forward="false" selection-start-line="3" selection-start-column="99" selection-end-line="3" selection-end-column="99" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cluster_bash/movielens20m/20m_wrmf_part9.sh">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="3" column="99" lean-forward="false" selection-start-line="3" selection-start-column="99" selection-end-line="3" selection-end-column="99" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cluster_bash/movielens20m/20m_wrmf_part10.sh">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="3" column="101" lean-forward="false" selection-start-line="3" selection-start-column="101" selection-end-line="3" selection-end-column="101" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cluster_bash/movielens20m/20m_wrmf_part11.sh">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="3" column="101" lean-forward="false" selection-start-line="3" selection-start-column="101" selection-end-line="3" selection-end-column="101" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cluster_bash/movielens20m/20m_wrmf_part12.sh">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="3" column="73" lean-forward="false" selection-start-line="3" selection-start-column="73" selection-end-line="3" selection-end-column="73" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cluster_bash/movielens20m/20m_wrmf.sh">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" column="26" lean-forward="false" selection-start-line="2" selection-start-column="26" selection-end-line="2" selection-end-column="26" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cluster_bash/movielens20m/20m_vae_part1.sh">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="4" column="0" lean-forward="true" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cluster_bash/movielens20m/20m_vae_part2.sh">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="3" column="97" lean-forward="false" selection-start-line="3" selection-start-column="97" selection-end-line="3" selection-end-column="97" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cluster_bash/movielens20m/20m_vae_part3.sh">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="4" column="0" lean-forward="true" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cluster_bash/movielens20m/20m_vae_part4.sh">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="4" column="0" lean-forward="true" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cluster_bash/movielens20m/20m_wrmf_part1.sh">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" column="26" lean-forward="false" selection-start-line="2" selection-start-column="26" selection-end-line="2" selection-end-column="26" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cluster_bash/movielens20m/20m_wrmf_part2.sh">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" column="26" lean-forward="false" selection-start-line="2" selection-start-column="26" selection-end-line="2" selection-end-column="26" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cluster_bash/movielens20m/20m_cdae_part1.sh">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="3" column="99" lean-forward="false" selection-start-line="3" selection-start-column="94" selection-end-line="3" selection-end-column="99" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cluster_bash/movielens20m/20m_cdae_part2.sh">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="4" column="0" lean-forward="true" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cluster_bash/movielens20m/20m_cdae_part3.sh">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="3" column="99" lean-forward="false" selection-start-line="3" selection-start-column="99" selection-end-line="3" selection-end-column="99" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cluster_bash/movielens20m/20m_cdae_part4.sh">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="4" column="0" lean-forward="true" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cluster_bash/movielens20m/run_movielens.sh">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="12" column="26" lean-forward="false" selection-start-line="8" selection-start-column="0" selection-end-line="28" selection-end-column="0" />
+          <caret line="3" column="0" lean-forward="true" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
           <folding />
         </state>
       </provider>
