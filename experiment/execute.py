@@ -7,7 +7,7 @@ import inspect
 from models.predictor import predict
 
 
-def execute(train, test, params, model, measure='Cosine', gpu_on=True):
+def execute(train, test, params, model, measure='Cosine', gpu_on=True, analytical=False):
     progress = WorkSplitter()
 
     columns = ['model', 'rank', 'alpha', 'lambda', 'iter', 'similarity', 'corruption', 'root', 'topK']
@@ -39,12 +39,15 @@ def execute(train, test, params, model, measure='Cosine', gpu_on=True):
 
     progress.subsection("Evaluation")
 
-    result = evaluate(prediction, test, params['metric'], params['topK'])
+    result = evaluate(prediction, test, params['metric'], params['topK'], analytical=analytical)
 
-    result_dict = params
+    if analytical:
+        return result
+    else:
+        result_dict = params
 
-    for name in result.keys():
-        result_dict[name] = [round(result[name][0], 4), round(result[name][1], 4)]
-    df = df.append(result_dict, ignore_index=True)
+        for name in result.keys():
+            result_dict[name] = [round(result[name][0], 4), round(result[name][1], 4)]
+        df = df.append(result_dict, ignore_index=True)
 
-    return df
+        return df

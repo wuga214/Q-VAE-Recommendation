@@ -18,3 +18,42 @@ def show_training_progress(df, hue='model', metric='NDCG', name="epoch_vs_ndcg",
         fig.savefig('figs/train/progress/'+name+'.png', bbox_inches="tight", pad_inches=0, format='png')
     else:
         plt.show()
+
+
+def pandas_ridge_plot(df, model, pop, k, folder='figures', name='personalization', save=True):
+    sns.set(style="white", rc={"axes.facecolor": (0, 0, 0, 0)})
+    num_models = len(df.model.unique())
+
+
+    # Initialize the FacetGrid object
+    pal = sns.cubehelix_palette(num_models, rot=-.25, light=.7)
+    g = sns.FacetGrid(df, row=model, hue=model, aspect=15, height=.5, palette=pal)
+
+    # Draw the densities in a few steps
+    g.map(sns.kdeplot, pop, clip_on=False, shade=True, alpha=1, lw=1.5, bw=.1)
+    g.map(sns.kdeplot, pop, clip_on=False, color="w", lw=2, bw=.1)
+    g.map(plt.axhline, y=0, lw=2, clip_on=False)
+
+    # Define and use a simple function to label the plot in axes coordinates
+    def label(x, color, label):
+        ax = plt.gca()
+        ax.text(-0.1, .2, label, fontweight="bold", color=color,
+                ha="left", va="center", transform=ax.transAxes)
+
+    g.map(label, pop)
+
+    # Set the subplots to overlap
+    g.fig.subplots_adjust(hspace=-.25)
+
+    # Remove axes details that don't play well with overlap
+
+    g.set_xlabels("Popularity Distribution of The Top-{0} Recommended Items".format(k))
+    g.set_titles("")
+    g.set(yticks=[])
+    g.despine(bottom=True, left=True)
+    if save:
+        plt.savefig("figs/{0}/{1}.pdf".format(folder, name), format="pdf")
+        plt.savefig("figs/{0}/{1}.png".format(folder, name), format="png")
+    else:
+        plt.show()
+    plt.close()

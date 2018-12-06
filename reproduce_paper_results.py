@@ -38,7 +38,7 @@ def main(args):
 
 if __name__ == "__main__":
     # Commandline arguments
-    parser = argparse.ArgumentParser(description="LRec")
+    parser = argparse.ArgumentParser(description="Reproduce")
     parser.add_argument('-n', dest='name', default="final_result.csv")
     parser.add_argument('-d', dest='path', default="datax/")
     parser.add_argument('-t', dest='train', default='Rtrain.npz')
