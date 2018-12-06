@@ -1,3 +1,4 @@
+from models.pop import pop
 from models.cdae import cdae, CDAE
 from models.vae import vae_cf, VAE
 from models.ifvae import ifvae, IFVAE
@@ -13,6 +14,7 @@ from models.plrec import plrec
 
 
 models = {
+    "POP": pop,
     "AutoRec": autorec,
     "CDAE": cdae,
     "VAE-CF": vae_cf,

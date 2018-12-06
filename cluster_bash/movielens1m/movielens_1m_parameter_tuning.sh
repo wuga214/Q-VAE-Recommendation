@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 python getmovielens.py --implicit -r 0.5,0.2,0.3 -d datax/ -n ml-1m/ratings.csv
+python tune_parameters.py -d datax/ -n movielens1m/pop.csv -y config/pop.yml
 python tune_parameters.py -d datax/ -n movielens1m/autorec.csv -y config/autorec.yml -gpu
 python tune_parameters.py -d datax/ -n movielens1m/bpr.csv -y config/bpr.yml -gpu
 python tune_parameters.py -d datax/ -n movielens1m/cdae.csv -y config/cdae.yml -gpu

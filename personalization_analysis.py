@@ -13,7 +13,7 @@ def main(args):
 
     R_train = load_numpy(path=args.path, name=args.train)
     R_valid = load_numpy(path=args.path, name=args.valid)
-    topK = [1, 5, 10, 15, 20, 25, 30]
+    topK = [1, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50]
 
     personalization(R_train, R_valid, df, topK, gpu_on=args.gpu)
 

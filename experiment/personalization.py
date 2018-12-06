@@ -1,6 +1,7 @@
 import os
 import numpy as np
 import pandas as pd
+import scipy.stats as ss
 from models.predictor import predict
 from evaluation.metrics import evaluate
 from plots.rec_plots import pandas_ridge_plot
@@ -50,5 +51,6 @@ def personalization(Rtrain, Rvalid, df_input, topK, gpu_on=True):
 
         df = pd.concat(giant_dataframes)
 
-        pandas_ridge_plot(df, 'model', 'pop', k, folder='analysis/personalization', name="personalization_at_{0}".format(k))
+        pandas_ridge_plot(df, 'model', 'pop', k, folder='analysis/personalization',
+                          name="personalization_at_{0}".format(k))
 
