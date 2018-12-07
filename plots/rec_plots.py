@@ -1,4 +1,5 @@
 import numpy as np
+import itertools
 import matplotlib.pyplot as plt
 from mpl_toolkits.axes_grid1 import ImageGrid
 
@@ -54,6 +55,33 @@ def pandas_ridge_plot(df, model, pop, k, folder='figures', name='personalization
     if save:
         plt.savefig("figs/{0}/{1}.pdf".format(folder, name), format="pdf")
         plt.savefig("figs/{0}/{1}.png".format(folder, name), format="png")
+    else:
+        plt.show()
+    plt.close()
+
+
+def pandas_bar_plot(df, x, y, hue, x_name, y_name, folder='figures', name='unknown', save=True):
+    fig, ax = plt.subplots(figsize=(8, 4))
+    sns.barplot(ax=ax, x=x, y=y, hue=hue, data=df, errwidth=1)
+
+    num_category = len(df[x].unique())
+    hatch = None
+    hatches = itertools.cycle(['//', '+++', '///', '---', 'xxx', '\\\\\\', '+/+/', '+\\+\\', '...', '+-+-'])
+    for i, bar in enumerate(ax.patches):
+        if i % num_category == 0:
+            hatch = next(hatches)
+        bar.set_hatch(hatch)
+
+    plt.xlabel(x_name)
+    plt.ylabel(y_name)
+    plt.xticks(rotation=15)
+    plt.legend(loc='upper left')
+    if 'Precision' not in y:
+        ax.legend_.remove()
+    plt.tight_layout()
+    if save:
+        plt.savefig("figs/{0}/{1}_bar.pdf".format(folder, name), format="pdf")
+        plt.savefig("figs/{0}/{1}_bar.png".format(folder, name), format="png")
     else:
         plt.show()
     plt.close()
