@@ -7,7 +7,7 @@ import inspect
 from models.predictor import predict
 
 
-def execute(train, test, params, model, measure='Cosine', gpu_on=True, analytical=False):
+def execute(train, test, params, model, measure='Cosine', gpu_on=True, analytical=False, folder='latent'):
     progress = WorkSplitter()
 
     columns = ['model', 'rank', 'alpha', 'lambda', 'iter', 'similarity', 'corruption', 'root', 'topK']
@@ -27,10 +27,10 @@ def execute(train, test, params, model, measure='Cosine', gpu_on=True, analytica
                          gpu_on=gpu_on)
     Y = Yt.T
 
-    np.save('latent/U_{0}_{1}'.format(params['model'], params['rank']), RQ)
-    np.save('latent/V_{0}_{1}'.format(params['model'], params['rank']), Y)
+    np.save('{2}/U_{0}_{1}'.format(params['model'], params['rank'], folder), RQ)
+    np.save('{2}/V_{0}_{1}'.format(params['model'], params['rank'], folder), Y)
     if Bias is not None:
-        np.save('latent/B_{0}_{1}'.format(params['model'], params['rank']), Bias)
+        np.save('{2}/B_{0}_{1}'.format(params['model'], params['rank'], folder), Bias)
 
     progress.subsection("Prediction")
 
