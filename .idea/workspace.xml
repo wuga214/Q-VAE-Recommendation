@@ -5,21 +5,52 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0388e4b0-6a26-46c6-8d3d-c585814fb1c3" name="Default Changelist" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/usercategory_analysis.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/figs/analysis/personalization/personalization_at_1.pdf" afterPath="$PROJECT_DIR$/figs/analysis/personalization/personalization_at_1.pdf" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/figs/analysis/personalization/personalization_at_10.pdf" afterPath="$PROJECT_DIR$/figs/analysis/personalization/personalization_at_10.pdf" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/figs/analysis/personalization/personalization_at_15.pdf" afterPath="$PROJECT_DIR$/figs/analysis/personalization/personalization_at_15.pdf" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/figs/analysis/personalization/personalization_at_20.pdf" afterPath="$PROJECT_DIR$/figs/analysis/personalization/personalization_at_20.pdf" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/figs/analysis/personalization/personalization_at_25.pdf" afterPath="$PROJECT_DIR$/figs/analysis/personalization/personalization_at_25.pdf" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/figs/analysis/personalization/personalization_at_30.pdf" afterPath="$PROJECT_DIR$/figs/analysis/personalization/personalization_at_30.pdf" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/figs/analysis/personalization/personalization_at_35.pdf" afterPath="$PROJECT_DIR$/figs/analysis/personalization/personalization_at_35.pdf" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/figs/analysis/personalization/personalization_at_40.pdf" afterPath="$PROJECT_DIR$/figs/analysis/personalization/personalization_at_40.pdf" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/figs/analysis/personalization/personalization_at_45.pdf" afterPath="$PROJECT_DIR$/figs/analysis/personalization/personalization_at_45.pdf" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/figs/analysis/personalization/personalization_at_5.pdf" afterPath="$PROJECT_DIR$/figs/analysis/personalization/personalization_at_5.pdf" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/figs/analysis/personalization/personalization_at_50.pdf" afterPath="$PROJECT_DIR$/figs/analysis/personalization/personalization_at_50.pdf" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/experiment/personalization.py" afterPath="$PROJECT_DIR$/experiment/personalization.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/experiment/usercategory.py" afterPath="$PROJECT_DIR$/experiment/usercategory.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/figs/analysis/numofrating/Clicks_bar.pdf" afterPath="$PROJECT_DIR$/figs/analysis/numofrating/Clicks_bar.pdf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/figs/analysis/numofrating/Clicks_bar.png" afterPath="$PROJECT_DIR$/figs/analysis/numofrating/Clicks_bar.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/figs/analysis/numofrating/NDCG_bar.pdf" afterPath="$PROJECT_DIR$/figs/analysis/numofrating/NDCG_bar.pdf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/figs/analysis/numofrating/NDCG_bar.png" afterPath="$PROJECT_DIR$/figs/analysis/numofrating/NDCG_bar.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/figs/analysis/numofrating/Precision@10_bar.pdf" afterPath="$PROJECT_DIR$/figs/analysis/numofrating/Precision@10_bar.pdf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/figs/analysis/numofrating/Precision@10_bar.png" afterPath="$PROJECT_DIR$/figs/analysis/numofrating/Precision@10_bar.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/figs/analysis/numofrating/Precision@15_bar.pdf" afterPath="$PROJECT_DIR$/figs/analysis/numofrating/Precision@15_bar.pdf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/figs/analysis/numofrating/Precision@15_bar.png" afterPath="$PROJECT_DIR$/figs/analysis/numofrating/Precision@15_bar.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/figs/analysis/numofrating/Precision@20_bar.pdf" afterPath="$PROJECT_DIR$/figs/analysis/numofrating/Precision@20_bar.pdf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/figs/analysis/numofrating/Precision@20_bar.png" afterPath="$PROJECT_DIR$/figs/analysis/numofrating/Precision@20_bar.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/figs/analysis/numofrating/Precision@25_bar.pdf" afterPath="$PROJECT_DIR$/figs/analysis/numofrating/Precision@25_bar.pdf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/figs/analysis/numofrating/Precision@25_bar.png" afterPath="$PROJECT_DIR$/figs/analysis/numofrating/Precision@25_bar.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/figs/analysis/numofrating/Precision@30_bar.pdf" afterPath="$PROJECT_DIR$/figs/analysis/numofrating/Precision@30_bar.pdf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/figs/analysis/numofrating/Precision@30_bar.png" afterPath="$PROJECT_DIR$/figs/analysis/numofrating/Precision@30_bar.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/figs/analysis/numofrating/Precision@35_bar.pdf" afterPath="$PROJECT_DIR$/figs/analysis/numofrating/Precision@35_bar.pdf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/figs/analysis/numofrating/Precision@35_bar.png" afterPath="$PROJECT_DIR$/figs/analysis/numofrating/Precision@35_bar.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/figs/analysis/numofrating/Precision@40_bar.pdf" afterPath="$PROJECT_DIR$/figs/analysis/numofrating/Precision@40_bar.pdf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/figs/analysis/numofrating/Precision@40_bar.png" afterPath="$PROJECT_DIR$/figs/analysis/numofrating/Precision@40_bar.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/figs/analysis/numofrating/Precision@45_bar.pdf" afterPath="$PROJECT_DIR$/figs/analysis/numofrating/Precision@45_bar.pdf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/figs/analysis/numofrating/Precision@45_bar.png" afterPath="$PROJECT_DIR$/figs/analysis/numofrating/Precision@45_bar.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/figs/analysis/numofrating/Precision@50_bar.pdf" afterPath="$PROJECT_DIR$/figs/analysis/numofrating/Precision@50_bar.pdf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/figs/analysis/numofrating/Precision@50_bar.png" afterPath="$PROJECT_DIR$/figs/analysis/numofrating/Precision@50_bar.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/figs/analysis/numofrating/Precision@5_bar.pdf" afterPath="$PROJECT_DIR$/figs/analysis/numofrating/Precision@5_bar.pdf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/figs/analysis/numofrating/Precision@5_bar.png" afterPath="$PROJECT_DIR$/figs/analysis/numofrating/Precision@5_bar.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/figs/analysis/numofrating/R-Precision_bar.pdf" afterPath="$PROJECT_DIR$/figs/analysis/numofrating/R-Precision_bar.pdf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/figs/analysis/numofrating/R-Precision_bar.png" afterPath="$PROJECT_DIR$/figs/analysis/numofrating/R-Precision_bar.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/figs/analysis/numofrating/Recall@10_bar.pdf" afterPath="$PROJECT_DIR$/figs/analysis/numofrating/Recall@10_bar.pdf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/figs/analysis/numofrating/Recall@10_bar.png" afterPath="$PROJECT_DIR$/figs/analysis/numofrating/Recall@10_bar.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/figs/analysis/numofrating/Recall@15_bar.pdf" afterPath="$PROJECT_DIR$/figs/analysis/numofrating/Recall@15_bar.pdf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/figs/analysis/numofrating/Recall@15_bar.png" afterPath="$PROJECT_DIR$/figs/analysis/numofrating/Recall@15_bar.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/figs/analysis/numofrating/Recall@20_bar.pdf" afterPath="$PROJECT_DIR$/figs/analysis/numofrating/Recall@20_bar.pdf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/figs/analysis/numofrating/Recall@20_bar.png" afterPath="$PROJECT_DIR$/figs/analysis/numofrating/Recall@20_bar.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/figs/analysis/numofrating/Recall@25_bar.pdf" afterPath="$PROJECT_DIR$/figs/analysis/numofrating/Recall@25_bar.pdf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/figs/analysis/numofrating/Recall@25_bar.png" afterPath="$PROJECT_DIR$/figs/analysis/numofrating/Recall@25_bar.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/figs/analysis/numofrating/Recall@30_bar.pdf" afterPath="$PROJECT_DIR$/figs/analysis/numofrating/Recall@30_bar.pdf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/figs/analysis/numofrating/Recall@30_bar.png" afterPath="$PROJECT_DIR$/figs/analysis/numofrating/Recall@30_bar.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/figs/analysis/numofrating/Recall@35_bar.pdf" afterPath="$PROJECT_DIR$/figs/analysis/numofrating/Recall@35_bar.pdf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/figs/analysis/numofrating/Recall@35_bar.png" afterPath="$PROJECT_DIR$/figs/analysis/numofrating/Recall@35_bar.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/figs/analysis/numofrating/Recall@40_bar.pdf" afterPath="$PROJECT_DIR$/figs/analysis/numofrating/Recall@40_bar.pdf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/figs/analysis/numofrating/Recall@40_bar.png" afterPath="$PROJECT_DIR$/figs/analysis/numofrating/Recall@40_bar.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/figs/analysis/numofrating/Recall@45_bar.pdf" afterPath="$PROJECT_DIR$/figs/analysis/numofrating/Recall@45_bar.pdf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/figs/analysis/numofrating/Recall@45_bar.png" afterPath="$PROJECT_DIR$/figs/analysis/numofrating/Recall@45_bar.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/figs/analysis/numofrating/Recall@50_bar.pdf" afterPath="$PROJECT_DIR$/figs/analysis/numofrating/Recall@50_bar.pdf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/figs/analysis/numofrating/Recall@50_bar.png" afterPath="$PROJECT_DIR$/figs/analysis/numofrating/Recall@50_bar.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/figs/analysis/numofrating/Recall@5_bar.pdf" afterPath="$PROJECT_DIR$/figs/analysis/numofrating/Recall@5_bar.pdf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/figs/analysis/numofrating/Recall@5_bar.png" afterPath="$PROJECT_DIR$/figs/analysis/numofrating/Recall@5_bar.png" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/plots/rec_plots.py" afterPath="$PROJECT_DIR$/plots/rec_plots.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -90,10 +121,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="usercategory.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="usercategory.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/experiment/usercategory.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="682">
+            <state relative-caret-position="833">
               <caret line="49" column="1" lean-forward="false" selection-start-line="49" selection-start-column="1" selection-end-line="49" selection-end-column="1" />
               <folding>
                 <element signature="e#0#9#0" expanded="true" />
@@ -104,16 +135,6 @@
       </file>
       <file leaf-file-name="cml.yml" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/config/cml.yml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="170">
-              <caret line="10" column="50" lean-forward="false" selection-start-line="10" selection-start-column="50" selection-end-line="10" selection-end-column="50" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="autorec.yml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/config/autorec.yml">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="170">
               <caret line="10" column="50" lean-forward="false" selection-start-line="10" selection-start-column="50" selection-end-line="10" selection-end-column="50" />
@@ -158,10 +179,20 @@
         <entry file="file://$PROJECT_DIR$/usercategory_analysis.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="187">
-              <caret line="11" column="12" lean-forward="false" selection-start-line="11" selection-start-column="12" selection-end-line="11" selection-end-column="12" />
+              <caret line="11" column="50" lean-forward="false" selection-start-line="11" selection-start-column="50" selection-end-line="11" selection-end-column="50" />
               <folding>
                 <element signature="e#0#15#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="reproduce_paper_results.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/reproduce_paper_results.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="442">
+              <caret line="32" column="21" lean-forward="false" selection-start-line="32" selection-start-column="21" selection-end-line="32" selection-end-column="21" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -176,11 +207,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="rec_plots.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="rec_plots.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/plots/rec_plots.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="512">
-              <caret line="70" column="33" lean-forward="false" selection-start-line="70" selection-start-column="33" selection-end-line="70" selection-end-column="33" />
+            <state relative-caret-position="478">
+              <caret line="68" column="101" lean-forward="false" selection-start-line="68" selection-start-column="101" selection-end-line="68" selection-end-column="101" />
               <folding>
                 <element signature="e#0#18#0" expanded="true" />
               </folding>
@@ -268,8 +299,8 @@
         <option value="$PROJECT_DIR$/personalization_analysis.py" />
         <option value="$PROJECT_DIR$/experiment/personalization.py" />
         <option value="$PROJECT_DIR$/usercategory_analysis.py" />
-        <option value="$PROJECT_DIR$/plots/rec_plots.py" />
         <option value="$PROJECT_DIR$/experiment/usercategory.py" />
+        <option value="$PROJECT_DIR$/plots/rec_plots.py" />
       </list>
     </option>
   </component>
@@ -679,13 +710,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/reproduce_paper_results.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="544">
-          <caret line="32" column="21" lean-forward="false" selection-start-line="32" selection-start-column="21" selection-end-line="32" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/experiment/execute.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="410">
@@ -800,6 +824,16 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/usercategory_analysis.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="11" column="50" lean-forward="false" selection-start-line="11" selection-start-column="50" selection-end-line="11" selection-end-column="50" />
+          <folding>
+            <element signature="e#0#15#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/experiment/personalization.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="104">
@@ -810,32 +844,30 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/usercategory_analysis.py">
+    <entry file="file://$PROJECT_DIR$/experiment/usercategory.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="11" column="12" lean-forward="false" selection-start-line="11" selection-start-column="12" selection-end-line="11" selection-end-column="12" />
+        <state relative-caret-position="833">
+          <caret line="49" column="1" lean-forward="false" selection-start-line="49" selection-start-column="1" selection-end-line="49" selection-end-column="1" />
           <folding>
-            <element signature="e#0#15#0" expanded="true" />
+            <element signature="e#0#9#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/reproduce_paper_results.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="442">
+          <caret line="32" column="21" lean-forward="false" selection-start-line="32" selection-start-column="21" selection-end-line="32" selection-end-column="21" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/plots/rec_plots.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="512">
-          <caret line="70" column="33" lean-forward="false" selection-start-line="70" selection-start-column="33" selection-end-line="70" selection-end-column="33" />
+        <state relative-caret-position="478">
+          <caret line="68" column="101" lean-forward="false" selection-start-line="68" selection-start-column="101" selection-end-line="68" selection-end-column="101" />
           <folding>
             <element signature="e#0#18#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/experiment/usercategory.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="682">
-          <caret line="49" column="1" lean-forward="false" selection-start-line="49" selection-start-column="1" selection-end-line="49" selection-end-column="1" />
-          <folding>
-            <element signature="e#0#9#0" expanded="true" />
           </folding>
         </state>
       </provider>

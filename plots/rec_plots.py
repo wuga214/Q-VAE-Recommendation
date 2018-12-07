@@ -66,7 +66,7 @@ def pandas_bar_plot(df, x, y, hue, x_name, y_name, folder='figures', name='unkno
 
     num_category = len(df[x].unique())
     hatch = None
-    hatches = itertools.cycle(['//', '+++', '///', '---', 'xxx', '\\\\\\', '+/+/', '+\\+\\', '...', '+-+-'])
+    hatches = itertools.cycle(['//', '+++', '///', '---', 'xxx', '\\\\\\', ' ', '+\\+\\', '...', 'OOO'])
     for i, bar in enumerate(ax.patches):
         if i % num_category == 0:
             hatch = next(hatches)
