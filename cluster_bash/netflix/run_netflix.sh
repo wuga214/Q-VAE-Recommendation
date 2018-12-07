@@ -26,4 +26,7 @@ sbatch --nodes=1 --time=96:00:00 --mem=32G --cpus=4 --gres=gpu:1 netflix_wrmf_pa
 sbatch --nodes=1 --time=96:00:00 --mem=32G --cpus=4 --gres=gpu:1 netflix_wrmf_part10.sh
 sbatch --nodes=1 --time=96:00:00 --mem=32G --cpus=4 --gres=gpu:1 netflix_wrmf_part11.sh
 sbatch --nodes=1 --time=96:00:00 --mem=32G --cpus=4 --gres=gpu:1 netflix_wrmf_part12.sh
+sbatch --nodes=1 --time=96:00:00 --mem=32G --cpus=4 --gres=gpu:1 netflix_wrmf_part13.sh
+sbatch --nodes=1 --time=96:00:00 --mem=32G --cpus=4 --gres=gpu:1 netflix_wrmf_part14.sh
+sbatch --nodes=1 --time=96:00:00 --mem=32G --cpus=4 --gres=gpu:1 netflix_wrmf_part15.sh
 

@@ -2,8 +2,8 @@ parameters:
     models: WRMF
     similarity: Cosine
     corruption: [0]
-    alpha: [1]
-    rank: [50]
+    alpha: [10000]
+    rank: [100]
     root: [1.0]
     topK: [5, 10, 15, 20, 50]
     iter: 10

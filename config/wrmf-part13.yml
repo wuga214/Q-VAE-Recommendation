@@ -2,7 +2,7 @@ parameters:
     models: WRMF
     similarity: Cosine
     corruption: [0]
-    alpha: [1]
+    alpha: [10000]
     rank: [50]
     root: [1.0]
     topK: [5, 10, 15, 20, 50]
