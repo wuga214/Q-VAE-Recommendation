@@ -5,104 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0388e4b0-6a26-46c6-8d3d-c585814fb1c3" name="Default Changelist" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cluster_bash/netflix/netflix_bpr_part1.sh" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cluster_bash/netflix/netflix_bpr_part2.sh" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cluster_bash/netflix/netflix_bpr_part3.sh" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cluster_bash/netflix/netflix_bpr_part4.sh" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cluster_bash/netflix/netflix_bpr_part5.sh" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cluster_bash/netflix/netflix_cml_part1.sh" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cluster_bash/netflix/netflix_cml_part2.sh" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cluster_bash/netflix/netflix_cml_part3.sh" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cluster_bash/netflix/netflix_cml_part4.sh" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cluster_bash/netflix/netflix_cml_part5.sh" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/config/bpr-part1.yml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/config/bpr-part2.yml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/config/bpr-part3.yml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/config/bpr-part4.yml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/config/bpr-part5.yml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/config/cml-part1.yml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/config/cml-part2.yml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/config/cml-part3.yml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/config/cml-part4.yml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/config/cml-part5.yml" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/figs/analysis/numofrating/Clicks_bar.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/figs/analysis/numofrating/Clicks_bar.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/figs/analysis/numofrating/NDCG_bar.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/figs/analysis/numofrating/NDCG_bar.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/figs/analysis/numofrating/Precision@10_bar.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/figs/analysis/numofrating/Precision@10_bar.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/figs/analysis/numofrating/Precision@15_bar.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/figs/analysis/numofrating/Precision@15_bar.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/figs/analysis/numofrating/Precision@20_bar.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/figs/analysis/numofrating/Precision@20_bar.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/figs/analysis/numofrating/Precision@25_bar.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/figs/analysis/numofrating/Precision@25_bar.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/figs/analysis/numofrating/Precision@30_bar.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/figs/analysis/numofrating/Precision@30_bar.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/figs/analysis/numofrating/Precision@35_bar.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/figs/analysis/numofrating/Precision@35_bar.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/figs/analysis/numofrating/Precision@40_bar.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/figs/analysis/numofrating/Precision@40_bar.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/figs/analysis/numofrating/Precision@45_bar.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/figs/analysis/numofrating/Precision@45_bar.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/figs/analysis/numofrating/Precision@50_bar.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/figs/analysis/numofrating/Precision@50_bar.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/figs/analysis/numofrating/Precision@5_bar.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/figs/analysis/numofrating/Precision@5_bar.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/figs/analysis/numofrating/R-Precision_bar.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/figs/analysis/numofrating/R-Precision_bar.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/figs/analysis/numofrating/Recall@10_bar.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/figs/analysis/numofrating/Recall@10_bar.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/figs/analysis/numofrating/Recall@15_bar.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/figs/analysis/numofrating/Recall@15_bar.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/figs/analysis/numofrating/Recall@20_bar.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/figs/analysis/numofrating/Recall@20_bar.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/figs/analysis/numofrating/Recall@25_bar.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/figs/analysis/numofrating/Recall@25_bar.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/figs/analysis/numofrating/Recall@30_bar.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/figs/analysis/numofrating/Recall@30_bar.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/figs/analysis/numofrating/Recall@35_bar.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/figs/analysis/numofrating/Recall@35_bar.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/figs/analysis/numofrating/Recall@40_bar.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/figs/analysis/numofrating/Recall@40_bar.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/figs/analysis/numofrating/Recall@45_bar.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/figs/analysis/numofrating/Recall@45_bar.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/figs/analysis/numofrating/Recall@50_bar.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/figs/analysis/numofrating/Recall@50_bar.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/figs/analysis/numofrating/Recall@5_bar.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/figs/analysis/numofrating/Recall@5_bar.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/figs/analysis/personalization/personalization_at_1.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/figs/analysis/personalization/personalization_at_1.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/figs/analysis/personalization/personalization_at_10.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/figs/analysis/personalization/personalization_at_10.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/figs/analysis/personalization/personalization_at_15.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/figs/analysis/personalization/personalization_at_15.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/figs/analysis/personalization/personalization_at_20.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/figs/analysis/personalization/personalization_at_20.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/figs/analysis/personalization/personalization_at_25.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/figs/analysis/personalization/personalization_at_25.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/figs/analysis/personalization/personalization_at_30.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/figs/analysis/personalization/personalization_at_30.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/figs/analysis/personalization/personalization_at_35.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/figs/analysis/personalization/personalization_at_35.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/figs/analysis/personalization/personalization_at_40.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/figs/analysis/personalization/personalization_at_40.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/figs/analysis/personalization/personalization_at_45.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/figs/analysis/personalization/personalization_at_45.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/figs/analysis/personalization/personalization_at_5.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/figs/analysis/personalization/personalization_at_5.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/figs/analysis/personalization/personalization_at_50.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/figs/analysis/personalization/personalization_at_50.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tables/final_result.csv" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tables/movielens1m_test_result_cpu.csv" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tables/movielens1m_test_result_gpu.csv" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/experiment/execute.py" afterPath="$PROJECT_DIR$/experiment/execute.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/experiment/personalization.py" afterPath="$PROJECT_DIR$/experiment/personalization.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/experiment/usercategory.py" afterPath="$PROJECT_DIR$/experiment/usercategory.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cluster_bash/netflix/run_netflix.sh" afterPath="$PROJECT_DIR$/cluster_bash/netflix/run_netflix.sh" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/personalization_analysis.py" afterPath="$PROJECT_DIR$/personalization_analysis.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/reproduce_paper_results.py" afterPath="$PROJECT_DIR$/reproduce_paper_results.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/usercategory_analysis.py" afterPath="$PROJECT_DIR$/usercategory_analysis.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -202,18 +106,6 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="tune_parameters.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/tune_parameters.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="221">
-              <caret line="13" column="17" lean-forward="false" selection-start-line="13" selection-start-column="17" selection-end-line="13" selection-end-column="17" />
-              <folding>
-                <element signature="e#0#18#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="netflix_bpr_part5.sh" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/cluster_bash/netflix/netflix_bpr_part5.sh">
           <provider selected="true" editor-type-id="text-editor">
@@ -224,21 +116,41 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="tuning.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/experiment/tuning.py">
+      <file leaf-file-name="personalization_analysis.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/personalization_analysis.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="867">
-              <caret line="57" column="11" lean-forward="false" selection-start-line="57" selection-start-column="11" selection-end-line="57" selection-end-column="11" />
+            <state relative-caret-position="306">
+              <caret line="24" column="64" lean-forward="true" selection-start-line="24" selection-start-column="64" selection-end-line="24" selection-end-column="64" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="personalization_analysis.py" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/personalization_analysis.py">
+      <file leaf-file-name="run_movielens.sh" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/cluster_bash/movielens20m/run_movielens.sh">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="187">
-              <caret line="17" column="16" lean-forward="false" selection-start-line="17" selection-start-column="16" selection-end-line="17" selection-end-column="16" />
+            <state relative-caret-position="476">
+              <caret line="28" column="13" lean-forward="false" selection-start-line="28" selection-start-column="0" selection-end-line="30" selection-end-column="83" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="run_netflix.sh" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/cluster_bash/netflix/run_netflix.sh">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="510">
+              <caret line="30" column="9" lean-forward="false" selection-start-line="29" selection-start-column="0" selection-end-line="39" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="personalization.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/experiment/personalization.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="51">
+              <caret line="8" column="4" lean-forward="false" selection-start-line="8" selection-start-column="4" selection-end-line="8" selection-end-column="4" />
               <folding />
             </state>
           </provider>
@@ -246,16 +158,6 @@
       </file>
       <file leaf-file-name="netflix_cml_part1.sh" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/cluster_bash/netflix/netflix_cml_part1.sh">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="51">
-              <caret line="3" column="0" lean-forward="false" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="netflix_cml_part5.sh" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/cluster_bash/netflix/netflix_cml_part5.sh">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="51">
               <caret line="3" column="0" lean-forward="false" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
@@ -319,11 +221,9 @@
         <option value="$PROJECT_DIR$/cluster_bash/netflix/netflix_wrmf_part13.sh" />
         <option value="$PROJECT_DIR$/cluster_bash/netflix/netflix_wrmf_part14.sh" />
         <option value="$PROJECT_DIR$/cluster_bash/netflix/netflix_wrmf_part15.sh" />
-        <option value="$PROJECT_DIR$/cluster_bash/netflix/run_netflix.sh" />
         <option value="$PROJECT_DIR$/experiment/execute.py" />
         <option value="$PROJECT_DIR$/usercategory_analysis.py" />
         <option value="$PROJECT_DIR$/reproduce_paper_results.py" />
-        <option value="$PROJECT_DIR$/personalization_analysis.py" />
         <option value="$PROJECT_DIR$/experiment/usercategory.py" />
         <option value="$PROJECT_DIR$/experiment/personalization.py" />
         <option value="$PROJECT_DIR$/config/cml-part1.yml" />
@@ -346,6 +246,8 @@
         <option value="$PROJECT_DIR$/cluster_bash/netflix/netflix_cml_part3.sh" />
         <option value="$PROJECT_DIR$/cluster_bash/netflix/netflix_cml_part4.sh" />
         <option value="$PROJECT_DIR$/cluster_bash/netflix/netflix_cml_part5.sh" />
+        <option value="$PROJECT_DIR$/personalization_analysis.py" />
+        <option value="$PROJECT_DIR$/cluster_bash/netflix/run_netflix.sh" />
       </list>
     </option>
   </component>
@@ -388,6 +290,12 @@
               <item name="IF-VAE-Recommendation" type="b2602c69:ProjectViewProjectNode" />
               <item name="IF-VAE-Recommendation" type="462c0819:PsiDirectoryNode" />
               <item name="cluster_bash" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="IF-VAE-Recommendation" type="b2602c69:ProjectViewProjectNode" />
+              <item name="IF-VAE-Recommendation" type="462c0819:PsiDirectoryNode" />
+              <item name="cluster_bash" type="462c0819:PsiDirectoryNode" />
+              <item name="movielens20m" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="IF-VAE-Recommendation" type="b2602c69:ProjectViewProjectNode" />
@@ -595,24 +503,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/cluster_bash/movielens20m/run_movielens.sh">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="476">
-          <caret line="28" column="13" lean-forward="false" selection-start-line="28" selection-start-column="0" selection-end-line="30" selection-end-column="83" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/cluster_bash/netflix/netflix_wrmf_part13.sh">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="34">
           <caret line="2" column="18" lean-forward="false" selection-start-line="2" selection-start-column="18" selection-end-line="2" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cluster_bash/netflix/run_netflix.sh">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="510">
-          <caret line="30" column="87" lean-forward="false" selection-start-line="30" selection-start-column="87" selection-end-line="30" selection-end-column="87" />
         </state>
       </provider>
     </entry>
@@ -674,14 +568,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="767">
           <caret line="72" column="44" lean-forward="false" selection-start-line="72" selection-start-column="44" selection-end-line="72" selection-end-column="44" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/experiment/personalization.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="374">
-          <caret line="27" column="41" lean-forward="true" selection-start-line="27" selection-start-column="41" selection-end-line="27" selection-end-column="41" />
           <folding />
         </state>
       </provider>
@@ -924,10 +810,34 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/experiment/personalization.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="51">
+          <caret line="8" column="4" lean-forward="false" selection-start-line="8" selection-start-column="4" selection-end-line="8" selection-end-column="4" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/personalization_analysis.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="17" column="16" lean-forward="false" selection-start-line="17" selection-start-column="16" selection-end-line="17" selection-end-column="16" />
+        <state relative-caret-position="306">
+          <caret line="24" column="64" lean-forward="true" selection-start-line="24" selection-start-column="64" selection-end-line="24" selection-end-column="64" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cluster_bash/movielens20m/run_movielens.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="476">
+          <caret line="28" column="13" lean-forward="false" selection-start-line="28" selection-start-column="0" selection-end-line="30" selection-end-column="83" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cluster_bash/netflix/run_netflix.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="510">
+          <caret line="30" column="9" lean-forward="false" selection-start-line="29" selection-start-column="0" selection-end-line="39" selection-end-column="0" />
           <folding />
         </state>
       </provider>

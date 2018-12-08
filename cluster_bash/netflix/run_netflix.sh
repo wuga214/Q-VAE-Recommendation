@@ -3,8 +3,6 @@ sbatch --nodes=1 --time=24:00:00 --mem=32G --cpus=4 --gres=gpu:1 netflix_puresvd
 sbatch --nodes=1 --time=48:00:00 --mem=32G --cpus=4 --gres=gpu:1 netflix_plrec.sh
 sbatch --nodes=1 --time=96:00:00 --mem=32G --cpus=4 --gres=gpu:1 netflix_nceplrec.sh
 sbatch --nodes=1 --time=96:00:00 --mem=32G --cpus=4 --gres=gpu:1 netflix_autorec.sh
-sbatch --nodes=1 --time=96:00:00 --mem=32G --cpus=4 --gres=gpu:1 netflix_bpr.sh
-sbatch --nodes=1 --time=96:00:00 --mem=32G --cpus=4 --gres=gpu:1 netflix_cml.sh
 sbatch --nodes=1 --time=96:00:00 --mem=32G --cpus=4 --gres=gpu:1 netflix_ifvae.sh
 sbatch --nodes=1 --time=96:00:00 --mem=32G --cpus=4 --gres=gpu:1 netflix_vae_part1.sh
 sbatch --nodes=1 --time=96:00:00 --mem=32G --cpus=4 --gres=gpu:1 netflix_vae_part2.sh
@@ -29,4 +27,14 @@ sbatch --nodes=1 --time=96:00:00 --mem=32G --cpus=4 --gres=gpu:1 netflix_wrmf_pa
 sbatch --nodes=1 --time=96:00:00 --mem=32G --cpus=4 --gres=gpu:1 netflix_wrmf_part13.sh
 sbatch --nodes=1 --time=96:00:00 --mem=32G --cpus=4 --gres=gpu:1 netflix_wrmf_part14.sh
 sbatch --nodes=1 --time=96:00:00 --mem=32G --cpus=4 --gres=gpu:1 netflix_wrmf_part15.sh
+sbatch --nodes=1 --time=96:00:00 --mem=32G --cpus=4 --gres=gpu:1 netflix_bpr_part1.sh
+sbatch --nodes=1 --time=96:00:00 --mem=32G --cpus=4 --gres=gpu:1 netflix_bpr_part2.sh
+sbatch --nodes=1 --time=96:00:00 --mem=32G --cpus=4 --gres=gpu:1 netflix_bpr_part3.sh
+sbatch --nodes=1 --time=96:00:00 --mem=32G --cpus=4 --gres=gpu:1 netflix_bpr_part4.sh
+sbatch --nodes=1 --time=96:00:00 --mem=32G --cpus=4 --gres=gpu:1 netflix_bpr_part5.sh
+sbatch --nodes=1 --time=96:00:00 --mem=32G --cpus=4 --gres=gpu:1 netflix_cml_part1.sh
+sbatch --nodes=1 --time=96:00:00 --mem=32G --cpus=4 --gres=gpu:1 netflix_cml_part2.sh
+sbatch --nodes=1 --time=96:00:00 --mem=32G --cpus=4 --gres=gpu:1 netflix_cml_part3.sh
+sbatch --nodes=1 --time=96:00:00 --mem=32G --cpus=4 --gres=gpu:1 netflix_cml_part4.sh
+sbatch --nodes=1 --time=96:00:00 --mem=32G --cpus=4 --gres=gpu:1 netflix_cml_part5.sh
 

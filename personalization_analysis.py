@@ -9,7 +9,7 @@ from utils.modelnames import models
 
 def main(args):
 
-    df = find_best_hyperparameters('tables/'+args.param, 'NDCG')
+    df = find_best_hyperparameters('tables/'+args.problem, 'NDCG')
 
     R_train = load_numpy(path=args.path, name=args.train)
     R_valid = load_numpy(path=args.path, name=args.valid)
@@ -20,7 +20,6 @@ def main(args):
 if __name__ == "__main__":
     # Commandline arguments
     parser = argparse.ArgumentParser(description="Personalization")
-    parser.add_argument('-n', dest='name', default="final_result.csv")
     parser.add_argument('-d', dest='path', default="datax/")
     parser.add_argument('-t', dest='train', default='Rtrain.npz')
     parser.add_argument('-v', dest='valid', default='Rtest.npz')
