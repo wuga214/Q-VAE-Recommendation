@@ -20,7 +20,7 @@ IFVAE,1,0.2,50,300,0.0001
 
 def main(args):
 
-    df = find_best_hyperparameters(args.param, 'NDCG')
+    df = find_best_hyperparameters('tables/'+args.problem, 'NDCG')
 
     R_train = load_numpy(path=args.path, name=args.train)
     R_valid = load_numpy(path=args.path, name=args.valid)
@@ -31,7 +31,7 @@ def main(args):
         row['metric'] = ['R-Precision', 'NDCG', 'Precision', 'Recall']
         row['topK'] = [5, 10, 15, 20, 50]
         result = execute(R_train, R_valid, row, models[row['model']],
-                         measure=row['similarity'], gpu_on=args.gpu, folder=args.folder)
+                         measure=row['similarity'], gpu_on=args.gpu, folder=args.model_folder)
         frame.append(result)
 
     results = pd.concat(frame)
@@ -44,8 +44,8 @@ if __name__ == "__main__":
     parser.add_argument('-d', dest='path', default="datax/")
     parser.add_argument('-t', dest='train', default='Rtrain.npz')
     parser.add_argument('-v', dest='valid', default='Rtest.npz')
-    parser.add_argument('-p', dest='param', default='tables/movielens1m')
-    parser.add_argument('-s', dest='folder', default='latent') # Model saving folder
+    parser.add_argument('-p', dest='problem', default='movielens1m')
+    parser.add_argument('-s', dest='model_folder', default='latent') # Model saving folder
     parser.add_argument('-gpu', dest='gpu', action='store_true')
     args = parser.parse_args()
 

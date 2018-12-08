@@ -9,13 +9,13 @@ from utils.modelnames import models
 
 def main(args):
 
-    df = find_best_hyperparameters(args.param, 'NDCG')
+    df = find_best_hyperparameters('tables/'+args.param, 'NDCG')
 
     R_train = load_numpy(path=args.path, name=args.train)
     R_valid = load_numpy(path=args.path, name=args.valid)
     topK = [1, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50]
 
-    personalization(R_train, R_valid, df, topK, gpu_on=args.gpu)
+    personalization(R_train, R_valid, df, topK, args.problem, args.model_folder, gpu_on=args.gpu)
 
 if __name__ == "__main__":
     # Commandline arguments
@@ -24,7 +24,8 @@ if __name__ == "__main__":
     parser.add_argument('-d', dest='path', default="datax/")
     parser.add_argument('-t', dest='train', default='Rtrain.npz')
     parser.add_argument('-v', dest='valid', default='Rtest.npz')
-    parser.add_argument('-p', dest='param', default='tables/movielens1m')
+    parser.add_argument('-p', dest='problem', default='movielens1m')
+    parser.add_argument('-s', dest='model_folder', default='latent')  # Model saving folder
     parser.add_argument('-gpu', dest='gpu', action='store_true')
     args = parser.parse_args()
 

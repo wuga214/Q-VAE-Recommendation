@@ -22,7 +22,7 @@ def getGroup(user_counts):
     return group
 
 
-def usercategory(Rtrain, Rvalid, df_input, topK, metric, gpu_on=True):
+def usercategory(Rtrain, Rvalid, df_input, topK, metric, problem, model_folder, gpu_on=True):
 
     user_observation_counts = np.array(np.sum(Rtrain, axis=1)).flatten()
     user_observation_counts = user_observation_counts[np.array(np.sum(Rvalid, axis=1)).flatten() != 0]
@@ -36,11 +36,11 @@ def usercategory(Rtrain, Rvalid, df_input, topK, metric, gpu_on=True):
     for idx, row in df_input.iterrows():
         row = row.to_dict()
 
-        RQ = np.load('latent/U_{0}_{1}.npy'.format(row['model'], row['rank']))
-        Y = np.load('latent/V_{0}_{1}.npy'.format(row['model'], row['rank']))
+        RQ = np.load('{2}/U_{0}_{1}.npy'.format(row['model'], row['rank'], model_folder))
+        Y = np.load('{2}/V_{0}_{1}.npy'.format(row['model'], row['rank'], model_folder))
 
-        if os.path.isfile('latent/B_{0}_{1}.npy'.format(row['model'], row['rank'])):
-            Bias = np.load('latent/B_{0}_{1}.npy'.format(row['model'], row['rank']))
+        if os.path.isfile('{2}/B_{0}_{1}.npy'.format(row['model'], row['rank'], model_folder)):
+            Bias = np.load('{2}/B_{0}_{1}.npy'.format(row['model'], row['rank'], model_folder))
         else:
             Bias = None
 
@@ -70,7 +70,7 @@ def usercategory(Rtrain, Rvalid, df_input, topK, metric, gpu_on=True):
 
     for metric in evaluated_metrics:
         pandas_bar_plot(x='group', y=metric, hue='model', x_name='User Category', y_name=metric, df=giant_df,
-                        folder='analysis/numofrating', name=metric)
+                        folder='analysis/{0}/numofrating'.format(problem), name=metric)
 
 
 

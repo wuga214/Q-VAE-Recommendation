@@ -6,7 +6,7 @@ from models.predictor import predict
 from plots.rec_plots import pandas_ridge_plot
 
 
-def personalization(Rtrain, Rvalid, df_input, topK, gpu_on=True):
+def personalization(Rtrain, Rvalid, df_input, topK, problem, model_folder, gpu_on=True):
     item_popularity = np.array(np.sum(Rtrain, axis=0)).flatten()
 
     index = None
@@ -17,11 +17,11 @@ def personalization(Rtrain, Rvalid, df_input, topK, gpu_on=True):
     for idx, row in df_input.iterrows():
         row = row.to_dict()
 
-        RQ = np.load('latent/U_{0}_{1}.npy'.format(row['model'], row['rank']))
-        Y = np.load('latent/V_{0}_{1}.npy'.format(row['model'], row['rank']))
+        RQ = np.load('{2}/U_{0}_{1}.npy'.format(row['model'], row['rank'], model_folder))
+        Y = np.load('{2}/V_{0}_{1}.npy'.format(row['model'], row['rank'], model_folder))
 
-        if os.path.isfile('latent/B_{0}_{1}.npy'.format(row['model'], row['rank'])):
-            Bias = np.load('latent/B_{0}_{1}.npy'.format(row['model'], row['rank']))
+        if os.path.isfile('{2}/B_{0}_{1}.npy'.format(row['model'], row['rank'], model_folder)):
+            Bias = np.load('{2}/B_{0}_{1}.npy'.format(row['model'], row['rank'], model_folder))
         else:
             Bias = None
 
@@ -52,6 +52,6 @@ def personalization(Rtrain, Rvalid, df_input, topK, gpu_on=True):
 
         df = pd.concat(giant_dataframes[k])
 
-        pandas_ridge_plot(df, 'model', 'pop', k, folder='analysis/personalization',
+        pandas_ridge_plot(df, 'model', 'pop', k, folder='analysis/{0}/personalization'.format(problem),
                           name="personalization_at_{0}".format(k))
 
