@@ -39,8 +39,8 @@ def als(matrix_train,
     cold_rows, cold_cols = get_cold(matrix_coo, m, n)
 
     np.random.seed(1)
-    U = torch.tensor(np.random.normal(0, 0.01, size=(m, rank)).astype(np.float32))
-    V = torch.tensor(np.random.normal(0, 0.01, size=(n, rank)).astype(np.float32))
+    U = torch.tensor(np.random.normal(0, 0.01, size=(m, rank)).astype(np.float32)).float()
+    V = torch.tensor(np.random.normal(0, 0.01, size=(n, rank)).astype(np.float32)).float()
 
     U[cold_rows] = 0
     V[cold_cols] = 0
@@ -83,7 +83,7 @@ def solve(R, X, H, lam, rank, alpha):
 
 def per_item(vector_r, matrix_A, matrix_B, alpha):
     vector_r_index = torch.tensor(vector_r.nonzero()[0]).type(torch.long)
-    vector_r_small = torch.tensor(vector_r.data)
+    vector_r_small = torch.tensor(vector_r.data).float()
     vector_c_small = alpha * vector_r_small
     matrix_B_small = matrix_B[vector_r_index]
     matrix_BT_small = torch.transpose(matrix_B_small, 0, 1)
