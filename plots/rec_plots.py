@@ -2,6 +2,7 @@ import itertools
 import matplotlib.pyplot as plt
 import seaborn as sns
 from utils.io import load_yaml
+from ast import literal_eval
 sns.axes_style("white")
 
 
@@ -84,3 +85,14 @@ def pandas_bar_plot(df, x, y, hue, x_name, y_name, folder='figures', name='unkno
     else:
         plt.show()
     plt.close()
+
+
+def precision_recall_curve(df, x, y, hue, x_name, y_name,
+                           folder='figures', name='unknown', save=True):
+    fig, ax = plt.subplots(figsize=(8, 4))
+    precisions = [x for x in df.columns if "Precision@" in x]
+    recalls = [x for x in df.columns if "Recall@" in x]
+    for i in len(df):
+        precision = [literal_eval(x)[0] for x in df[precisions].iloc[i].tolist()]
+        recall = [literal_eval(x)[0] for x in df[recalls].iloc[i].tolist()]
+        ax.plot()
