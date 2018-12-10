@@ -15,6 +15,7 @@ Inference Friendly Variational Auto-encoder for Recommendation
 ![](https://img.shields.io/badge/tqdm-4.11.2-blue.svg)
 ![](https://img.shields.io/badge/argparse-1.1-blue.svg)
 ![](https://img.shields.io/badge/tensorflow-1.4.0-blue.svg)
+![](https://img.shields.io/badge/pytorch-1.0.0-blue.svg)
 ![](https://img.shields.io/badge/matplotlib-3.0.0-blue.svg)
 ![](https://img.shields.io/badge/fbpca-1.0-blue.svg)
 ![](https://img.shields.io/badge/pyyaml-4.1-blue.svg)
