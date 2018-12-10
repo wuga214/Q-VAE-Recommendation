@@ -8,11 +8,12 @@ from utils.modelnames import models
 def main(args):
     params = load_yaml(args.grid)
     params['models'] = {params['models']: models[params['models']]}
+    table_path = load_yaml('config/global.yml', key='path')['tables']
 
     R_train = load_numpy(path=args.path, name=args.train)
     R_valid = load_numpy(path=args.path, name=args.valid)
     df = hyper_parameter_tuning(R_train, R_valid, params, measure=params['similarity'], gpu_on=args.gpu)
-    save_dataframe_csv(df, 'tables/', args.name)
+    save_dataframe_csv(df, table_path, args.name)
 
 if __name__ == "__main__":
     # Commandline arguments

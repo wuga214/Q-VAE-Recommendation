@@ -1,11 +1,8 @@
-import numpy as np
 import matplotlib.pyplot as plt
 from mpl_toolkits.axes_grid1 import ImageGrid
-
 import matplotlib.patches as mpatches
-from matplotlib.collections import PatchCollection
-
 import seaborn as sns
+from utils.io import load_yaml
 sns.axes_style("white")
 
 
@@ -25,7 +22,8 @@ def show_samples(images, row, col, image_shape, name="Unknown", save=True, shift
     plt.axis('off')
     plt.tight_layout()
     if save:
-        fig.savefig('figs/train/grid/'+name+'.png', bbox_inches="tight", pad_inches=0, format='png')
+        fig_path = load_yaml('config/global.yml', key='path')['figs']
+        fig.savefig('{0}/train/grid/{1}.png'.format(fig_path, name), bbox_inches="tight", pad_inches=0, format='png')
     else:
         plt.show()
 
@@ -48,7 +46,8 @@ def latent_distribution_ellipse(means, stds, keep_rate, lim=6, name="Unknown", s
     plt.legend(handles=handles)
     plt.tight_layout()
     if save:
-        fig.savefig('figs/train/grid/'+name+'.png', bbox_inches="tight", pad_inches=0, format='png')
+        fig_path = load_yaml('config/global.yml', key='path')['figs']
+        fig.savefig('{0}/train/grid/{1}.png'.format(fig_path, name), bbox_inches="tight", pad_inches=0, format='png')
     else:
         plt.show()
 

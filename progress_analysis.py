@@ -1,11 +1,11 @@
 import argparse
-import pandas as pd
 from experiment.converge import converge
-from utils.io import load_numpy, save_dataframe_latex, save_dataframe_csv, find_best_hyperparameters
+from utils.io import load_numpy, save_dataframe_csv, find_best_hyperparameters, load_yaml
 from plots.rec_plots import show_training_progress
 
 
 def main(args):
+    table_path = load_yaml('config/global.yml', key='path')['tables']
 
     df = find_best_hyperparameters(args.param, 'NDCG')
 
@@ -14,7 +14,7 @@ def main(args):
 
     results = converge(R_train, R_valid, df, epochs=1000, gpu_on=args.gpu)
 
-    save_dataframe_csv(results, 'tables/', args.name)
+    save_dataframe_csv(results, table_path, args.name)
 
     show_training_progress(results, hue='model', metric='NDCG', name="epoch_vs_ndcg")
 

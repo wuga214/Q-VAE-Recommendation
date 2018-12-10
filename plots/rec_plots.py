@@ -1,12 +1,7 @@
-import numpy as np
 import itertools
 import matplotlib.pyplot as plt
-from mpl_toolkits.axes_grid1 import ImageGrid
-
-import matplotlib.patches as mpatches
-from matplotlib.collections import PatchCollection
-
 import seaborn as sns
+from utils.io import load_yaml
 sns.axes_style("white")
 
 
@@ -16,7 +11,9 @@ def show_training_progress(df, hue='model', metric='NDCG', name="epoch_vs_ndcg",
     ax = sns.lineplot(x='epoch', y=metric, hue=hue, style=hue, data=df)
     plt.tight_layout()
     if save:
-        fig.savefig('figs/train/progress/'+name+'.png', bbox_inches="tight", pad_inches=0, format='png')
+        fig_path = load_yaml('config/global.yml', key='path')['figs']
+        fig.savefig('{0}/train/progress/{1}.png'.format(fig_path, name),
+                    bbox_inches="tight", pad_inches=0, format='png')
     else:
         plt.show()
 
@@ -53,8 +50,9 @@ def pandas_ridge_plot(df, model, pop, k, folder='figures', name='personalization
     g.set(yticks=[])
     g.despine(bottom=True, left=True)
     if save:
-        plt.savefig("figs/{0}/{1}.pdf".format(folder, name), format="pdf")
-        plt.savefig("figs/{0}/{1}.png".format(folder, name), format="png")
+        fig_path = load_yaml('config/global.yml', key='path')['figs']
+        plt.savefig("{2}/{0}/{1}.pdf".format(folder, name, fig_path), format="pdf")
+        plt.savefig("{2}/{0}/{1}.png".format(folder, name, fig_path), format="png")
     else:
         plt.show()
     plt.close()
@@ -80,8 +78,9 @@ def pandas_bar_plot(df, x, y, hue, x_name, y_name, folder='figures', name='unkno
         ax.legend_.remove()
     plt.tight_layout()
     if save:
-        plt.savefig("figs/{0}/{1}_bar.pdf".format(folder, name), format="pdf")
-        plt.savefig("figs/{0}/{1}_bar.png".format(folder, name), format="png")
+        fig_path = load_yaml('config/global.yml', key='path')['figs']
+        plt.savefig("{2}/{0}/{1}_bar.pdf".format(folder, name, fig_path), format="pdf")
+        plt.savefig("{2}/{0}/{1}_bar.png".format(folder, name, fig_path), format="png")
     else:
         plt.show()
     plt.close()

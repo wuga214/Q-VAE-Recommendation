@@ -3,7 +3,7 @@ import argparse
 import json
 import pandas as pd
 from experiment.execute import execute
-from utils.io import load_numpy, save_dataframe_latex, save_dataframe_csv, find_best_hyperparameters
+from utils.io import load_numpy, save_dataframe_csv, find_best_hyperparameters, load_yaml
 from utils.modelnames import models
 
 
@@ -19,8 +19,9 @@ IFVAE,1,0.2,50,300,0.0001
 
 
 def main(args):
+    table_path = load_yaml('config/global.yml', key='path')['tables']
 
-    df = find_best_hyperparameters('tables/'+args.problem, 'NDCG')
+    df = find_best_hyperparameters(table_path+args.problem, 'NDCG')
 
     R_train = load_numpy(path=args.path, name=args.train)
     R_valid = load_numpy(path=args.path, name=args.valid)
@@ -35,7 +36,7 @@ def main(args):
         frame.append(result)
 
     results = pd.concat(frame)
-    save_dataframe_csv(results, 'tables/', args.name)
+    save_dataframe_csv(results, table_path, args.name)
 
 if __name__ == "__main__":
     # Commandline arguments

@@ -3,13 +3,14 @@ import argparse
 import json
 import pandas as pd
 from experiment.personalization import personalization
-from utils.io import load_numpy, save_dataframe_latex, save_dataframe_csv, find_best_hyperparameters
-from utils.modelnames import models
+from utils.io import load_numpy, find_best_hyperparameters, load_yaml
 
 
 def main(args):
 
-    df = find_best_hyperparameters('tables/'+args.problem, 'NDCG')
+    table_path = load_yaml('config/global.yml', key='path')['tables']
+
+    df = find_best_hyperparameters(table_path+args.problem, 'NDCG')
 
     R_train = load_numpy(path=args.path, name=args.train)
     R_valid = load_numpy(path=args.path, name=args.valid)

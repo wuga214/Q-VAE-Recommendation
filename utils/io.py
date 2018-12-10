@@ -130,10 +130,10 @@ def load_pickle(path, name):
     return data
 
 
-def load_yaml(path):
+def load_yaml(path, key='parameters'):
     with open(path, 'r') as stream:
         try:
-            return yaml.load(stream)['parameters']
+            return yaml.load(stream)[key]
         except yaml.YAMLError as exc:
             print(exc)
 
