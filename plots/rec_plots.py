@@ -62,7 +62,7 @@ def pandas_ridge_plot(df, model, pop, k, folder='figures', name='personalization
 
 def pandas_bar_plot(df, x, y, hue, x_name, y_name, folder='figures', name='unknown', save=True):
     fig, ax = plt.subplots(figsize=(8, 4))
-    sns.barplot(ax=ax, x=x, y=y, hue=hue, data=df, errwidth=1)
+    sns.barplot(ax=ax, x=x, y=y, hue=hue, data=df, errwidth=1, edgecolor='black')
 
     num_category = len(df[x].unique())
     hatch = None
@@ -74,8 +74,8 @@ def pandas_bar_plot(df, x, y, hue, x_name, y_name, folder='figures', name='unkno
 
     plt.xlabel(x_name)
     plt.ylabel(y_name)
-    plt.xticks(rotation=15)
-    plt.legend(loc='upper left')
+    #plt.xticks(rotation=15)
+    plt.legend(loc='upper left', ncol=5)
     if 'Precision' not in y:
         ax.legend_.remove()
     plt.tight_layout()
