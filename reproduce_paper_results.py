@@ -1,21 +1,8 @@
-import numpy as np
 import argparse
-import json
 import pandas as pd
 from experiment.execute import execute
 from utils.io import load_numpy, save_dataframe_csv, find_best_hyperparameters, load_yaml
 from utils.modelnames import models
-
-
-""" Example Params.csv File
-
-model,alpha,corruption,rank,iter,lam
-VAE-CF,1,0.2,100,300,0.0001
-AutoRec,1,0.2,50,300,0.000001
-CDAE,1,0.2,50,300,0.000001
-IFVAE,1,0.2,50,300,0.0001
-
-"""
 
 
 def main(args):

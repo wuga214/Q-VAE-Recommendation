@@ -16,7 +16,7 @@ def main(args):
 
 if __name__ == "__main__":
     # Commandline arguments
-    parser = argparse.ArgumentParser(description="Personalization")
+    parser = argparse.ArgumentParser(description="UserAnalysis")
     parser.add_argument('-d', dest='path', default="datax/")
     parser.add_argument('-t', dest='train', default='Rtrain.npz')
     parser.add_argument('-v', dest='valid', default='Rtest.npz')
