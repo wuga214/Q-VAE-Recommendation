@@ -16,7 +16,7 @@ def main(args):
     frame = []
     for idx, row in df.iterrows():
         row = row.to_dict()
-        row['metric'] = ['R-Precision', 'NDCG', 'Precision', 'Recall']
+        row['metric'] = ['R-Precision', 'NDCG', 'Precision', 'Recall', "MAP"]
         row['topK'] = [5, 10, 15, 20, 50]
         result = execute(R_train, R_valid, row, models[row['model']],
                          measure=row['similarity'], gpu_on=args.gpu, folder=args.model_folder)

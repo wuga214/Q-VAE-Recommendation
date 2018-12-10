@@ -12,6 +12,11 @@ def precisionk(vector_predict, hits, **unused):
     return float(hits)/len(vector_predict)
 
 
+def average_precisionk(vector_predict, hits, **unused):
+    precisions = np.cumsum(hits, dtype=np.float32)/range(1, len(vector_predict)+1)
+    return np.mean(precisions)
+
+
 def r_precision(vector_true_dense, vector_predict, **unused):
     vector_predict_short = vector_predict[:len(vector_true_dense)]
     hits = len(np.isin(vector_predict_short, vector_true_dense).nonzero()[0])
@@ -57,7 +62,8 @@ def evaluate(matrix_Predict, matrix_Test, metric_names, atK, analytical=False):
 
     local_metrics = {
         "Precision": precisionk,
-        "Recall": recallk
+        "Recall": recallk,
+        "MAP": average_precisionk
     }
 
     output = dict()

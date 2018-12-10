@@ -10,7 +10,7 @@ def main(args):
     R_train = load_numpy(path=args.path, name=args.train)
     R_valid = load_numpy(path=args.path, name=args.valid)
     topK = [5, 10, 15, 20, 25, 30, 35, 40, 45, 50]
-    metric = ['R-Precision', 'NDCG', 'Clicks', 'Recall', 'Precision']
+    metric = ['R-Precision', 'NDCG', 'Clicks', 'Recall', 'Precision', 'MAP']
 
     usercategory(R_train, R_valid, df, topK, metric, args.problem, args.model_folder, gpu_on=args.gpu)
 
