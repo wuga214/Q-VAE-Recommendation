@@ -3,6 +3,7 @@ import pandas as pd
 from experiment.execute import execute
 from utils.io import load_numpy, save_dataframe_csv, find_best_hyperparameters, load_yaml
 from utils.modelnames import models
+from plots.rec_plots import precision_recall_curve
 
 
 def main(args):
@@ -13,17 +14,20 @@ def main(args):
     R_train = load_numpy(path=args.path, name=args.train)
     R_valid = load_numpy(path=args.path, name=args.valid)
 
+    topK = [5, 10, 15, 20, 50]
+
     frame = []
     for idx, row in df.iterrows():
         row = row.to_dict()
         row['metric'] = ['R-Precision', 'NDCG', 'Precision', 'Recall', "MAP"]
-        row['topK'] = [5, 10, 15, 20, 50]
+        row['topK'] = topK
         result = execute(R_train, R_valid, row, models[row['model']],
                          measure=row['similarity'], gpu_on=args.gpu, folder=args.model_folder)
         frame.append(result)
 
     results = pd.concat(frame)
     save_dataframe_csv(results, table_path, args.name)
+    precision_recall_curve(results, topK, save=True, folder='analysis/'+args.problem)
 
 if __name__ == "__main__":
     # Commandline arguments

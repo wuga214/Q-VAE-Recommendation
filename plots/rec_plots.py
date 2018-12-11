@@ -87,12 +87,31 @@ def pandas_bar_plot(df, x, y, hue, x_name, y_name, folder='figures', name='unkno
     plt.close()
 
 
-def precision_recall_curve(df, x, y, hue, x_name, y_name,
-                           folder='figures', name='unknown', save=True):
-    fig, ax = plt.subplots(figsize=(8, 4))
-    precisions = [x for x in df.columns if "Precision@" in x]
-    recalls = [x for x in df.columns if "Recall@" in x]
-    for i in len(df):
-        precision = [literal_eval(x)[0] for x in df[precisions].iloc[i].tolist()]
-        recall = [literal_eval(x)[0] for x in df[recalls].iloc[i].tolist()]
-        ax.plot()
+def precision_recall_curve(df,
+                           k,
+                           folder='figures', name='precison_recall', save=True, reloaded=False):
+    fig, ax = plt.subplots(figsize=(6, 4))
+    precisions = ["Precision@"+str(x) for x in k]
+    recalls = ["Recall@"+str(x) for x in k]
+
+    markers = ['o', '^', 's', '*', 'P', 'h', 'd', '3', 'X', 'v']
+    for i in range(len(df)):
+        if reloaded:
+            precision = [literal_eval(x)[0] for x in df[precisions].iloc[i].tolist()]
+            recall = [literal_eval(x)[0] for x in df[recalls].iloc[i].tolist()]
+        else:
+            precision = [x[0] for x in df[precisions].iloc[i].tolist()]
+            recall = [x[0] for x in df[recalls].iloc[i].tolist()]
+        ax.plot(recall, precision, label=df['model'].iloc[i], marker=markers[i])
+    plt.legend(loc='upper right', ncol=2)
+
+    plt.xlabel("Recall")
+    plt.ylabel("Precision")
+    plt.tight_layout()
+    if save:
+        fig_path = load_yaml('config/global.yml', key='path')['figs']
+        plt.savefig("{2}/{0}/{1}_curve.pdf".format(folder, name, fig_path), format="pdf")
+        plt.savefig("{2}/{0}/{1}_curve.png".format(folder, name, fig_path), format="png")
+    else:
+        plt.show()
+    plt.close()
