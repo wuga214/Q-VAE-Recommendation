@@ -1,0 +1,2 @@
+model,rank,alpha,lambda,iter,similarity,corruption,root,topK,NDCG,Precision@10,Precision@15,Precision@20,Precision@5,Precision@50,R-Precision,Recall@10,Recall@15,Recall@20,Recall@5,Recall@50
+WRMF,100,1,1,10,Cosine,0,1.0,,"[0.1533, 0.0004]","[0.1041, 0.0004]","[0.0972, 0.0003]","[0.0918, 0.0003]","[0.1147, 0.0005]","[0.0738, 0.0002]","[0.0861, 0.0003]","[0.077, 0.0004]","[0.1035, 0.0004]","[0.1262, 0.0005]","[0.0448, 0.0003]","[0.225, 0.0006]"
