@@ -5,11 +5,18 @@ from evaluation.metrics import evaluate
 from utils.progress import WorkSplitter
 import inspect
 from models.predictor import predict
+from utils.io import load_dataframe_csv, save_dataframe_csv, load_yaml
 
 
-def hyper_parameter_tuning(train, validation, params, measure='Cosine', gpu_on=True):
+def hyper_parameter_tuning(train, validation, params, save_path, measure='Cosine', gpu_on=True):
     progress = WorkSplitter()
-    df = pd.DataFrame(columns=['model', 'rank', 'alpha', 'lambda', 'iter', 'similarity', 'corruption', 'root', 'topK'])
+    table_path = load_yaml('config/global.yml', key='path')['tables']
+
+    try:
+        df = load_dataframe_csv(table_path, save_path)
+    except:
+        df = pd.DataFrame(columns=['model', 'rank', 'alpha', 'lambda',
+                                   'iter', 'similarity', 'corruption', 'root', 'topK'])
 
     num_user = train.shape[0]
 
@@ -24,6 +31,14 @@ def hyper_parameter_tuning(train, validation, params, measure='Cosine', gpu_on=T
                     for corruption in params['corruption']:
 
                         for root in params['root']:
+
+                            if ((df['model'] == algorithm) &
+                                (df['rank'] == rank) &
+                                (df['alpha'] == alpha) &
+                                (df['lambda'] == lam) &
+                                (df['corruption'] == corruption) &
+                               (df['root'] == root)).any():
+                                continue
 
                             format = "model: {0}, rank: {1}, alpha: {2}, lambda: {3}, corruption: {4}, root: {5}"
                             progress.section(format.format(algorithm, rank, alpha, lam, corruption, root))
@@ -55,4 +70,5 @@ def hyper_parameter_tuning(train, validation, params, measure='Cosine', gpu_on=T
                                 result_dict[name] = [round(result[name][0], 4), round(result[name][1], 4)]
 
                             df = df.append(result_dict, ignore_index=True)
-    return df
+
+                            save_dataframe_csv(df, table_path, save_path)

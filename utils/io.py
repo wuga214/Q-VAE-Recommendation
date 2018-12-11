@@ -13,7 +13,11 @@ from ast import literal_eval
 
 
 def save_dataframe_csv(df, path, name):
-    df.to_csv(path+name)
+    df.to_csv(path+name, index=False)
+
+
+def load_dataframe_csv(path, name):
+    return pd.read_csv(path+name)
 
 
 def save_dataframe_latex(df, path, model):
