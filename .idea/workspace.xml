@@ -5,12 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0388e4b0-6a26-46c6-8d3d-c585814fb1c3" name="Default Changelist" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/IFVAE.iml" afterPath="$PROJECT_DIR$/.idea/IFVAE.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/plots/rec_plots.py" afterPath="$PROJECT_DIR$/plots/rec_plots.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/reproduce_paper_results.py" afterPath="$PROJECT_DIR$/reproduce_paper_results.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tables/20m_final_result.csv" afterPath="$PROJECT_DIR$/tables/20m_final_result.csv" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/tables/.~lock.20m_final_result.csv#" afterPath="" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -112,11 +107,21 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="rec_plots.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="rec_plots.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/plots/rec_plots.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="648">
-              <caret line="103" column="65" lean-forward="true" selection-start-line="103" selection-start-column="65" selection-end-line="103" selection-end-column="65" />
+            <state relative-caret-position="614">
+              <caret line="101" column="13" lean-forward="false" selection-start-line="101" selection-start-column="13" selection-end-line="101" selection-end-column="13" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="package_install.sh" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/package_install.sh">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="34">
+              <caret line="2" column="182" lean-forward="false" selection-start-line="2" selection-start-column="182" selection-end-line="2" selection-end-column="182" />
               <folding />
             </state>
           </provider>
@@ -150,16 +155,6 @@
               <folding>
                 <element signature="e#0#9#0" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="grid_plots.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/plots/grid_plots.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="697">
-              <caret line="45" column="31" lean-forward="false" selection-start-line="45" selection-start-column="31" selection-end-line="45" selection-end-column="31" />
-              <folding />
             </state>
           </provider>
         </entry>
@@ -207,7 +202,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/config/wrmf-part12.yml" />
         <option value="$PROJECT_DIR$/config/wrmf-part13.yml" />
         <option value="$PROJECT_DIR$/config/wrmf-part14.yml" />
         <option value="$PROJECT_DIR$/config/wrmf-part15.yml" />
@@ -258,6 +252,7 @@
         <option value="$PROJECT_DIR$/models/wrmf.py" />
         <option value="$PROJECT_DIR$/reproduce_paper_results.py" />
         <option value="$PROJECT_DIR$/plots/rec_plots.py" />
+        <option value="$PROJECT_DIR$/package_install.sh" />
       </list>
     </option>
   </component>
@@ -359,8 +354,9 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="1920" y="-4" width="2497" height="1092" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.10004083" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.10004083" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -698,8 +694,16 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/plots/rec_plots.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="648">
-          <caret line="103" column="65" lean-forward="true" selection-start-line="103" selection-start-column="65" selection-end-line="103" selection-end-column="65" />
+        <state relative-caret-position="614">
+          <caret line="101" column="13" lean-forward="false" selection-start-line="101" selection-start-column="13" selection-end-line="101" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/package_install.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="2" column="182" lean-forward="false" selection-start-line="2" selection-start-column="182" selection-end-line="2" selection-end-column="182" />
           <folding />
         </state>
       </provider>
