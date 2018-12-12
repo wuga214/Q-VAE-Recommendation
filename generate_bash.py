@@ -18,7 +18,7 @@ def main(args):
         content = pattern.format(args.virtualenv_path, project_path, args.data_path, args.problem, name)
         write_file(bash_path+args.problem, args.problem+'-'+name+'.sh', content, exe=True)
 
-    bash_files = get_file_names(bash_path+args.problem, extension='.sh')
+    bash_files = sorted(get_file_names(bash_path+args.problem, extension='.sh'))
 
     commands = []
     command_pattern = 'sbatch --nodes=1 --time={0}:00:00 --mem={1} --cpus=4 '
