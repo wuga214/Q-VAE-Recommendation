@@ -19,6 +19,20 @@ def show_training_progress(df, hue='model', metric='NDCG', name="epoch_vs_ndcg",
         plt.show()
 
 
+def show_uncertainty(df, x, y, hue='model', folder='unknown', name='uncertainty_analysis', save=True):
+    fig, ax = plt.subplots(figsize=(8, 4))
+    sns.lineplot(x=x, y=y, hue=hue, style=hue, data=df, ax=ax)
+    plt.tight_layout()
+    if save:
+        fig_path = load_yaml('config/global.yml', key='path')['figs']
+        fig.savefig('{0}/analysis/{1}/{2}.pdf'.format(fig_path, folder, name),
+                    bbox_inches="tight", pad_inches=0, format='pdf')
+        fig.savefig('{0}/analysis/{1}/{2}.png'.format(fig_path, folder, name),
+                    bbox_inches="tight", pad_inches=0, format='png')
+    else:
+        plt.show()
+
+
 def pandas_ridge_plot(df, model, pop, k, folder='figures', name='personalization', save=True):
     sns.set(style="white", rc={"axes.facecolor": (0, 0, 0, 0)})
     num_models = len(df.model.unique())

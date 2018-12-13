@@ -41,17 +41,20 @@ class IFVAE(object):
             hc = wc * mask2
 
             with tf.variable_scope('network'):
-                self.wc_mean, self.wc_std, self.wc_obs_mean = self._network(wc)
+                self.wc_mean, wc_log_std, self.wc_obs_mean = self._network(wc)
             with tf.variable_scope('network', reuse=True):
-                self.hc_mean, self.hc_std, self.hc_obs_mean = self._network(hc)
+                self.hc_mean, hc_log_std, self.hc_obs_mean = self._network(hc)
+
+            self.wc_std = tf.exp(wc_log_std)
+            self.hc_std = tf.exp(hc_log_std)
 
             with tf.variable_scope('loss'):
                 with tf.variable_scope('kl-divergence'):
-                    kl1 = self._kl_diagnormal_stdnormal(self.wc_mean, self.wc_std,
-                                                        self.hc_mean, self.hc_std)
-                    kl2 = self._kl_diagnormal_stdnormal(self.hc_mean, self.hc_std,
+                    kl1 = self._kl_diagnormal_stdnormal(self.wc_mean, wc_log_std,
+                                                        self.hc_mean, hc_log_std)
+                    kl2 = self._kl_diagnormal_stdnormal(self.hc_mean, hc_log_std,
                                                         tf.zeros_like(self.hc_mean),
-                                                        tf.ones_like(self.hc_std))
+                                                        tf.ones_like(hc_log_std))
 
                 if self._observation_distribution == 'Gaussian':
                     with tf.variable_scope('gaussian'):
@@ -100,8 +103,8 @@ class IFVAE(object):
 
         with tf.variable_scope('latent'):
             mean = encoded[:, :self._latent_dim]
-            logvar = encoded[:, self._latent_dim:]
-            std = tf.sqrt(tf.exp(logvar))
+            logstd = encoded[:, self._latent_dim:]
+            std = tf.exp(logstd)
             epsilon = tf.random_normal(tf.shape(std))
             z = mean
 
@@ -116,14 +119,23 @@ class IFVAE(object):
 
             obs_mean = decoded
 
-        return mean, std, obs_mean#, sample
+        return mean, logstd, obs_mean
+
+    # @staticmethod
+    # def _kl_diagnormal_stdnormal(mu_1, std_1, mu_2=0, std_2=1):
+    #
+    #     kl = tf.reduce_mean(tf.log(std_2) - tf.log(std_1)
+    #                         + tf.divide((tf.square(std_1) + tf.square(mu_1-mu_2)), 2*tf.square(std_2))
+    #                         - 0.5)
+    #     return kl
 
     @staticmethod
-    def _kl_diagnormal_stdnormal(mu_1, std_1, mu_2=0, std_2=1):
+    def _kl_diagnormal_stdnormal(mu_1, log_std_1, mu_2=0, log_std_2=0):
 
-        kl = tf.reduce_mean(tf.log(std_2) - tf.log(std_1)
-                            + tf.divide((tf.square(std_1) + tf.square(mu_1-mu_2)), 2*tf.square(std_2))
-                            - 0.5)
+        var_square_1 = tf.exp(2. * log_std_1)
+        var_square_2 = tf.exp(2. * log_std_2)
+        kl = 0.5 * tf.reduce_mean(2 * log_std_2 - 2. * log_std_1
+                                  + tf.divide(var_square_1 + tf.square(mu_1-mu_2), var_square_2) - 1.)
         return kl
 
     @staticmethod

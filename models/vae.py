@@ -50,8 +50,8 @@ class VAE(object):
 
             with tf.variable_scope('latent'):
                 self.mean = encoded[:, :self._latent_dim]
-                logvar = encoded[:, self._latent_dim:]
-                self.stddev = tf.sqrt(tf.exp(logvar))
+                logstd = encoded[:, self._latent_dim:]
+                self.stddev = tf.exp(logstd)
                 epsilon = tf.random_normal(tf.shape(self.stddev))
                 self.z = tf.cond(self.sampling, lambda: self.mean + self.stddev * epsilon, lambda: self.mean)
 
@@ -73,7 +73,7 @@ class VAE(object):
 
             with tf.variable_scope('loss'):
                 with tf.variable_scope('kl-divergence'):
-                    kl = self._kl_diagnormal_stdnormal(self.mean, logvar)
+                    kl = self._kl_diagnormal_stdnormal(self.mean, logstd)
 
                 if self._observation_distribution == 'Gaussian':
                     with tf.variable_scope('gaussian'):
@@ -100,10 +100,10 @@ class VAE(object):
             self.sess.run(init)
 
     @staticmethod
-    def _kl_diagnormal_stdnormal(mu, log_var):
+    def _kl_diagnormal_stdnormal(mu, log_std):
 
-        var = tf.exp(log_var)
-        kl = 0.5 * tf.reduce_mean(tf.square(mu) + var - 1. - log_var)
+        var_square = tf.exp(2 * log_std)
+        kl = 0.5 * tf.reduce_mean(tf.square(mu) + var_square - 1. - 2 * log_std)
         return kl
 
     @staticmethod
