@@ -7,7 +7,7 @@ from plots.rec_plots import show_training_progress
 def main(args):
     table_path = load_yaml('config/global.yml', key='path')['tables']
 
-    df = find_best_hyperparameters(args.param, 'NDCG')
+    df = find_best_hyperparameters(table_path+args.param, 'NDCG')
 
     R_train = load_numpy(path=args.path, name=args.train)
     R_valid = load_numpy(path=args.path, name=args.valid)
@@ -25,7 +25,7 @@ if __name__ == "__main__":
     parser.add_argument('-d', dest='path', default="datax/")
     parser.add_argument('-t', dest='train', default='Rtrain.npz')
     parser.add_argument('-v', dest='valid', default='Rtest.npz')
-    parser.add_argument('-p', dest='param', default='tables/movielens1m')
+    parser.add_argument('-p', dest='param', default='movielens1m')
     parser.add_argument('-type', dest='type', default='optimizer')
     parser.add_argument('-gpu', dest='gpu', action='store_true')
     args = parser.parse_args()

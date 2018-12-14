@@ -46,7 +46,6 @@ class IFVAE(object):
                 self.hc_mean, hc_log_std, self.hc_obs_mean = self._network(hc)
 
             self.wc_std = tf.exp(wc_log_std)
-            self.hc_std = tf.exp(hc_log_std)
 
             with tf.variable_scope('loss'):
                 with tf.variable_scope('kl-divergence'):
@@ -99,10 +98,10 @@ class IFVAE(object):
                                          name="Weights")
             encode_bias = tf.Variable(tf.constant(0., shape=[self._latent_dim * 2]), name="Bias")
 
-            encoded = tf.nn.relu(tf.matmul(x, self.encode_weights) + encode_bias)
+            encoded = tf.matmul(x, self.encode_weights) + encode_bias
 
         with tf.variable_scope('latent'):
-            mean = encoded[:, :self._latent_dim]
+            mean = tf.nn.relu(encoded[:, :self._latent_dim])
             logstd = encoded[:, self._latent_dim:]
             std = tf.exp(logstd)
             epsilon = tf.random_normal(tf.shape(std))

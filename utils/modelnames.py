@@ -33,6 +33,6 @@ autoencoders = {
 }
 
 vaes = {
-    #"VAE-CF": VAE,
+    "VAE-CF": VAE,
     "IFVAE": IFVAE
 }

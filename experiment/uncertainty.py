@@ -7,7 +7,7 @@ from tqdm import tqdm
 from utils.regularizers import Regularizer
 
 
-def uncertainty(Rtrain, df_input):
+def uncertainty(Rtrain, df_input, rank):
     progress = WorkSplitter()
     m, n = Rtrain.shape
 
@@ -28,20 +28,10 @@ def uncertainty(Rtrain, df_input):
             if 'optimizer' not in row.keys():
                 row['optimizer'] = 'RMSProp'
 
-            model = vaes[row['model']](n, row['rank'],
+            model = vaes[row['model']](n, rank,
                                        batch_size=100,
                                        lamb=row['lambda'],
                                        optimizer=Regularizer[row['optimizer']])
-
-            data_batches = model.get_batches(Rtrain, batch_size=100)
-            for batch in tqdm(data_batches):
-                batch_size = batch.shape[0]
-                _, stds = model.uncertainty(batch.todense())
-                num_rated = np.squeeze(np.asarray(np.sum(batch, axis=1)))
-                std = np.mean(stds, axis=1)
-                results.append(pd.DataFrame({'model': [row['model']]*batch_size, 'numRated': num_rated, 'std': std}))
-            import ipdb;
-            ipdb.set_trace()
 
             model.train_model(Rtrain, corruption=row['corruption'], epoch=row['iter'])
             data_batches = model.get_batches(Rtrain, batch_size=100)
@@ -52,7 +42,5 @@ def uncertainty(Rtrain, df_input):
                 num_rated = np.squeeze(np.asarray(np.sum(batch, axis=1)))
                 std = np.mean(stds, axis=1)
                 results.append(pd.DataFrame({'model': [row['model']]*batch_size, 'numRated': num_rated, 'std': std}))
-            import ipdb;
-            ipdb.set_trace()
 
     return pd.concat(results)

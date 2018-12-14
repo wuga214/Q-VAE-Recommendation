@@ -46,10 +46,10 @@ class VAE(object):
                                              name="Weights")
                 encode_bias = tf.Variable(tf.constant(0., shape=[self._latent_dim*2]), name="Bias")
 
-                encoded = tf.nn.relu(tf.matmul(wc, encode_weights) + encode_bias)
+                encoded = tf.matmul(wc, encode_weights) + encode_bias
 
             with tf.variable_scope('latent'):
-                self.mean = encoded[:, :self._latent_dim]
+                self.mean = tf.nn.relu(encoded[:, :self._latent_dim])
                 logstd = encoded[:, self._latent_dim:]
                 self.stddev = tf.exp(logstd)
                 epsilon = tf.random_normal(tf.shape(self.stddev))
