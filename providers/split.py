@@ -3,21 +3,33 @@ import numpy as np
 from tqdm import tqdm
 
 
-def split_seed_randomly(rating_matrix, ratio=[0.5, 0.2, 0.3], implicit=True, remove_empty=True, split_seed=8292):
+def split_seed_randomly(rating_matrix, ratio=[0.5, 0.2, 0.3], threshold=70,
+                        implicit=True, remove_empty=True, split_seed=8292, sampling=True, percentage=0.1):
     '''
     Split based on a deterministic seed randomly
     '''
+
+    if sampling:
+        m, n = rating_matrix.shape
+        index = np.random.choice(m, int(m * percentage))
+        rating_matrix = rating_matrix[index]
+
+
     if implicit:
         '''
         If only implicit (clicks, views, binary) feedback, convert to implicit feedback
         '''
         temp_rating_matrix = sparse.csr_matrix(rating_matrix.shape)
-        temp_rating_matrix[(rating_matrix > 50).nonzero()] = 1
+        temp_rating_matrix[(rating_matrix >= threshold).nonzero()] = 1
         rating_matrix = temp_rating_matrix
     if remove_empty:
         # Remove empty columns. record original item index
         nonzero_index = np.unique(rating_matrix.nonzero()[1])
         rating_matrix = rating_matrix[:, nonzero_index]
+
+        # Remove empty rows. record original user index
+        nonzero_rows = np.unique(rating_matrix.nonzero()[0])
+        rating_matrix = rating_matrix[nonzero_rows]
 
     # Note: This just gets the highest userId and doesn't account for non-contiguous users.
     user_num, item_num = rating_matrix.shape
@@ -65,7 +77,14 @@ def split_seed_randomly(rating_matrix, ratio=[0.5, 0.2, 0.3], implicit=True, rem
     return rtrain, rvalid, rtest, nonzero_index
 
 
-def time_ordered_split(rating_matrix, timestamp_matrix, ratio=[0.5, 0.2, 0.3], implicit=True, remove_empty=True):
+def time_ordered_split(rating_matrix, timestamp_matrix, ratio=[0.5, 0.2, 0.3],
+                       implicit=True, remove_empty=True, sampling=False):
+
+    if sampling:
+        m, n = rating_matrix.shape
+        index = np.random.choice(m, m//10)
+        rating_matrix = rating_matrix[index]
+
     if implicit:
         # rating_matrix[rating_matrix.nonzero()] = 1
 

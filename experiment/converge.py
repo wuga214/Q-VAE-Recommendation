@@ -6,9 +6,10 @@ from evaluation.metrics import evaluate
 from utils.progress import WorkSplitter
 from utils.regularizers import Regularizer
 from utils.modelnames import autoencoders
+from utils.io import save_dataframe_csv
 
 
-def converge(Rtrain, Rtest, df, epochs=10, gpu_on=True):
+def converge(Rtrain, Rtest, df, table_path, file_name, epochs=10, gpu_on=True):
     progress = WorkSplitter()
     m, n = Rtrain.shape
 
@@ -42,39 +43,44 @@ def converge(Rtrain, Rtest, df, epochs=10, gpu_on=True):
                                                    lamb=row['lambda'],
                                                    optimizer=Regularizer[row['optimizer']])
 
-            for i in range(epochs):
+            batches = model.get_batches(Rtrain, 100)
 
-                model.train_model(Rtrain, corruption=row['corruption'], epoch=1)
+            epoch_batch = 50
 
-                if (i + 1) % 20 == 0:
+            for i in range(epochs//epoch_batch):
 
-                    RQ = model.get_RQ(Rtrain)
-                    Y = model.get_Y()
-                    Bias = model.get_Bias()
+                model.train_model(Rtrain, corruption=row['corruption'], epoch=epoch_batch, batches=batches)
 
-                    Y = Y.T
 
-                    prediction = predict(matrix_U=RQ,
-                                         matrix_V=Y,
-                                         bias=Bias,
-                                         topK=row['topK'][0],
-                                         matrix_Train=Rtrain,
-                                         measure='Cosine',
-                                         gpu=gpu_on)
+                RQ = model.get_RQ(Rtrain)
+                Y = model.get_Y()
+                Bias = model.get_Bias()
 
-                    result = evaluate(prediction, Rtest, row['metric'], row['topK'])
-                    # Note Finished yet
-                    result_dict = {'model': row['model'],
-                                   'rank': row['rank'],
-                                   'lambda': row['lambda'],
-                                   'optimizer': row['optimizer'],
-                                   'epoch': i}
+                Y = Y.T
 
-                    for name in result.keys():
-                        result_dict[name] = round(result[name][0], 4)
-                    results = results.append(result_dict, ignore_index=True)
+                prediction = predict(matrix_U=RQ,
+                                     matrix_V=Y,
+                                     bias=Bias,
+                                     topK=row['topK'][0],
+                                     matrix_Train=Rtrain,
+                                     measure='Cosine',
+                                     gpu=gpu_on)
+
+                result = evaluate(prediction, Rtest, row['metric'], row['topK'])
+                # Note Finished yet
+                result_dict = {'model': row['model'],
+                               'rank': row['rank'],
+                               'lambda': row['lambda'],
+                               'optimizer': row['optimizer'],
+                               'epoch': (i+1)*epoch_batch}
+
+                for name in result.keys():
+                    result_dict[name] = round(result[name][0], 4)
+                results = results.append(result_dict, ignore_index=True)
 
             model.sess.close()
             tf.reset_default_graph()
+
+            save_dataframe_csv(results, table_path, file_name)
 
     return results

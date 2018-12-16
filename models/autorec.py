@@ -62,8 +62,9 @@ class AutoRec(object):
             remaining_size -= batch_size
         return batches
 
-    def train_model(self, rating_matrix, epoch=100, **unused):
-        batches = self.get_batches(rating_matrix, self.batch_size)
+    def train_model(self, rating_matrix, epoch=100, batches=None, **unused):
+        if batches is None:
+            batches = self.get_batches(rating_matrix, self.batch_size)
 
         # Training
         pbar = tqdm(range(epoch))
