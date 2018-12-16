@@ -6,7 +6,8 @@ import os
 def main(args):
     bash_path = load_yaml('config/global.yml', key='path')['bashes']
     yaml_files = get_file_names('config', extension='.yml')
-    project_path = os.path.dirname(os.path.abspath(__file__))
+    #project_path = os.path.dirname(os.path.abspath(__file__))
+    project_path = "~/IF-VAE-Recommendation"
 
     pattern = "#!/usr/bin/env bash\n" \
               "source {0}\n" \

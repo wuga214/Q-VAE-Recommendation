@@ -6,9 +6,10 @@ from evaluation.metrics import evaluate
 from utils.progress import WorkSplitter
 from utils.regularizers import Regularizer
 from utils.modelnames import autoencoders
+from utils.io import save_dataframe_csv
 
 
-def converge(Rtrain, Rtest, df, epochs=10, gpu_on=True):
+def converge(Rtrain, Rtest, df, table_path, name, epochs=10, gpu_on=True):
     progress = WorkSplitter()
     m, n = Rtrain.shape
 
@@ -42,11 +43,13 @@ def converge(Rtrain, Rtest, df, epochs=10, gpu_on=True):
                                                    lamb=row['lambda'],
                                                    optimizer=Regularizer[row['optimizer']])
 
+            batches = model.get_batches(Rtrain, 100)
+
             for i in range(epochs):
 
-                model.train_model(Rtrain, corruption=row['corruption'], epoch=1)
+                model.train_model(Rtrain, corruption=row['corruption'], epoch=1, batches=batches)
 
-                if (i + 1) % 20 == 0:
+                if (i + 1) % 25 == 0:
 
                     RQ = model.get_RQ(Rtrain)
                     Y = model.get_Y()
@@ -76,5 +79,7 @@ def converge(Rtrain, Rtest, df, epochs=10, gpu_on=True):
 
             model.sess.close()
             tf.reset_default_graph()
+
+            save_dataframe_csv(results, table_path, name)
 
     return results

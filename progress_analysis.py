@@ -1,6 +1,6 @@
 import argparse
 from experiment.converge import converge
-from utils.io import load_numpy, save_dataframe_csv, find_best_hyperparameters, load_yaml
+from utils.io import load_numpy, find_best_hyperparameters, load_yaml
 from plots.rec_plots import show_training_progress
 
 
@@ -12,9 +12,7 @@ def main(args):
     R_train = load_numpy(path=args.path, name=args.train)
     R_valid = load_numpy(path=args.path, name=args.valid)
 
-    results = converge(R_train, R_valid, df, epochs=1000, gpu_on=args.gpu)
-
-    save_dataframe_csv(results, table_path, args.name)
+    results = converge(R_train, R_valid, df, table_path, args.name, epochs=500, gpu_on=args.gpu)
 
     show_training_progress(results, hue='model', metric='NDCG', name="epoch_vs_ndcg")
 

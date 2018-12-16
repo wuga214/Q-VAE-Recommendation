@@ -135,8 +135,9 @@ class VAE(object):
 
         return gaussian_parameters
 
-    def train_model(self, rating_matrix, corruption, epoch=100):
-        batches = self.get_batches(rating_matrix, self._batch_size)
+    def train_model(self, rating_matrix, corruption, epoch=100, batches=None, **unused):
+        if batches is None:
+            batches = self.get_batches(rating_matrix, self._batch_size)
 
         # Training
         pbar = tqdm(range(epoch))
