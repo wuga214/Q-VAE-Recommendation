@@ -5,69 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0388e4b0-6a26-46c6-8d3d-c585814fb1c3" name="Default Changelist" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cluster_bash/yahoo/run_yahoo.sh" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cluster_bash/yahoo/yahoo-autorec.sh" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cluster_bash/yahoo/yahoo-bpr-part1.sh" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cluster_bash/yahoo/yahoo-bpr-part2.sh" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cluster_bash/yahoo/yahoo-bpr-part3.sh" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cluster_bash/yahoo/yahoo-bpr-part4.sh" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cluster_bash/yahoo/yahoo-bpr-part5.sh" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cluster_bash/yahoo/yahoo-bpr.sh" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cluster_bash/yahoo/yahoo-cdae-part1.sh" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cluster_bash/yahoo/yahoo-cdae-part2.sh" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cluster_bash/yahoo/yahoo-cdae-part3.sh" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cluster_bash/yahoo/yahoo-cdae-part4.sh" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cluster_bash/yahoo/yahoo-cdae.sh" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cluster_bash/yahoo/yahoo-cml-part1.sh" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cluster_bash/yahoo/yahoo-cml-part2.sh" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cluster_bash/yahoo/yahoo-cml-part3.sh" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cluster_bash/yahoo/yahoo-cml-part4.sh" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cluster_bash/yahoo/yahoo-cml-part5.sh" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cluster_bash/yahoo/yahoo-cml.sh" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cluster_bash/yahoo/yahoo-default.sh" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cluster_bash/yahoo/yahoo-global.sh" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cluster_bash/yahoo/yahoo-ifvae.sh" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cluster_bash/yahoo/yahoo-nceplrec.sh" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cluster_bash/yahoo/yahoo-plrec.sh" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cluster_bash/yahoo/yahoo-pop.sh" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cluster_bash/yahoo/yahoo-puresvd.sh" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cluster_bash/yahoo/yahoo-vae-part1.sh" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cluster_bash/yahoo/yahoo-vae-part2.sh" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cluster_bash/yahoo/yahoo-vae-part3.sh" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cluster_bash/yahoo/yahoo-vae-part4.sh" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cluster_bash/yahoo/yahoo-vae.sh" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cluster_bash/yahoo/yahoo-wrmf-part1.sh" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cluster_bash/yahoo/yahoo-wrmf-part10.sh" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cluster_bash/yahoo/yahoo-wrmf-part11.sh" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cluster_bash/yahoo/yahoo-wrmf-part12.sh" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cluster_bash/yahoo/yahoo-wrmf-part13.sh" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cluster_bash/yahoo/yahoo-wrmf-part14.sh" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cluster_bash/yahoo/yahoo-wrmf-part15.sh" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cluster_bash/yahoo/yahoo-wrmf-part2.sh" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cluster_bash/yahoo/yahoo-wrmf-part3.sh" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cluster_bash/yahoo/yahoo-wrmf-part4.sh" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cluster_bash/yahoo/yahoo-wrmf-part5.sh" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cluster_bash/yahoo/yahoo-wrmf-part6.sh" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cluster_bash/yahoo/yahoo-wrmf-part7.sh" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cluster_bash/yahoo/yahoo-wrmf-part8.sh" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cluster_bash/yahoo/yahoo-wrmf-part9.sh" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cluster_bash/yahoo/yahoo-wrmf.sh" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/figs/analysis/movielens20m/precison_recall_curve.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/figs/analysis/movielens20m/precison_recall_curve.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/figs/analysis/movielens20m/uncertainty_analysis.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/figs/analysis/movielens20m/uncertainty_analysis.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tables/netflix/ifvae.csv" afterPath="" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/getyahoo.py" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/tables/R-Precision" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/experiment/converge.py" afterPath="$PROJECT_DIR$/experiment/converge.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/generate_bash.py" afterPath="$PROJECT_DIR$/generate_bash.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/models/autorec.py" afterPath="$PROJECT_DIR$/models/autorec.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/models/cdae.py" afterPath="$PROJECT_DIR$/models/cdae.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/models/ifvae.py" afterPath="$PROJECT_DIR$/models/ifvae.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/models/vae.py" afterPath="$PROJECT_DIR$/models/vae.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/progress_analysis.py" afterPath="$PROJECT_DIR$/progress_analysis.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/providers/split.py" afterPath="$PROJECT_DIR$/providers/split.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tables/movielens20m/ifvae.csv" afterPath="$PROJECT_DIR$/tables/movielens20m/ifvae.csv" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tables/movielens20m/vae.csv" afterPath="$PROJECT_DIR$/tables/movielens20m/vae.csv" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/utils/io.py" afterPath="$PROJECT_DIR$/utils/io.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -135,7 +78,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="progress_analysis.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="progress_analysis.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/progress_analysis.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="510">
@@ -150,8 +93,8 @@
       <file leaf-file-name="global.yml" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/config/global.yml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+            <state relative-caret-position="68">
+              <caret line="4" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -160,8 +103,8 @@
       <file leaf-file-name="converge.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/experiment/converge.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="750">
-              <caret line="82" column="48" lean-forward="false" selection-start-line="82" selection-start-column="48" selection-end-line="82" selection-end-column="48" />
+            <state relative-caret-position="665">
+              <caret line="51" column="78" lean-forward="false" selection-start-line="51" selection-start-column="78" selection-end-line="51" selection-end-column="78" />
               <folding>
                 <element signature="e#0#11#0" expanded="true" />
               </folding>
@@ -169,12 +112,14 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="autorec.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/models/autorec.py">
+      <file leaf-file-name="getyahoo.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/getyahoo.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="136">
-              <caret line="58" column="17" lean-forward="true" selection-start-line="58" selection-start-column="17" selection-end-line="58" selection-end-column="17" />
-              <folding />
+            <state relative-caret-position="442">
+              <caret line="26" column="49" lean-forward="false" selection-start-line="26" selection-start-column="49" selection-end-line="26" selection-end-column="49" />
+              <folding>
+                <element signature="e#0#70#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -194,8 +139,8 @@
       <file leaf-file-name="split.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/providers/split.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="427">
-              <caret line="28" column="0" lean-forward="true" selection-start-line="28" selection-start-column="0" selection-end-line="28" selection-end-column="0" />
+            <state relative-caret-position="374">
+              <caret line="22" column="44" lean-forward="false" selection-start-line="22" selection-start-column="44" selection-end-line="22" selection-end-column="44" />
               <folding>
                 <element signature="e#0#29#0" expanded="true" />
               </folding>
@@ -207,7 +152,7 @@
         <entry file="file://$PROJECT_DIR$/config/wrmf-part9.yml">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="68">
-              <caret line="4" column="16" lean-forward="true" selection-start-line="4" selection-start-column="16" selection-end-line="4" selection-end-column="16" />
+              <caret line="4" column="16" lean-forward="false" selection-start-line="4" selection-start-column="16" selection-end-line="4" selection-end-column="16" />
               <folding />
             </state>
           </provider>
@@ -216,8 +161,8 @@
       <file leaf-file-name="io.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/utils/io.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="595">
-              <caret line="35" column="4" lean-forward="false" selection-start-line="35" selection-start-column="4" selection-end-line="35" selection-end-column="4" />
+            <state relative-caret-position="522">
+              <caret line="73" column="58" lean-forward="false" selection-start-line="73" selection-start-column="58" selection-end-line="73" selection-end-column="58" />
               <folding>
                 <element signature="e#0#9#0" expanded="true" />
               </folding>
@@ -225,11 +170,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="main.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/main.py">
+      <file leaf-file-name="getmovielens.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/getmovielens.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="187">
-              <caret line="37" column="23" lean-forward="false" selection-start-line="37" selection-start-column="23" selection-end-line="37" selection-end-column="23" />
+            <state relative-caret-position="119">
+              <caret line="11" column="26" lean-forward="false" selection-start-line="11" selection-start-column="26" selection-end-line="11" selection-end-column="26" />
               <folding />
             </state>
           </provider>
@@ -266,7 +211,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/config/cml-part3.yml" />
         <option value="$PROJECT_DIR$/config/cml-part4.yml" />
         <option value="$PROJECT_DIR$/config/cml-part5.yml" />
         <option value="$PROJECT_DIR$/config/bpr-part1.yml" />
@@ -298,7 +242,6 @@
         <option value="$PROJECT_DIR$/tune_parameters.py" />
         <option value="$PROJECT_DIR$/config/wrmf-part1.yml" />
         <option value="$PROJECT_DIR$/gettaobao.py" />
-        <option value="$PROJECT_DIR$/utils/io.py" />
         <option value="$PROJECT_DIR$/main.py" />
         <option value="$PROJECT_DIR$/tables/movielens1m/vae.csv" />
         <option value="$PROJECT_DIR$/utils/modelnames.py" />
@@ -314,9 +257,11 @@
         <option value="$PROJECT_DIR$/models/ifvae.py" />
         <option value="$PROJECT_DIR$/models/vae.py" />
         <option value="$PROJECT_DIR$/models/cdae.py" />
-        <option value="$PROJECT_DIR$/experiment/converge.py" />
         <option value="$PROJECT_DIR$/progress_analysis.py" />
+        <option value="$PROJECT_DIR$/experiment/converge.py" />
         <option value="$PROJECT_DIR$/providers/split.py" />
+        <option value="$PROJECT_DIR$/utils/io.py" />
+        <option value="$PROJECT_DIR$/getyahoo.py" />
       </list>
     </option>
   </component>
@@ -327,8 +272,8 @@
     <sorting>DEFINITION_ORDER</sorting>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="1444" />
-    <option name="y" value="432" />
+    <option name="x" value="1463" />
+    <option name="y" value="421" />
     <option name="width" value="1851" />
     <option name="height" value="1068" />
   </component>
@@ -464,6 +409,27 @@
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
+    <layout-to-restore>
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.10289914" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Data View" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+    </layout-to-restore>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
@@ -478,22 +444,7 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/config/wrmf-part4.yml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/tables/movielens1m/vae.csv">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/getmovielens.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
@@ -769,22 +720,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/cluster_bash/yahoo/yahoo-bpr-part3.sh">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="4" column="0" lean-forward="false" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/config/wrmf-part9.yml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="4" column="16" lean-forward="true" selection-start-line="4" selection-start-column="16" selection-end-line="4" selection-end-column="16" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/main.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="187">
@@ -793,20 +728,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/utils/io.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="595">
-          <caret line="35" column="4" lean-forward="false" selection-start-line="35" selection-start-column="4" selection-end-line="35" selection-end-column="4" />
-          <folding>
-            <element signature="e#0#9#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/models/autorec.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="136">
-          <caret line="58" column="17" lean-forward="true" selection-start-line="58" selection-start-column="17" selection-end-line="58" selection-end-column="17" />
+          <caret line="58" column="17" lean-forward="false" selection-start-line="58" selection-start-column="17" selection-end-line="58" selection-end-column="17" />
           <folding />
         </state>
       </provider>
@@ -821,30 +746,18 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/providers/split.py">
+    <entry file="file://$PROJECT_DIR$/config/wrmf-part9.yml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="427">
-          <caret line="28" column="0" lean-forward="true" selection-start-line="28" selection-start-column="0" selection-end-line="28" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#29#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="68">
+          <caret line="4" column="16" lean-forward="false" selection-start-line="4" selection-start-column="16" selection-end-line="4" selection-end-column="16" />
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/experiment/converge.py">
+    <entry file="file://$PROJECT_DIR$/cluster_bash/yahoo/yahoo-bpr-part3.sh">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="750">
-          <caret line="82" column="48" lean-forward="false" selection-start-line="82" selection-start-column="48" selection-end-line="82" selection-end-column="48" />
-          <folding>
-            <element signature="e#0#11#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/config/global.yml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        <state relative-caret-position="68">
+          <caret line="4" column="0" lean-forward="false" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -855,6 +768,62 @@
           <caret line="30" column="14" lean-forward="true" selection-start-line="30" selection-start-column="14" selection-end-line="30" selection-end-column="14" />
           <folding>
             <element signature="e#0#15#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/getmovielens.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="11" column="26" lean-forward="false" selection-start-line="11" selection-start-column="26" selection-end-line="11" selection-end-column="26" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config/global.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="4" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/providers/split.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="374">
+          <caret line="22" column="44" lean-forward="false" selection-start-line="22" selection-start-column="44" selection-end-line="22" selection-end-column="44" />
+          <folding>
+            <element signature="e#0#29#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/experiment/converge.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="665">
+          <caret line="51" column="78" lean-forward="false" selection-start-line="51" selection-start-column="78" selection-end-line="51" selection-end-column="78" />
+          <folding>
+            <element signature="e#0#11#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/utils/io.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="522">
+          <caret line="73" column="58" lean-forward="false" selection-start-line="73" selection-start-column="58" selection-end-line="73" selection-end-column="58" />
+          <folding>
+            <element signature="e#0#9#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/getyahoo.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="442">
+          <caret line="26" column="49" lean-forward="false" selection-start-line="26" selection-start-column="49" selection-end-line="26" selection-end-column="49" />
+          <folding>
+            <element signature="e#0#70#0" expanded="true" />
           </folding>
         </state>
       </provider>

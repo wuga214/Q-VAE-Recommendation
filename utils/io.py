@@ -57,49 +57,21 @@ def load_csv(path, name, shape=(1010000, 2262292)):
     return matrix
 
 
-def load_yahoo(path, name, shape, sep='\t'):
-    '''
-    Load yahoo dataset from WebScope. Only tested on R1 so far
-    '''
-    df = pd.read_csv(path + name, sep=sep, header=None, names=['userId', 'trackId', 'rating'])
+def load_pandas_without_names(path, name, row_name='userId', col_name='movieId',
+                value_name='rating', shape=(138494, 131263), sep=',', names=['userId', 'trackId', 'rating']):
+    df = pd.read_csv(path + name, sep=sep, header=None, names=names)
+    rows = df[row_name]
+    cols = df[col_name]
+    if value_name is not None:
+        values = df[value_name]
+    else:
+        values = [1]*len(rows)
 
-    # Coordinate Format
-    userCOO = list()
-    itemCOO = list()
-    ratingCOO = list()
-
-    # Create unique mapping
-    itemIdToUniqueItemId = dict()
-    userIdToUniqueUserId = dict()
-    uniqueItemId = 0
-    uniqueUserId = 0
-    numIndex = 0
-    for index, row in df.iterrows():
-        numIndex += 1
-        itemId = row['trackId']
-        userId = row['userId']
-        rating = row['rating']
-        # Ensure it is in map
-        if itemId not in itemIdToUniqueItemId.keys():
-            itemIdToUniqueItemId[itemId] = uniqueItemId
-            uniqueItemId += 1
-        if userId not in userIdToUniqueUserId.keys():
-            userIdToUniqueUserId[userId] = uniqueUserId
-            uniqueUserId += 1
-        userCOO.append(userIdToUniqueUserId[userId])
-        itemCOO.append(itemIdToUniqueItemId[itemId])
-        ratingCOO.append(rating)
-    rows = np.array(userCOO)
-    cols = np.array(itemCOO)
-    values = np.array(ratingCOO)
-    print("Number of UniqueItems", uniqueItemId)
-    print("Number of UniqueUsers", uniqueUserId)
-    print("Number of ratings", numIndex)
-    #rows = df['userId']
-    #cols = df['trackId']
-    #values = df['rating']
-    csrMat = csr_matrix((values,(rows, cols)), shape=shape)
-    return csrMat
+    index = np.where(cols >= 0)[0]
+    rows = rows[index]
+    cols = cols[index]
+    values = values[index]
+    return csr_matrix((values, (rows, cols)), shape=shape)
 
 
 def load_netflix(path, shape=(2649430, 17771)):

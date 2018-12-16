@@ -3,15 +3,15 @@ import numpy as np
 from tqdm import tqdm
 
 
-def split_seed_randomly(rating_matrix, ratio=[0.5, 0.2, 0.3],
-                        implicit=True, remove_empty=True, split_seed=8292, sampling=True):
+def split_seed_randomly(rating_matrix, ratio=[0.5, 0.2, 0.3], threshold=70,
+                        implicit=True, remove_empty=True, split_seed=8292, sampling=True, percentage=0.1):
     '''
     Split based on a deterministic seed randomly
     '''
 
     if sampling:
         m, n = rating_matrix.shape
-        index = np.random.choice(m, m//10)
+        index = np.random.choice(m, int(m * percentage))
         rating_matrix = rating_matrix[index]
 
 
@@ -20,7 +20,7 @@ def split_seed_randomly(rating_matrix, ratio=[0.5, 0.2, 0.3],
         If only implicit (clicks, views, binary) feedback, convert to implicit feedback
         '''
         temp_rating_matrix = sparse.csr_matrix(rating_matrix.shape)
-        temp_rating_matrix[(rating_matrix > 70).nonzero()] = 1
+        temp_rating_matrix[(rating_matrix >= threshold).nonzero()] = 1
         rating_matrix = temp_rating_matrix
     if remove_empty:
         # Remove empty columns. record original item index
