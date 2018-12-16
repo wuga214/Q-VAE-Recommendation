@@ -15,7 +15,7 @@ def main(args):
     progress.section("Split CSR Matrices")
     rtrain, rvalid, rtest, nonzero_index = split_seed_randomly(rating_matrix=rating_matrix,
                                                                ratio=args.ratio,
-                                                               threshold=70,
+                                                               threshold=80,
                                                                implicit=args.implicit,
                                                                sampling=True,
                                                                percentage=0.2)

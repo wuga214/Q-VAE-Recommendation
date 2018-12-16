@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 sbatch --nodes=1 --time=96:00:00 --mem=32G --cpus=4 --gres=gpu:1 yahoo-autorec.sh
 sbatch --nodes=1 --time=96:00:00 --mem=32G --cpus=4 --gres=gpu:1 yahoo-bpr-part1.sh
 sbatch --nodes=1 --time=96:00:00 --mem=32G --cpus=4 --gres=gpu:1 yahoo-bpr-part2.sh
