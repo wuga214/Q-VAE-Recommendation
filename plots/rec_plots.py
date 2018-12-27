@@ -69,6 +69,7 @@ def pandas_ridge_plot(df, model, pop, k, folder='figures', name='personalization
     g.set_titles("")
     g.set(yticks=[])
     g.despine(bottom=True, left=True)
+    plt.tight_layout()
     if save:
         fig_path = load_yaml('config/global.yml', key='path')['figs']
         plt.savefig("{2}/{0}/{1}.pdf".format(folder, name, fig_path), format="pdf")
@@ -84,7 +85,7 @@ def pandas_bar_plot(df, x, y, hue, x_name, y_name, folder='figures', name='unkno
 
     num_category = len(df[x].unique())
     hatch = None
-    hatches = itertools.cycle(['//', '+++', '///', '---', 'xxx', '\\\\\\', ' ', '+\\+\\', '...', 'OOO'])
+    hatches = itertools.cycle(['//', '+++', '///', '---', 'xxx', '\\\\\\', ' ', '+\\+\\', '...', 'OOO', "\\"])
     for i, bar in enumerate(ax.patches):
         if i % num_category == 0:
             hatch = next(hatches)
@@ -113,7 +114,7 @@ def precision_recall_curve(df,
     precisions = ["Precision@"+str(x) for x in k]
     recalls = ["Recall@"+str(x) for x in k]
 
-    markers = ['o', '^', 's', '*', 'P', 'h', 'd', '3', 'X', 'v']
+    markers = ['o', '^', 's', '*', 'P', 'h', 'd', '3', 'X', 'v', '+']
     for i in range(len(df)):
         if reloaded:
             precision = [literal_eval(x)[0] for x in df[precisions].iloc[i].tolist()]
