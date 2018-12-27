@@ -74,8 +74,8 @@ class IFVAE(object):
                     with tf.variable_scope('multinomial'):
                         obj1 = self._multinomial_log_likelihood(self.input * tf.floor(mask1) * (1 - tf.floor(mask1)),
                                                                 self.wc_obs_mean * tf.floor(mask1) * (1 - tf.floor(mask1)))
-                        obj2 = self._bernoulli_log_likelihood(self.input * tf.floor(mask1) * tf.floor(mask2),
-                                                              self.hc_obs_mean * tf.floor(mask1) * tf.floor(mask2))
+                        obj2 = self._multinomial_log_likelihood(self.input * tf.floor(mask1) * tf.floor(mask2),
+                                                                self.hc_obs_mean * tf.floor(mask1) * tf.floor(mask2))
 
                 with tf.variable_scope('l2'):
                     l2_loss = tf.reduce_mean(tf.nn.l2_loss(self.encode_weights) + tf.nn.l2_loss(self.decode_weights))
@@ -98,10 +98,10 @@ class IFVAE(object):
                                          name="Weights")
             encode_bias = tf.Variable(tf.constant(0., shape=[self._latent_dim * 2]), name="Bias")
 
-            encoded = tf.matmul(x, self.encode_weights) + encode_bias
+            encoded = tf.nn.relu(tf.matmul(x, self.encode_weights) + encode_bias)
 
         with tf.variable_scope('latent'):
-            mean = tf.nn.relu(encoded[:, :self._latent_dim])
+            mean = encoded[:, :self._latent_dim]
             logstd = encoded[:, self._latent_dim:]
             std = tf.exp(logstd)
             epsilon = tf.random_normal(tf.shape(std))
@@ -181,7 +181,8 @@ class IFVAE(object):
             for step in range(len(batches)):
                 corrupt_rate = random.uniform(0.1, 0.5)
                 feed_dict = {self.input: batches[step].todense(), self.corruption: corrupt_rate, self.sampling: True}
-                training = self.sess.run([self._train], feed_dict=feed_dict)
+                training, loss = self.sess.run([self._train, self.wc_std], feed_dict=feed_dict)
+                pbar.set_description("loss: {:.4f}".format(np.mean(loss)))
 
     def get_batches(self, rating_matrix, batch_size):
         remaining_size = rating_matrix.shape[0]

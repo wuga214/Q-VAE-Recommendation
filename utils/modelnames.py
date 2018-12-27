@@ -9,7 +9,7 @@ from models.cml import cml
 from models.puresvd import puresvd
 from models.nceplrec import nceplrec
 from models.plrec import plrec
-
+from models.ncesvd import ncesvd
 
 models = {
     "POP": pop,
@@ -22,6 +22,7 @@ models = {
     "CML": cml,
     "PureSVD": puresvd,
     "NCE-PLRec": nceplrec,
+    "NCE-SVD": ncesvd,
     "PLRec": plrec,
 }
 
