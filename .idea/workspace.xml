@@ -5,100 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0388e4b0-6a26-46c6-8d3d-c585814fb1c3" name="Default Changelist" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/figs/analysis/movielens1m/numofrating/Clicks_bar.pdf" afterPath="$PROJECT_DIR$/figs/analysis/movielens1m/numofrating/Clicks_bar.pdf" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/figs/analysis/movielens1m/numofrating/Clicks_bar.png" afterPath="$PROJECT_DIR$/figs/analysis/movielens1m/numofrating/Clicks_bar.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/figs/analysis/movielens1m/numofrating/MAP@10_bar.pdf" afterPath="$PROJECT_DIR$/figs/analysis/movielens1m/numofrating/MAP@10_bar.pdf" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/figs/analysis/movielens1m/numofrating/MAP@10_bar.png" afterPath="$PROJECT_DIR$/figs/analysis/movielens1m/numofrating/MAP@10_bar.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/figs/analysis/movielens1m/numofrating/MAP@15_bar.pdf" afterPath="$PROJECT_DIR$/figs/analysis/movielens1m/numofrating/MAP@15_bar.pdf" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/figs/analysis/movielens1m/numofrating/MAP@15_bar.png" afterPath="$PROJECT_DIR$/figs/analysis/movielens1m/numofrating/MAP@15_bar.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/figs/analysis/movielens1m/numofrating/MAP@20_bar.pdf" afterPath="$PROJECT_DIR$/figs/analysis/movielens1m/numofrating/MAP@20_bar.pdf" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/figs/analysis/movielens1m/numofrating/MAP@20_bar.png" afterPath="$PROJECT_DIR$/figs/analysis/movielens1m/numofrating/MAP@20_bar.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/figs/analysis/movielens1m/numofrating/MAP@25_bar.pdf" afterPath="$PROJECT_DIR$/figs/analysis/movielens1m/numofrating/MAP@25_bar.pdf" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/figs/analysis/movielens1m/numofrating/MAP@25_bar.png" afterPath="$PROJECT_DIR$/figs/analysis/movielens1m/numofrating/MAP@25_bar.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/figs/analysis/movielens1m/numofrating/MAP@30_bar.pdf" afterPath="$PROJECT_DIR$/figs/analysis/movielens1m/numofrating/MAP@30_bar.pdf" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/figs/analysis/movielens1m/numofrating/MAP@30_bar.png" afterPath="$PROJECT_DIR$/figs/analysis/movielens1m/numofrating/MAP@30_bar.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/figs/analysis/movielens1m/numofrating/MAP@35_bar.pdf" afterPath="$PROJECT_DIR$/figs/analysis/movielens1m/numofrating/MAP@35_bar.pdf" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/figs/analysis/movielens1m/numofrating/MAP@35_bar.png" afterPath="$PROJECT_DIR$/figs/analysis/movielens1m/numofrating/MAP@35_bar.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/figs/analysis/movielens1m/numofrating/MAP@40_bar.pdf" afterPath="$PROJECT_DIR$/figs/analysis/movielens1m/numofrating/MAP@40_bar.pdf" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/figs/analysis/movielens1m/numofrating/MAP@40_bar.png" afterPath="$PROJECT_DIR$/figs/analysis/movielens1m/numofrating/MAP@40_bar.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/figs/analysis/movielens1m/numofrating/MAP@45_bar.pdf" afterPath="$PROJECT_DIR$/figs/analysis/movielens1m/numofrating/MAP@45_bar.pdf" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/figs/analysis/movielens1m/numofrating/MAP@45_bar.png" afterPath="$PROJECT_DIR$/figs/analysis/movielens1m/numofrating/MAP@45_bar.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/figs/analysis/movielens1m/numofrating/MAP@50_bar.pdf" afterPath="$PROJECT_DIR$/figs/analysis/movielens1m/numofrating/MAP@50_bar.pdf" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/figs/analysis/movielens1m/numofrating/MAP@50_bar.png" afterPath="$PROJECT_DIR$/figs/analysis/movielens1m/numofrating/MAP@50_bar.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/figs/analysis/movielens1m/numofrating/MAP@5_bar.pdf" afterPath="$PROJECT_DIR$/figs/analysis/movielens1m/numofrating/MAP@5_bar.pdf" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/figs/analysis/movielens1m/numofrating/MAP@5_bar.png" afterPath="$PROJECT_DIR$/figs/analysis/movielens1m/numofrating/MAP@5_bar.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/figs/analysis/movielens1m/numofrating/NDCG_bar.pdf" afterPath="$PROJECT_DIR$/figs/analysis/movielens1m/numofrating/NDCG_bar.pdf" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/figs/analysis/movielens1m/numofrating/NDCG_bar.png" afterPath="$PROJECT_DIR$/figs/analysis/movielens1m/numofrating/NDCG_bar.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/figs/analysis/movielens1m/numofrating/Precision@10_bar.pdf" afterPath="$PROJECT_DIR$/figs/analysis/movielens1m/numofrating/Precision@10_bar.pdf" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/figs/analysis/movielens1m/numofrating/Precision@10_bar.png" afterPath="$PROJECT_DIR$/figs/analysis/movielens1m/numofrating/Precision@10_bar.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/figs/analysis/movielens1m/numofrating/Precision@15_bar.pdf" afterPath="$PROJECT_DIR$/figs/analysis/movielens1m/numofrating/Precision@15_bar.pdf" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/figs/analysis/movielens1m/numofrating/Precision@15_bar.png" afterPath="$PROJECT_DIR$/figs/analysis/movielens1m/numofrating/Precision@15_bar.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/figs/analysis/movielens1m/numofrating/Precision@20_bar.pdf" afterPath="$PROJECT_DIR$/figs/analysis/movielens1m/numofrating/Precision@20_bar.pdf" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/figs/analysis/movielens1m/numofrating/Precision@20_bar.png" afterPath="$PROJECT_DIR$/figs/analysis/movielens1m/numofrating/Precision@20_bar.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/figs/analysis/movielens1m/numofrating/Precision@25_bar.pdf" afterPath="$PROJECT_DIR$/figs/analysis/movielens1m/numofrating/Precision@25_bar.pdf" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/figs/analysis/movielens1m/numofrating/Precision@25_bar.png" afterPath="$PROJECT_DIR$/figs/analysis/movielens1m/numofrating/Precision@25_bar.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/figs/analysis/movielens1m/numofrating/Precision@30_bar.pdf" afterPath="$PROJECT_DIR$/figs/analysis/movielens1m/numofrating/Precision@30_bar.pdf" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/figs/analysis/movielens1m/numofrating/Precision@30_bar.png" afterPath="$PROJECT_DIR$/figs/analysis/movielens1m/numofrating/Precision@30_bar.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/figs/analysis/movielens1m/numofrating/Precision@35_bar.pdf" afterPath="$PROJECT_DIR$/figs/analysis/movielens1m/numofrating/Precision@35_bar.pdf" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/figs/analysis/movielens1m/numofrating/Precision@35_bar.png" afterPath="$PROJECT_DIR$/figs/analysis/movielens1m/numofrating/Precision@35_bar.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/figs/analysis/movielens1m/numofrating/Precision@40_bar.pdf" afterPath="$PROJECT_DIR$/figs/analysis/movielens1m/numofrating/Precision@40_bar.pdf" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/figs/analysis/movielens1m/numofrating/Precision@40_bar.png" afterPath="$PROJECT_DIR$/figs/analysis/movielens1m/numofrating/Precision@40_bar.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/figs/analysis/movielens1m/numofrating/Precision@45_bar.pdf" afterPath="$PROJECT_DIR$/figs/analysis/movielens1m/numofrating/Precision@45_bar.pdf" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/figs/analysis/movielens1m/numofrating/Precision@45_bar.png" afterPath="$PROJECT_DIR$/figs/analysis/movielens1m/numofrating/Precision@45_bar.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/figs/analysis/movielens1m/numofrating/Precision@50_bar.pdf" afterPath="$PROJECT_DIR$/figs/analysis/movielens1m/numofrating/Precision@50_bar.pdf" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/figs/analysis/movielens1m/numofrating/Precision@50_bar.png" afterPath="$PROJECT_DIR$/figs/analysis/movielens1m/numofrating/Precision@50_bar.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/figs/analysis/movielens1m/numofrating/Precision@5_bar.pdf" afterPath="$PROJECT_DIR$/figs/analysis/movielens1m/numofrating/Precision@5_bar.pdf" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/figs/analysis/movielens1m/numofrating/Precision@5_bar.png" afterPath="$PROJECT_DIR$/figs/analysis/movielens1m/numofrating/Precision@5_bar.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/figs/analysis/movielens1m/numofrating/R-Precision_bar.pdf" afterPath="$PROJECT_DIR$/figs/analysis/movielens1m/numofrating/R-Precision_bar.pdf" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/figs/analysis/movielens1m/numofrating/R-Precision_bar.png" afterPath="$PROJECT_DIR$/figs/analysis/movielens1m/numofrating/R-Precision_bar.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/figs/analysis/movielens1m/numofrating/Recall@10_bar.pdf" afterPath="$PROJECT_DIR$/figs/analysis/movielens1m/numofrating/Recall@10_bar.pdf" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/figs/analysis/movielens1m/numofrating/Recall@10_bar.png" afterPath="$PROJECT_DIR$/figs/analysis/movielens1m/numofrating/Recall@10_bar.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/figs/analysis/movielens1m/numofrating/Recall@15_bar.pdf" afterPath="$PROJECT_DIR$/figs/analysis/movielens1m/numofrating/Recall@15_bar.pdf" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/figs/analysis/movielens1m/numofrating/Recall@15_bar.png" afterPath="$PROJECT_DIR$/figs/analysis/movielens1m/numofrating/Recall@15_bar.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/figs/analysis/movielens1m/numofrating/Recall@20_bar.pdf" afterPath="$PROJECT_DIR$/figs/analysis/movielens1m/numofrating/Recall@20_bar.pdf" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/figs/analysis/movielens1m/numofrating/Recall@20_bar.png" afterPath="$PROJECT_DIR$/figs/analysis/movielens1m/numofrating/Recall@20_bar.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/figs/analysis/movielens1m/numofrating/Recall@25_bar.pdf" afterPath="$PROJECT_DIR$/figs/analysis/movielens1m/numofrating/Recall@25_bar.pdf" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/figs/analysis/movielens1m/numofrating/Recall@25_bar.png" afterPath="$PROJECT_DIR$/figs/analysis/movielens1m/numofrating/Recall@25_bar.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/figs/analysis/movielens1m/numofrating/Recall@30_bar.pdf" afterPath="$PROJECT_DIR$/figs/analysis/movielens1m/numofrating/Recall@30_bar.pdf" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/figs/analysis/movielens1m/numofrating/Recall@30_bar.png" afterPath="$PROJECT_DIR$/figs/analysis/movielens1m/numofrating/Recall@30_bar.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/figs/analysis/movielens1m/numofrating/Recall@35_bar.pdf" afterPath="$PROJECT_DIR$/figs/analysis/movielens1m/numofrating/Recall@35_bar.pdf" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/figs/analysis/movielens1m/numofrating/Recall@35_bar.png" afterPath="$PROJECT_DIR$/figs/analysis/movielens1m/numofrating/Recall@35_bar.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/figs/analysis/movielens1m/numofrating/Recall@40_bar.pdf" afterPath="$PROJECT_DIR$/figs/analysis/movielens1m/numofrating/Recall@40_bar.pdf" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/figs/analysis/movielens1m/numofrating/Recall@40_bar.png" afterPath="$PROJECT_DIR$/figs/analysis/movielens1m/numofrating/Recall@40_bar.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/figs/analysis/movielens1m/numofrating/Recall@45_bar.pdf" afterPath="$PROJECT_DIR$/figs/analysis/movielens1m/numofrating/Recall@45_bar.pdf" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/figs/analysis/movielens1m/numofrating/Recall@45_bar.png" afterPath="$PROJECT_DIR$/figs/analysis/movielens1m/numofrating/Recall@45_bar.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/figs/analysis/movielens1m/numofrating/Recall@50_bar.pdf" afterPath="$PROJECT_DIR$/figs/analysis/movielens1m/numofrating/Recall@50_bar.pdf" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/figs/analysis/movielens1m/numofrating/Recall@50_bar.png" afterPath="$PROJECT_DIR$/figs/analysis/movielens1m/numofrating/Recall@50_bar.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/figs/analysis/movielens1m/numofrating/Recall@5_bar.pdf" afterPath="$PROJECT_DIR$/figs/analysis/movielens1m/numofrating/Recall@5_bar.pdf" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/figs/analysis/movielens1m/numofrating/Recall@5_bar.png" afterPath="$PROJECT_DIR$/figs/analysis/movielens1m/numofrating/Recall@5_bar.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/figs/analysis/movielens1m/personalization/personalization_at_1.pdf" afterPath="$PROJECT_DIR$/figs/analysis/movielens1m/personalization/personalization_at_1.pdf" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/figs/analysis/movielens1m/personalization/personalization_at_1.png" afterPath="$PROJECT_DIR$/figs/analysis/movielens1m/personalization/personalization_at_1.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/figs/analysis/movielens1m/personalization/personalization_at_10.pdf" afterPath="$PROJECT_DIR$/figs/analysis/movielens1m/personalization/personalization_at_10.pdf" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/figs/analysis/movielens1m/personalization/personalization_at_10.png" afterPath="$PROJECT_DIR$/figs/analysis/movielens1m/personalization/personalization_at_10.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/figs/analysis/movielens1m/personalization/personalization_at_15.pdf" afterPath="$PROJECT_DIR$/figs/analysis/movielens1m/personalization/personalization_at_15.pdf" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/figs/analysis/movielens1m/personalization/personalization_at_15.png" afterPath="$PROJECT_DIR$/figs/analysis/movielens1m/personalization/personalization_at_15.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/figs/analysis/movielens1m/personalization/personalization_at_20.pdf" afterPath="$PROJECT_DIR$/figs/analysis/movielens1m/personalization/personalization_at_20.pdf" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/figs/analysis/movielens1m/personalization/personalization_at_20.png" afterPath="$PROJECT_DIR$/figs/analysis/movielens1m/personalization/personalization_at_20.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/figs/analysis/movielens1m/personalization/personalization_at_25.pdf" afterPath="$PROJECT_DIR$/figs/analysis/movielens1m/personalization/personalization_at_25.pdf" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/figs/analysis/movielens1m/personalization/personalization_at_25.png" afterPath="$PROJECT_DIR$/figs/analysis/movielens1m/personalization/personalization_at_25.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/figs/analysis/movielens1m/personalization/personalization_at_30.pdf" afterPath="$PROJECT_DIR$/figs/analysis/movielens1m/personalization/personalization_at_30.pdf" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/figs/analysis/movielens1m/personalization/personalization_at_30.png" afterPath="$PROJECT_DIR$/figs/analysis/movielens1m/personalization/personalization_at_30.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/figs/analysis/movielens1m/personalization/personalization_at_35.pdf" afterPath="$PROJECT_DIR$/figs/analysis/movielens1m/personalization/personalization_at_35.pdf" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/figs/analysis/movielens1m/personalization/personalization_at_35.png" afterPath="$PROJECT_DIR$/figs/analysis/movielens1m/personalization/personalization_at_35.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/figs/analysis/movielens1m/personalization/personalization_at_40.pdf" afterPath="$PROJECT_DIR$/figs/analysis/movielens1m/personalization/personalization_at_40.pdf" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/figs/analysis/movielens1m/personalization/personalization_at_40.png" afterPath="$PROJECT_DIR$/figs/analysis/movielens1m/personalization/personalization_at_40.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/figs/analysis/movielens1m/personalization/personalization_at_45.pdf" afterPath="$PROJECT_DIR$/figs/analysis/movielens1m/personalization/personalization_at_45.pdf" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/figs/analysis/movielens1m/personalization/personalization_at_45.png" afterPath="$PROJECT_DIR$/figs/analysis/movielens1m/personalization/personalization_at_45.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/figs/analysis/movielens1m/personalization/personalization_at_5.pdf" afterPath="$PROJECT_DIR$/figs/analysis/movielens1m/personalization/personalization_at_5.pdf" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/figs/analysis/movielens1m/personalization/personalization_at_5.png" afterPath="$PROJECT_DIR$/figs/analysis/movielens1m/personalization/personalization_at_5.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/figs/analysis/movielens1m/personalization/personalization_at_50.pdf" afterPath="$PROJECT_DIR$/figs/analysis/movielens1m/personalization/personalization_at_50.pdf" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/figs/analysis/movielens1m/personalization/personalization_at_50.png" afterPath="$PROJECT_DIR$/figs/analysis/movielens1m/personalization/personalization_at_50.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/figs/analysis/movielens1m/precison_recall_curve.pdf" afterPath="$PROJECT_DIR$/figs/analysis/movielens1m/precison_recall_curve.pdf" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/figs/analysis/movielens1m/precison_recall_curve.png" afterPath="$PROJECT_DIR$/figs/analysis/movielens1m/precison_recall_curve.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/personalization_analysis.py" afterPath="$PROJECT_DIR$/personalization_analysis.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/plots/rec_plots.py" afterPath="$PROJECT_DIR$/plots/rec_plots.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/reproduce_paper_results.py" afterPath="$PROJECT_DIR$/reproduce_paper_results.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/usercategory_analysis.py" afterPath="$PROJECT_DIR$/usercategory_analysis.py" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/tables/1m_convergence_analysis.csv" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/tables/1m_final_result.csv" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/tables/20m_final_result.csv" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -166,11 +77,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ifvae.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="ifvae.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/models/ifvae.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1156">
-              <caret line="93" column="26" lean-forward="false" selection-start-line="93" selection-start-column="26" selection-end-line="93" selection-end-column="26" />
+            <state relative-caret-position="289">
+              <caret line="103" column="11" lean-forward="true" selection-start-line="103" selection-start-column="11" selection-end-line="103" selection-end-column="11" />
               <folding>
                 <element signature="e#0#9#0" expanded="true" />
               </folding>
@@ -200,11 +111,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="rec_plots.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="rec_plots.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/plots/rec_plots.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="-158">
-              <caret line="79" column="0" lean-forward="true" selection-start-line="79" selection-start-column="0" selection-end-line="79" selection-end-column="0" />
+              <caret line="79" column="0" lean-forward="false" selection-start-line="79" selection-start-column="0" selection-end-line="79" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -250,7 +161,7 @@
         <entry file="file://$PROJECT_DIR$/experiment/personalization.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="750">
-              <caret line="54" column="17" lean-forward="true" selection-start-line="54" selection-start-column="17" selection-end-line="54" selection-end-column="17" />
+              <caret line="54" column="17" lean-forward="false" selection-start-line="54" selection-start-column="17" selection-end-line="54" selection-end-column="17" />
               <folding />
             </state>
           </provider>
@@ -819,7 +730,7 @@
         <state relative-caret-position="408">
           <caret line="24" column="22" lean-forward="false" selection-start-line="24" selection-start-column="22" selection-end-line="24" selection-end-column="22" />
           <folding>
-            <element signature="e#0#26#0" expanded="true" />
+            <element signature="e#0#26#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -829,7 +740,7 @@
         <state relative-caret-position="172">
           <caret line="47" column="7" lean-forward="false" selection-start-line="47" selection-start-column="7" selection-end-line="47" selection-end-column="7" />
           <folding>
-            <element signature="e#0#18#0" expanded="true" />
+            <element signature="e#0#18#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -855,16 +766,6 @@
         <state relative-caret-position="119">
           <caret line="7" column="29" lean-forward="false" selection-start-line="7" selection-start-column="29" selection-end-line="7" selection-end-column="29" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/models/ifvae.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1156">
-          <caret line="93" column="26" lean-forward="false" selection-start-line="93" selection-start-column="26" selection-end-line="93" selection-end-column="26" />
-          <folding>
-            <element signature="e#0#9#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -904,16 +805,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/reproduce_paper_results.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="15" column="55" lean-forward="false" selection-start-line="15" selection-start-column="55" selection-end-line="15" selection-end-column="55" />
-          <folding>
-            <element signature="e#0#15#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/personalization_analysis.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="374">
@@ -927,7 +818,7 @@
     <entry file="file://$PROJECT_DIR$/experiment/personalization.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="750">
-          <caret line="54" column="17" lean-forward="true" selection-start-line="54" selection-start-column="17" selection-end-line="54" selection-end-column="17" />
+          <caret line="54" column="17" lean-forward="false" selection-start-line="54" selection-start-column="17" selection-end-line="54" selection-end-column="17" />
           <folding />
         </state>
       </provider>
@@ -935,8 +826,28 @@
     <entry file="file://$PROJECT_DIR$/plots/rec_plots.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-158">
-          <caret line="79" column="0" lean-forward="true" selection-start-line="79" selection-start-column="0" selection-end-line="79" selection-end-column="0" />
+          <caret line="79" column="0" lean-forward="false" selection-start-line="79" selection-start-column="0" selection-end-line="79" selection-end-column="0" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/reproduce_paper_results.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="15" column="55" lean-forward="false" selection-start-line="15" selection-start-column="55" selection-end-line="15" selection-end-column="55" />
+          <folding>
+            <element signature="e#0#15#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/models/ifvae.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="289">
+          <caret line="103" column="11" lean-forward="true" selection-start-line="103" selection-start-column="11" selection-end-line="103" selection-end-column="11" />
+          <folding>
+            <element signature="e#0#9#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
