@@ -98,10 +98,10 @@ class IFVAE(object):
                                          name="Weights")
             encode_bias = tf.Variable(tf.constant(0., shape=[self._latent_dim * 2]), name="Bias")
 
-            encoded = tf.nn.relu(tf.matmul(x, self.encode_weights) + encode_bias)
+            encoded = tf.matmul(x, self.encode_weights) + encode_bias
 
         with tf.variable_scope('latent'):
-            mean = encoded[:, :self._latent_dim]
+            mean = tf.nn.relu(encoded[:, :self._latent_dim])
             logstd = encoded[:, self._latent_dim:]
             std = tf.exp(logstd)
             epsilon = tf.random_normal(tf.shape(std))
@@ -130,6 +130,8 @@ class IFVAE(object):
 
     @staticmethod
     def _kl_diagnormal_stdnormal(mu_1, log_std_1, mu_2=0, log_std_2=0):
+
+        log_std_2 = tf.where(tf.less(0., log_std_2), tf.zeros(tf.shape(log_std_2)), log_std_2)
 
         var_square_1 = tf.exp(2. * log_std_1)
         var_square_2 = tf.exp(2. * log_std_2)
