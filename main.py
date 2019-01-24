@@ -39,7 +39,7 @@ def main(args):
     else:
         # R_train = load_pandas(path=args.path, name=args.train, shape=args.shape)
         R_train = load_csv(path=args.path, name=args.train, shape=args.shape)
-    print "Elapsed: {0}".format(inhour(time.time() - start_time))
+    print("Elapsed: {0}".format(inhour(time.time() - start_time)))
 
     print("Train U-I Dimensions: {0}".format(R_train.shape))
 
@@ -80,7 +80,7 @@ def main(args):
         print("-")
         for metric in result.keys():
             print("{0}:{1}".format(metric, result[metric]))
-        print "Elapsed: {0}".format(inhour(time.time() - start_time))
+        print("Elapsed: {0}".format(inhour(time.time() - start_time)))
 
 
 if __name__ == "__main__":
