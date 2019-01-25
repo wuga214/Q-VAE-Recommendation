@@ -48,6 +48,13 @@ def main(args):
 
     print("Train U-I Dimensions: {0}".format(R_train.shape))
 
+    for i in range(args.num_steps):
+        print(i)
+        RQ, Yt, Bias = models[args.model](R_train, embedded_matrix=np.empty((0)),
+                                          iteration=args.iter, rank=args.rank,
+                                          corruption=args.corruption, gpu_on=args.gpu,
+                                          lam=args.lamb, alpha=args.alpha, seed=args.seed, root=args.root)
+        Y = Yt.T
 
     # Item-Item or User-User
     if args.item == True:
