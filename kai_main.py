@@ -33,6 +33,8 @@ def main(args):
     print("Lambda: {0}".format(args.lamb))
     print("SVD/Alter Iteration: {0}".format(args.iter))
     print("Evaluation Ranking Topk: {0}".format(args.topk))
+    print('Number of Steps to Evaluate: {}'.format(args.num_steps))
+    print('Number of Recommendations in Each Step: {}'.format(args.num_rec))
 
     # Load Data
     progress.section("Loading Data")
@@ -45,6 +47,7 @@ def main(args):
     print("Elapsed: {0}".format(inhour(time.time() - start_time)))
 
     print("Train U-I Dimensions: {0}".format(R_train.shape))
+
 
     # Item-Item or User-User
     if args.item == True:
@@ -77,7 +80,7 @@ def main(args):
         progress.section("Create Metrics")
         start_time = time.time()
 
-        metric_names = ['R-Precision', 'NDCG', 'Clicks', 'Recall', 'Precision']
+        metric_names = ['R-Precision', 'NDCG', 'Clicks', 'Recall', 'Precision', 'MAP']
         R_valid = load_numpy(path=args.path, name=args.valid)
         result = evaluate(prediction, R_valid, metric_names, [args.topk])
         print("-")
@@ -99,6 +102,8 @@ if __name__ == "__main__":
     parser.add_argument('-f', dest='root', type=check_float_positive, default=1)
     parser.add_argument('-c', dest='corruption', type=check_float_positive, default=0.5)
     parser.add_argument('-s', dest='seed', type=check_int_positive, default=1)
+    parser.add_argument('-ns', dest='num_steps', type=check_int_positive, default=1)
+    parser.add_argument('-nr', dest='num_rec', type=check_int_positive, default=1)
     parser.add_argument('-m', dest='model', default="WRMF")
     parser.add_argument('-d', dest='path', default="datax/")
     parser.add_argument('-t', dest='train', default='Rtrain.npz')
