@@ -216,12 +216,12 @@ class IFVAE(object):
         return self.sess.run(self.decode_bias)
 
 
-def ifvae(matrix_train, embeded_matrix=np.empty((0)), iteration=100,
+def ifvae(matrix_train, embedded_matrix=np.empty((0)), iteration=100,
           lam=80, rank=200, corruption=0.2, optimizer="RMSProp", seed=1, **unused):
     progress = WorkSplitter()
     matrix_input = matrix_train
-    if embeded_matrix.shape[0] > 0:
-        matrix_input = vstack((matrix_input, embeded_matrix.T))
+    if embedded_matrix.shape[0] > 0:
+        matrix_input = vstack((matrix_input, embedded_matrix.T))
 
     m, n = matrix_input.shape
     model = IFVAE(n, rank, 100, lamb=lam, observation_distribution="Gaussian", optimizer=Regularizer[optimizer])
