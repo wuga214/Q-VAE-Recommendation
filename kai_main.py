@@ -48,14 +48,7 @@ def main(args):
 
     print("Train U-I Dimensions: {0}".format(R_train.shape))
 
-    for i in range(args.num_steps):
-        print(i)
-        RQ, Yt, Bias = models[args.model](R_train, embedded_matrix=np.empty((0)),
-                                          iteration=args.iter, rank=args.rank,
-                                          corruption=args.corruption, gpu_on=args.gpu,
-                                          lam=args.lamb, alpha=args.alpha, seed=args.seed, root=args.root)
-        Y = Yt.T
-
+    '''
     # Item-Item or User-User
     if args.item == True:
         RQ, Yt, Bias = models[args.model](R_train, embedded_matrix=np.empty((0)),
@@ -83,6 +76,29 @@ def main(args):
                          matrix_Train=R_train,
                          measure=args.sim_measure,
                          gpu=args.gpu)
+    '''
+
+    for i in range(args.num_steps):
+        print(i)
+        RQ, Yt, Bias = models[args.model](R_train, embedded_matrix=np.empty((0)),
+                                          iteration=args.iter, rank=args.rank,
+                                          corruption=args.corruption, gpu_on=args.gpu,
+                                          lam=args.lamb, alpha=args.alpha, seed=args.seed, root=args.root)
+        Y = Yt.T
+
+        progress.section("Predict")
+        prediction = predict(matrix_U=RQ,
+                             matrix_V=Y,
+                             bias=Bias,
+                             topK=args.topk,
+                             matrix_Train=R_train,
+                             measure=args.sim_measure,
+                             gpu=args.gpu)
+        print('U is \n {}'.format(RQ))
+        print('V is \n {}'.format(Y))
+        print('B is \n {}'.format(Bias))
+        print('Prediction is \n {}'.format(prediction))
+
     if args.validation:
         progress.section("Create Metrics")
         start_time = time.time()
@@ -110,7 +126,7 @@ if __name__ == "__main__":
     parser.add_argument('-c', dest='corruption', type=check_float_positive, default=0.5)
     parser.add_argument('-s', dest='seed', type=check_int_positive, default=1)
     parser.add_argument('-ns', dest='num_steps', type=check_int_positive, default=1)
-    parser.add_argument('-nr', dest='num_rec', type=check_int_positive, default=1)
+    parser.add_argument('-nr', dest='num_rec', type=check_int_positive, default=2)
     parser.add_argument('-m', dest='model', default="WRMF")
     parser.add_argument('-d', dest='path', default="datax/")
     parser.add_argument('-t', dest='train', default='Rtrain.npz')
