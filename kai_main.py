@@ -93,15 +93,15 @@ def main(args):
 
         # Train the model using the train set and get weights
         # TODO: Gaussian_params contains RQ. Need to be optimized here
-        RQ, Yt, Bias, Gaussian_Params = models[args.model](R_train_normalized, embedded_matrix=np.empty((0)),
-                                                           iteration=args.iter, rank=args.rank,
-                                          corruption=args.corruption, gpu_on=args.gpu,
-                                          lam=args.lamb, alpha=args.alpha, seed=args.seed, root=args.root)
-        Y = Yt.T
-        print(Gaussian_Params[0][0])
-        print(Gaussian_Params[1][0])
         # TODO: Get probability per sample
+        RQ, Yt, Bias, Gaussian_Params_mu, Gaussian_Params_sigma = models[args.model](R_train_normalized, embedded_matrix=np.empty((0)),
+                                                                                     iteration=args.iter, rank=args.rank,
+                                                                                     corruption=args.corruption, gpu_on=args.gpu,
+                                                                                     lam=args.lamb, alpha=args.alpha, seed=args.seed, root=args.root)
+        Y = Yt.T
+
         # TODO: Use the trained model with test set, get performance measures
+
         # TODO: Select ‘k’ most-informative samples based on
         # per-sample-probabilities, i.e., those that the model was most
         # uncertain about regarding their labelling.
@@ -165,6 +165,8 @@ if __name__ == "__main__":
 
     main(args)
 
+# Will this actually hurt the performance? Maybe just uncover the rating. No
+# need to penalize low rating. Just to be consistent with the dataset
 # TODO: Pick Top 1 and 2 for each user from prediction. Convert those two picks
 # to (1, 2 -> some hyperparameter such as -0.1 & 3, 4 -> 0 & 5 -> 1) and
 # feedforward through encoder to get latent mu and sigma. Use that particular
