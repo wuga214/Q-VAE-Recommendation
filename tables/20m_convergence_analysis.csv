@@ -1,0 +1,3 @@
+,model,rank,lambda,epoch,optimizer,NDCG,R-Precision
+0,CDAE,200,1e-05,24,RMSProp,0.1235,0.0745
+1,CDAE,200,1e-05,49,RMSProp,0.1295,0.0788

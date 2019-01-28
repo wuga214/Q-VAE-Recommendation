@@ -34,12 +34,11 @@ class IFVAE(object):
             self.corruption = tf.placeholder(tf.float32)
             self.sampling = tf.placeholder(tf.bool)
 
-            mask1 = tf.nn.dropout(tf.ones_like(self.input), 1-self.corruption)
-            mask2 = tf.nn.dropout(tf.ones_like(self.input), 1-self.corruption)
+            mask1 = tf.floor(tf.nn.dropout(tf.ones_like(self.input), 1-self.corruption))
+            mask2 = tf.floor(tf.nn.dropout(tf.ones_like(self.input), 1-self.corruption))
 
             wc = self.input * mask1
             hc = wc * mask2
-
             with tf.variable_scope('network'):
                 self.wc_mean, wc_log_std, self.wc_obs_mean = self._network(wc)
             with tf.variable_scope('network', reuse=True):
@@ -53,20 +52,21 @@ class IFVAE(object):
                                                         self.hc_mean, hc_log_std)
                     kl2 = self._kl_diagnormal_stdnormal(self.hc_mean, hc_log_std,
                                                         tf.zeros_like(self.hc_mean),
-                                                        tf.ones_like(hc_log_std))
+                                                        tf.zeros_like(hc_log_std))
 
                 if self._observation_distribution == 'Gaussian':
                     with tf.variable_scope('gaussian'):
-                        obj1 = self._gaussian_log_likelihood(self.input * tf.floor(mask1),
-                                                             self.wc_obs_mean,
+
+                        obj1 = self._gaussian_log_likelihood(self.input * mask1 * (1 - mask2),
+                                                             self.wc_obs_mean * mask1 * (1 - mask2),
                                                              self._observation_std)
-                        obj2 = self._gaussian_log_likelihood(self.input * tf.floor(mask2),
-                                                             self.hc_obs_mean,
+                        obj2 = self._gaussian_log_likelihood(self.input * mask1 * mask2,
+                                                             self.hc_obs_mean * mask1 * mask2,
                                                              self._observation_std)
                 elif self._observation_distribution == 'Bernoulli':
                     with tf.variable_scope('bernoulli'):
-                        obj1 = self._bernoulli_log_likelihood(self.input * tf.floor(mask1) * (1 - tf.floor(mask1)),
-                                                              self.wc_obs_mean * tf.floor(mask1) * (1 - tf.floor(mask1)))
+                        obj1 = self._bernoulli_log_likelihood(self.input * tf.floor(mask1) * (1 - tf.floor(mask2)),
+                                                              self.wc_obs_mean * tf.floor(mask1) * (1 - tf.floor(mask2)))
                         obj2 = self._bernoulli_log_likelihood(self.input * tf.floor(mask1) * tf.floor(mask2),
                                                               self.hc_obs_mean * tf.floor(mask1) * tf.floor(mask2))
 
@@ -131,17 +131,18 @@ class IFVAE(object):
     @staticmethod
     def _kl_diagnormal_stdnormal(mu_1, log_std_1, mu_2=0, log_std_2=0):
 
-        log_std_2 = tf.where(tf.less(0., log_std_2), tf.zeros(tf.shape(log_std_2)), log_std_2)
+        log_std_2 = tf.where(tf.less(-3., log_std_2), tf.zeros(tf.shape(log_std_2)), log_std_2)
+        log_std_1 = tf.where(tf.less(-3., log_std_2), tf.zeros(tf.shape(log_std_1)), log_std_1)
 
         var_square_1 = tf.exp(2. * log_std_1)
         var_square_2 = tf.exp(2. * log_std_2)
         kl = 0.5 * tf.reduce_mean(2 * log_std_2 - 2. * log_std_1
-                                  + tf.divide(var_square_1 + tf.square(mu_1-mu_2), var_square_2) - 1.)
+                                  + tf.divide(var_square_1 + tf.square(mu_1 - mu_2), var_square_2) - 1.)
         return kl
 
     @staticmethod
     def _gaussian_log_likelihood(targets, mean, std):
-        se = 0.5 * tf.reduce_mean(tf.square(targets - mean)) / (2*tf.square(std)) + tf.log(std)
+        se = 0.5 * tf.reduce_mean(tf.square(targets - mean)) / (2 * tf.square(std)) + tf.log(std)
         return se
 
     @staticmethod
@@ -159,17 +160,17 @@ class IFVAE(object):
 
     def update(self, x, corruption):
         _, loss = self.sess.run([self._train, self._loss],
-                                 feed_dict={self.input: x, self.corruption: corruption, self.sampling: True})
+                                feed_dict={self.input: x, self.corruption: corruption, self.sampling: True})
         return loss
 
     def inference(self, x):
         predict = self.sess.run(self.wc_obs_mean,
-                                 feed_dict={self.input: x, self.corruption: 0, self.sampling: False})
+                                feed_dict={self.input: x, self.corruption: 0, self.sampling: False})
         return predict
 
     def uncertainty(self, x):
         gaussian_parameters = self.sess.run([self.wc_mean, self.wc_std],
-                                             feed_dict={self.input: x, self.corruption: 0, self.sampling: False})
+                                            feed_dict={self.input: x, self.corruption: 0, self.sampling: False})
 
         return gaussian_parameters
 
@@ -182,7 +183,8 @@ class IFVAE(object):
         for i in pbar:
             for step in range(len(batches)):
                 corrupt_rate = random.uniform(0.1, 0.5)
-                feed_dict = {self.input: batches[step].todense(), self.corruption: corrupt_rate, self.sampling: True}
+                feed_dict = {self.input: batches[step].todense(), self.corruption: corrupt_rate,
+                             self.sampling: True}
                 training, loss = self.sess.run([self._train, self.wc_std], feed_dict=feed_dict)
                 pbar.set_description("loss: {:.4f}".format(np.mean(loss)))
 
@@ -192,9 +194,9 @@ class IFVAE(object):
         batches = []
         while remaining_size > 0:
             if remaining_size < batch_size:
-                batches.append(rating_matrix[batch_index*batch_size:])
+                batches.append(rating_matrix[batch_index * batch_size:])
             else:
-                batches.append(rating_matrix[batch_index*batch_size:(batch_index+1)*batch_size])
+                batches.append(rating_matrix[batch_index * batch_size:(batch_index + 1) * batch_size])
             batch_index += 1
             remaining_size -= batch_size
         return batches

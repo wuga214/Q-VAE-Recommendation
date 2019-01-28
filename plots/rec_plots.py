@@ -20,11 +20,11 @@ def show_training_progress(df, hue='model', metric='NDCG', name="epoch_vs_ndcg",
 
 
 def show_uncertainty(df, x, y, hue='model', folder='unknown', name='uncertainty_analysis', save=True):
-    fig, ax = plt.subplots(figsize=(6, 4))
+    fig, ax = plt.subplots(figsize=(6, 3))
     models = df[hue].unique()
     for model in models:
         sns.regplot(x=x, y=y, data=df[df[hue] == model], lowess=True, scatter=False, ax=ax, label=model)
-    plt.ylabel("Model Uncertainty \n (Standard Derivation)")
+    plt.ylabel("Representation Uncertainty \n (in Standard Derivation)")
     plt.xlabel("Number of Ratings")
     plt.legend(loc='center right')
     plt.tight_layout()
