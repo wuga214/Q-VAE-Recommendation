@@ -18,6 +18,9 @@ def normalize_matrix_by_column(matrix):
     sum_over_column[0][sum_over_column[0] == 0] = 1
     return csr_matrix(matrix/sum_over_column)
 
+def entropy(mean, sigma):
+    return
+
 def main(args):
     # Progress bar
     progress = WorkSplitter()
