@@ -12,6 +12,15 @@ from models.predictor import predict, predict_batch
 from evaluation.metrics import evaluate
 
 
+# TODO: Move this to util dir eventually
+# Normalize input matrix by column
+from scipy.sparse import csr_matrix
+def normalize_matrix_by_column(matrix):
+    matrix = matrix.tobsr()
+    sum_over_column = matrix.sum(axis=0)
+    sum_over_column[0][sum_over_column[0] == 0] = 1
+    return csr_matrix(matrix/sum_over_column)
+
 def main(args):
     # Progress bar
     progress = WorkSplitter()
@@ -78,9 +87,16 @@ def main(args):
                          gpu=args.gpu)
     '''
 
+    # By default, only 1 step
     for i in range(args.num_steps):
-        print(i)
-        RQ, Yt, Bias = models[args.model](R_train, embedded_matrix=np.empty((0)),
+        print('This is step {} \n'.format(i))
+
+        # Normalize train set
+        R_train_normalized = normalize_matrix_by_column(R_train)
+        print(R_train)
+        print('\n')
+        print(R_train_normalized)
+        RQ, Yt, Bias = models[args.model](R_train_normalized, embedded_matrix=np.empty((0)),
                                           iteration=args.iter, rank=args.rank,
                                           corruption=args.corruption, gpu_on=args.gpu,
                                           lam=args.lamb, alpha=args.alpha, seed=args.seed, root=args.root)
@@ -91,7 +107,7 @@ def main(args):
                              matrix_V=Y,
                              bias=Bias,
                              topK=args.topk,
-                             matrix_Train=R_train,
+                             matrix_Train=R_train_normalized,
                              measure=args.sim_measure,
                              gpu=args.gpu)
         print('U is \n {}'.format(RQ))
