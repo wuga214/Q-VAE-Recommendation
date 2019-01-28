@@ -1,6 +1,3 @@
-# TODO: Import dataset and split dataset into two as pre-train and test in
-# implicit feedback (1, 2, 3, 4 -> 0, 5->1)
-
 import numpy as np
 from utils.progress import WorkSplitter, inhour
 import argparse
@@ -93,14 +90,27 @@ def main(args):
 
         # Normalize train set
         R_train_normalized = normalize_matrix_by_column(R_train)
-        print(R_train)
-        print('\n')
-        print(R_train_normalized)
-        RQ, Yt, Bias = models[args.model](R_train_normalized, embedded_matrix=np.empty((0)),
-                                          iteration=args.iter, rank=args.rank,
+
+        # Train the model using the train set and get weights
+        # TODO: Gaussian_params contains RQ. Need to be optimized here
+        RQ, Yt, Bias, Gaussian_Params = models[args.model](R_train_normalized, embedded_matrix=np.empty((0)),
+                                                           iteration=args.iter, rank=args.rank,
                                           corruption=args.corruption, gpu_on=args.gpu,
                                           lam=args.lamb, alpha=args.alpha, seed=args.seed, root=args.root)
         Y = Yt.T
+        print(Gaussian_Params[0][0])
+        print(Gaussian_Params[1][0])
+        # TODO: Get probability per sample
+        # TODO: Use the trained model with test set, get performance measures
+        # TODO: Select ‘k’ most-informative samples based on
+        # per-sample-probabilities, i.e., those that the model was most
+        # uncertain about regarding their labelling.
+        # TODO: Move these ‘k’ samples from the validation set to the train-set
+        # and query their labels.
+        # TODO: Inverse normalization for all the data-sets
+        # TODO: Stop according to the stop criterion, otherwise normalize train
+        # set.
+
 
         progress.section("Predict")
         prediction = predict(matrix_U=RQ,
@@ -154,11 +164,6 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     main(args)
-
-# TODO: Train (Question: the sampling method of the value of z from pre-train
-# dataset should also be consistent with the following steps, right?) the
-# network using the pre-train dataset and extract encode, latent mu,
-# latent sigma, decode and prediction part
 
 # TODO: Pick Top 1 and 2 for each user from prediction. Convert those two picks
 # to (1, 2 -> some hyperparameter such as -0.1 & 3, 4 -> 0 & 5 -> 1) and

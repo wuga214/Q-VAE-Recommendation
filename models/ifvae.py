@@ -231,7 +231,11 @@ def ifvae(matrix_train, embedded_matrix=np.empty((0)), iteration=100,
     RQ = model.get_RQ(matrix_input)
     Y = model.get_Y()
     Bias = model.get_Bias()
+    # TODO: Instead of passing matrix_input, need to feed forward one hot
+    # encoding for all users and each item. Might need to average over all
+    # latent dimension
+    Gaussian_Params = model.uncertainty(matrix_input.todense())
     model.sess.close()
     tf.reset_default_graph()
 
-    return RQ, Y, Bias
+    return RQ, Y, Bias, Gaussian_Params
