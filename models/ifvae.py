@@ -11,7 +11,7 @@ class IFVAE(object):
 
     def __init__(self, observation_dim, latent_dim, batch_size,
                  lamb=0.01,
-                 beta=0.2,
+                 beta=1.0,
                  learning_rate=1e-4,
                  optimizer=tf.train.RMSPropOptimizer,
                  observation_distribution="Gaussian", # or Bernoulli or Multinomial
@@ -19,6 +19,7 @@ class IFVAE(object):
 
         self._lamb = lamb
         self._latent_dim = latent_dim
+        self._beta = beta
         self._batch_size = batch_size
         self._observation_dim = observation_dim
         self._learning_rate = learning_rate
@@ -80,7 +81,7 @@ class IFVAE(object):
                 with tf.variable_scope('l2'):
                     l2_loss = tf.reduce_mean(tf.nn.l2_loss(self.encode_weights) + tf.nn.l2_loss(self.decode_weights))
 
-                self._loss = ((kl1 + kl2 + obj1 + obj2) + self._lamb * l2_loss) * (1 - self.corruption)
+                self._loss = ((self._beta * (kl1 + kl2) + obj1 + obj2) + self._lamb * l2_loss) * (1 - self.corruption)
 
             with tf.variable_scope('optimizer'):
                 optimizer = self._optimizer(learning_rate=self._learning_rate)
@@ -219,14 +220,15 @@ class IFVAE(object):
 
 
 def ifvae(matrix_train, embeded_matrix=np.empty((0)), iteration=100,
-          lam=80, rank=200, corruption=0.2, optimizer="RMSProp", seed=1, **unused):
+          lam=80, rank=200, corruption=0.2, optimizer="RMSProp", beta=1.0, seed=1, **unused):
     progress = WorkSplitter()
     matrix_input = matrix_train
     if embeded_matrix.shape[0] > 0:
         matrix_input = vstack((matrix_input, embeded_matrix.T))
 
     m, n = matrix_input.shape
-    model = IFVAE(n, rank, 100, lamb=lam, observation_distribution="Gaussian", optimizer=Regularizer[optimizer])
+    model = IFVAE(n, rank, 100, lamb=lam, beta=beta,
+                  observation_distribution="Gaussian", optimizer=Regularizer[optimizer])
 
     model.train_model(matrix_input, corruption, iteration)
 

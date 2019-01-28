@@ -1,21 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="BookmarkManager">
-    <bookmark url="file://$PROJECT_DIR$/models/ifvae.py" line="108" mnemonic="8" />
+    <bookmark url="file://$PROJECT_DIR$/models/ifvae.py" line="109" mnemonic="8" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0388e4b0-6a26-46c6-8d3d-c585814fb1c3" name="Default Changelist" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tables/movielens20m_result.csv" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/figs/analysis/movielens1m/uncertainty_analysis.pdf" afterPath="$PROJECT_DIR$/figs/analysis/movielens1m/uncertainty_analysis.pdf" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/figs/analysis/movielens1m/uncertainty_analysis.png" afterPath="$PROJECT_DIR$/figs/analysis/movielens1m/uncertainty_analysis.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/figs/analysis/movielens20m/precison_recall_curve.pdf" afterPath="$PROJECT_DIR$/figs/analysis/movielens20m/precison_recall_curve.pdf" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/figs/analysis/movielens20m/precison_recall_curve.png" afterPath="$PROJECT_DIR$/figs/analysis/movielens20m/precison_recall_curve.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/config/ifvae-part1.yml" afterPath="$PROJECT_DIR$/config/ifvae-part1.yml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/config/ifvae-part2.yml" afterPath="$PROJECT_DIR$/config/ifvae-part2.yml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/figs/analysis/movielens1m/precison_recall_curve.pdf" afterPath="$PROJECT_DIR$/figs/analysis/movielens1m/precison_recall_curve.pdf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/figs/analysis/movielens1m/precison_recall_curve.png" afterPath="$PROJECT_DIR$/figs/analysis/movielens1m/precison_recall_curve.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/latent/B_IFVAE_50.npy" afterPath="$PROJECT_DIR$/latent/B_IFVAE_50.npy" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/latent/U_IFVAE_50.npy" afterPath="$PROJECT_DIR$/latent/U_IFVAE_50.npy" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/latent/V_IFVAE_50.npy" afterPath="$PROJECT_DIR$/latent/V_IFVAE_50.npy" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/models/ifvae.py" afterPath="$PROJECT_DIR$/models/ifvae.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/plots/rec_plots.py" afterPath="$PROJECT_DIR$/plots/rec_plots.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tables/movielens20m/ifvae.csv" afterPath="$PROJECT_DIR$/tables/movielens20m/ifvae.csv" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tables/movielens1m/ifvae.csv" afterPath="$PROJECT_DIR$/tables/movielens1m/ifvae.csv" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tables/movielens1m_result.csv" afterPath="$PROJECT_DIR$/tables/movielens1m_result.csv" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -73,14 +70,34 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="ifvae.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="ifvae.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/models/ifvae.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1836">
-              <caret line="114" column="13" lean-forward="true" selection-start-line="114" selection-start-column="13" selection-end-line="114" selection-end-column="13" />
+            <state relative-caret-position="650">
+              <caret line="230" column="18" lean-forward="false" selection-start-line="230" selection-start-column="18" selection-end-line="230" selection-end-column="18" />
               <folding>
                 <element signature="e#0#9#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="movielens_1m_parameter_tuning.sh" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/cluster_bash/movielens1m/movielens_1m_parameter_tuning.sh">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="119">
+              <caret line="7" column="0" lean-forward="false" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="85" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ifvae-part2.yml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/config/ifvae-part2.yml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="170">
+              <caret line="10" column="50" lean-forward="false" selection-start-line="10" selection-start-column="50" selection-end-line="10" selection-end-column="50" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -107,41 +124,17 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="progress_analysis.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/progress_analysis.py">
+      <file leaf-file-name="ifvae-part1.yml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/config/ifvae-part1.yml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="221">
-              <caret line="16" column="14" lean-forward="false" selection-start-line="16" selection-start-column="14" selection-end-line="16" selection-end-column="14" />
-              <folding>
-                <element signature="e#0#15#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="converge.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/experiment/converge.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1275">
-              <caret line="83" column="24" lean-forward="false" selection-start-line="83" selection-start-column="24" selection-end-line="83" selection-end-column="24" />
-              <folding>
-                <element signature="e#0#11#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="io.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/utils/io.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="119">
-              <caret line="18" column="0" lean-forward="false" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="34" />
+            <state relative-caret-position="170">
+              <caret line="10" column="17" lean-forward="false" selection-start-line="10" selection-start-column="17" selection-end-line="10" selection-end-column="17" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="reproduce_paper_results.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="reproduce_paper_results.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/reproduce_paper_results.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="323">
@@ -201,6 +194,7 @@
       <find>_sesh</find>
       <find>movielen</find>
       <find>_parameter_tuning</find>
+      <find>encode_weights</find>
     </findStrings>
     <replaceStrings>
       <replace>sess</replace>
@@ -272,7 +266,7 @@
     <detection-done>true</detection-done>
     <sorting>DEFINITION_ORDER</sorting>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
+  <component name="ProjectFrameBounds" extendedState="7">
     <option name="x" value="1460" />
     <option name="y" value="449" />
     <option name="width" value="1851" />
@@ -307,6 +301,12 @@
               <item name="IF-VAE-Recommendation" type="b2602c69:ProjectViewProjectNode" />
               <item name="IF-VAE-Recommendation" type="462c0819:PsiDirectoryNode" />
               <item name="cluster_bash" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="IF-VAE-Recommendation" type="b2602c69:ProjectViewProjectNode" />
+              <item name="IF-VAE-Recommendation" type="462c0819:PsiDirectoryNode" />
+              <item name="cluster_bash" type="462c0819:PsiDirectoryNode" />
+              <item name="movielens1m" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="IF-VAE-Recommendation" type="b2602c69:ProjectViewProjectNode" />
@@ -388,7 +388,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="1145" y="421" width="2495" height="1084" extended-state="6" />
+    <frame x="1145" y="421" width="2495" height="1084" extended-state="7" />
     <layout>
       <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.14454879" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -445,13 +445,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/config/wrmf-part4.yml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/config/wrmf-part6.yml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -718,22 +711,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/config/ifvae-part2.yml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="10" column="50" lean-forward="false" selection-start-line="10" selection-start-column="50" selection-end-line="10" selection-end-column="50" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/config/ifvae-part1.yml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="5" column="26" lean-forward="false" selection-start-line="5" selection-start-column="26" selection-end-line="5" selection-end-column="26" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/utils/io.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="119">
@@ -786,14 +763,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/reproduce_paper_results.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
-          <caret line="24" column="77" lean-forward="false" selection-start-line="24" selection-start-column="77" selection-end-line="24" selection-end-column="77" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/models/vae.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1156">
@@ -814,11 +783,43 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/models/ifvae.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1836">
-          <caret line="114" column="13" lean-forward="true" selection-start-line="114" selection-start-column="13" selection-end-line="114" selection-end-column="13" />
+        <state relative-caret-position="650">
+          <caret line="230" column="18" lean-forward="false" selection-start-line="230" selection-start-column="18" selection-end-line="230" selection-end-column="18" />
           <folding>
             <element signature="e#0#9#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cluster_bash/movielens1m/movielens_1m_parameter_tuning.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="7" column="0" lean-forward="false" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="85" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config/ifvae-part2.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="10" column="50" lean-forward="false" selection-start-line="10" selection-start-column="50" selection-end-line="10" selection-end-column="50" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config/ifvae-part1.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="10" column="17" lean-forward="false" selection-start-line="10" selection-start-column="17" selection-end-line="10" selection-end-column="17" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/reproduce_paper_results.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="323">
+          <caret line="24" column="77" lean-forward="false" selection-start-line="24" selection-start-column="77" selection-end-line="24" selection-end-column="77" />
+          <folding />
         </state>
       </provider>
     </entry>
