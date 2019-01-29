@@ -173,6 +173,7 @@ def main(args):
         out = np.where(np.in1d(np.ravel_multi_index(X.T,dims),\
                     np.ravel_multi_index(searched_values.T,dims)))[0]
         out_index = [index_prediction[x] for x in out]
+        index = [*map(tuple,out_index)]
         print("Elapsed for ravel: {0}".format(inhour(time.time() - start_time)))
 
         import ipdb; ipdb.set_trace()
