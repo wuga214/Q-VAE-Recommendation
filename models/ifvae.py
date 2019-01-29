@@ -231,35 +231,45 @@ def ifvae(matrix_train, embedded_matrix=np.empty((0)), iteration=100,
     RQ = model.get_RQ(matrix_input)
     Y = model.get_Y()
     Bias = model.get_Bias()
+
     # TODO: Instead of passing matrix_input, need to feed forward one hot
     # encoding for all users and each item. Might need to average over all
     # latent dimension
-    Gaussian_Params_mu, Gaussian_Params_sigma = np.zeros(n), np.zeros(n)
-    # Get one hot encoding matrix for all users and the 1st item as the 1st
+
+    # Get one hot encoding vector for all users and the 1st item as the 1st
     # iteration
-    for i in range(n):
+    Gaussian_Params_mu, Gaussian_Params_sigma = np.zeros(n), np.zeros(n)
+#    for i in range(n):
+    for i in tqdm(range(n)):
         nth_item = i
-        print(nth_item)
+#        print(nth_item)
         one_hot_vector = create_one_hot_vector(num_classes=n, nth_item=nth_item)
+#        print(one_hot_vector)
         Gaussian_Params = model.uncertainty(one_hot_vector)
         Gaussian_Params_mu[nth_item] = np.mean(Gaussian_Params[0], axis=1)
         Gaussian_Params_sigma[nth_item] = np.mean(Gaussian_Params[1], axis=1)
 
-#        Gaussian_Params = model.uncertainty(one_hot_vector)
+    """
+    # Get one hot encoding matrix for all users and the 1st item as the 1st
+    # iteration
+    Gaussian_Params_mu_m, Gaussian_Params_sigma_m = np.zeros((m, n)), np.zeros((m, n))
+    for i in range(n):
+        nth_item = i
+        print(nth_item)
 
-#        matrix_one_hot = create_one_hot_matrix(num_rows=m, num_classes=n, nth_item=nth_item)
-#        print(matrix_one_hot)
-#        print(matrix_one_hot.shape)
+        matrix_one_hot = create_one_hot_matrix(num_rows=m, num_classes=n, nth_item=nth_item)
+        print(matrix_one_hot)
+        print(matrix_one_hot.shape)
 
         # Average mu and sigma for each item from gaussian parameters and store it
-#        Gaussian_Params = model.uncertainty(matrix_one_hot)
-#        print(Gaussian_Params)
-#        print(np.count_nonzero(Gaussian_Params[0]))
+        Gaussian_Params = model.uncertainty(matrix_one_hot)
+        print(Gaussian_Params)
+        print(np.count_nonzero(Gaussian_Params[0]))
 #        import ipdb; ipdb.set_trace()
-#        Gaussian_Params_mu[:, nth_item] = np.mean(Gaussian_Params[0], axis=1)
-#        Gaussian_Params_sigma[:, nth_item] = np.mean(Gaussian_Params[1], axis=1)
-
-#    import ipdb; ipdb.set_trace()
+        Gaussian_Params_mu_m[:, nth_item] = np.mean(Gaussian_Params[0], axis=1)
+        Gaussian_Params_sigma_m[:, nth_item] = np.mean(Gaussian_Params[1], axis=1)
+    """
+    #import ipdb; ipdb.set_trace()
 
 
     model.sess.close()

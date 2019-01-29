@@ -12,14 +12,55 @@ from evaluation.metrics import evaluate
 # TODO: Move this to util dir eventually
 # Normalize input matrix by column
 from scipy.sparse import csr_matrix
-def normalize_matrix_by_column(matrix):
+def normalize_matrix_by_row(matrix):
     matrix = matrix.tobsr()
-    sum_over_column = matrix.sum(axis=0)
-    sum_over_column[0][sum_over_column[0] == 0] = 1
-    return csr_matrix(matrix/sum_over_column)
+    sum_over_row = matrix.sum(axis=1)
+    sum_over_row[sum_over_row == 0] = 1
+    return csr_matrix(matrix/sum_over_row)
 
-def entropy(mean, sigma):
-    return
+def entropy_sampling(mean, sigma, num_rows):
+    if mean[mean >= 1].size:
+        print("THERE ARE GAUSSIAN PARAMETERS GREATER OR EQUAL TO 1. CHECK!!!")
+    if mean[mean < 0].size:
+        print("THERE ARE GAUSSIAN PARAMETERS GREATER OR EQUAL TO 1. CHECK!!!")
+    entropy_scores = np.multiply(-mean, np.log2(mean))
+    entropy_scores = np.nan_to_num(entropy_scores)
+    return np.tile(entropy_scores, (num_rows, 1))
+
+def random_sampling(mean, sigma, num_rows):
+    return np.random.random((num_rows, mean.size))
+
+
+def sampling_predict(prediction_scores, topK, matrix_Train, gpu=False):
+    prediction = []
+
+    from tqdm import tqdm
+    for user_index in tqdm(range(prediction_scores.shape[0])):
+        vector_train = matrix_Train[user_index]
+        if len(vector_train.nonzero()[0]) > 0:
+            vector_predict = sub_routine(prediction_scores[user_index], vector_train, topK=topK, gpu=gpu)
+        else:
+            vector_predict = np.zeros(topK, dtype=np.float32)
+
+        prediction.append(vector_predict)
+
+    return np.vstack(prediction)
+
+
+def sub_routine(vector_predict, vector_train, topK=500, gpu=False):
+
+    train_index = vector_train.nonzero()[1]
+    if gpu:
+        import cupy as cp
+        candidate_index = cp.argpartition(-vector_predict, topK+len(train_index))[:topK+len(train_index)]
+        vector_predict = candidate_index[vector_predict[candidate_index].argsort()[::-1]]
+        vector_predict = cp.asnumpy(vector_predict).astype(np.float32)
+    else:
+        candidate_index = np.argpartition(-vector_predict, topK+len(train_index))[:topK+len(train_index)]
+        vector_predict = candidate_index[vector_predict[candidate_index].argsort()[::-1]]
+    vector_predict = np.delete(vector_predict, np.isin(vector_predict, train_index).nonzero()[0])
+
+    return vector_predict[:topK]
 
 def main(args):
     # Progress bar
@@ -44,6 +85,7 @@ def main(args):
     print("Evaluation Ranking Topk: {0}".format(args.topk))
     print('Number of Steps to Evaluate: {}'.format(args.num_steps))
     print('Number of Recommendations in Each Step: {}'.format(args.num_rec))
+    print('Normalized: {}'.format(int(args.normalized)==True))
 
     # Load Data
     progress.section("Loading Data")
@@ -57,43 +99,17 @@ def main(args):
 
     print("Train U-I Dimensions: {0}".format(R_train.shape))
 
-    '''
-    # Item-Item or User-User
-    if args.item == True:
-        RQ, Yt, Bias = models[args.model](R_train, embedded_matrix=np.empty((0)),
-                                          iteration=args.iter, rank=args.rank,
-                                          corruption=args.corruption, gpu_on=args.gpu,
-                                          lam=args.lamb, alpha=args.alpha, seed=args.seed, root=args.root)
-        Y = Yt.T
-    else:
-        Y, RQt, Bias = models[args.model](R_train.T, embedded_matrix=np.empty((0)),
-                                          iteration=args.iter, rank=args.rank,
-                                          corruption=args.corruption, gpu_on=args.gpu,
-                                          lam=args.lamb, alpha=args.alpha, seed=args.seed, root=args.root)
-        RQ = RQt.T
-
-    # np.save('latent/U_{0}_{1}'.format(args.model, args.rank), RQ)
-    # np.save('latent/V_{0}_{1}'.format(args.model, args.rank), Y)
-    # if Bias is not None:
-    #     np.save('latent/B_{0}_{1}'.format(args.model, args.rank), Bias)
-
-    progress.section("Predict")
-    prediction = predict(matrix_U=RQ,
-                         matrix_V=Y,
-                         bias=Bias,
-                         topK=args.topk,
-                         matrix_Train=R_train,
-                         measure=args.sim_measure,
-                         gpu=args.gpu)
-    '''
-
     # By default, only 1 step
     for i in range(args.num_steps):
         print('This is step {} \n'.format(i))
 
         # Normalize train set
-        R_train_normalized = normalize_matrix_by_column(R_train)
+        if int(args.normalized):
+            R_train_normalized = normalize_matrix_by_row(R_train)
+        else:
+            R_train_normalized = R_train
 
+        progress.section("Train")
         # Train the model using the train set and get weights
         # TODO: Gaussian_params contains RQ. Need to be optimized here
         # TODO: Get probability per sample
@@ -103,30 +119,29 @@ def main(args):
                                                                                      lam=args.lamb, alpha=args.alpha, seed=args.seed, root=args.root)
         Y = Yt.T
 
+#        print('U is \n {}'.format(RQ))
+#        print('V is \n {}'.format(Y))
+#        print('B is \n {}'.format(Bias))
+
+        progress.section("Predict")
         # TODO: Use the trained model with test set, get performance measures
 
         # TODO: Select ‘k’ most-informative samples based on
         # per-sample-probabilities, i.e., those that the model was most
         # uncertain about regarding their labelling.
+        prediction_scores = entropy_sampling(Gaussian_Params_mu, Gaussian_Params_sigma, R_train.shape[0])
+        prediction_scores = random_sampling(Gaussian_Params_mu, Gaussian_Params_sigma, R_train.shape[0])
+#        import ipdb; ipdb.set_trace()
         # TODO: Move these ‘k’ samples from the validation set to the train-set
         # and query their labels.
         # TODO: Inverse normalization for all the data-sets
         # TODO: Stop according to the stop criterion, otherwise normalize train
         # set.
-
-
-        progress.section("Predict")
-        prediction = predict(matrix_U=RQ,
-                             matrix_V=Y,
-                             bias=Bias,
-                             topK=args.topk,
-                             matrix_Train=R_train_normalized,
-                             measure=args.sim_measure,
-                             gpu=args.gpu)
-        print('U is \n {}'.format(RQ))
-        print('V is \n {}'.format(Y))
-        print('B is \n {}'.format(Bias))
-        print('Prediction is \n {}'.format(prediction))
+    print(prediction_scores)
+    prediction = sampling_predict(prediction_scores=prediction_scores,
+                                  topK=args.topk,
+                                  matrix_Train=R_train,
+                                  gpu=args.gpu)
 
     if args.validation:
         progress.section("Create Metrics")
@@ -156,6 +171,7 @@ if __name__ == "__main__":
     parser.add_argument('-s', dest='seed', type=check_int_positive, default=1)
     parser.add_argument('-ns', dest='num_steps', type=check_int_positive, default=1)
     parser.add_argument('-nr', dest='num_rec', type=check_int_positive, default=2)
+    parser.add_argument('-nor', dest='normalized', default=0)
     parser.add_argument('-m', dest='model', default="WRMF")
     parser.add_argument('-d', dest='path', default="datax/")
     parser.add_argument('-t', dest='train', default='Rtrain.npz')
