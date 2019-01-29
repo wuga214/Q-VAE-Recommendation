@@ -105,7 +105,7 @@ class IFVAE(object):
             mean = tf.nn.relu(encoded[:, :self._latent_dim])
             logstd = encoded[:, self._latent_dim:]
 
-            logstd = tf.where(tf.less(-3., logstd), tf.zeros(tf.shape(logstd)), logstd)
+            logstd = tf.where(tf.less(logstd, -3), tf.ones(tf.shape(logstd))*-3, logstd)
 
             std = tf.exp(logstd)
             epsilon = tf.random_normal(tf.shape(std))
@@ -123,14 +123,6 @@ class IFVAE(object):
             obs_mean = decoded
 
         return mean, logstd, obs_mean
-
-    # @staticmethod
-    # def _kl_diagnormal_stdnormal(mu_1, std_1, mu_2=0, std_2=1):
-    #
-    #     kl = tf.reduce_mean(tf.log(std_2) - tf.log(std_1)
-    #                         + tf.divide((tf.square(std_1) + tf.square(mu_1-mu_2)), 2*tf.square(std_2))
-    #                         - 0.5)
-    #     return kl
 
     @staticmethod
     def _kl_diagnormal_stdnormal(mu_1, log_std_1, mu_2=0, log_std_2=0):
