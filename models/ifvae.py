@@ -58,10 +58,10 @@ class IFVAE(object):
                 if self._observation_distribution == 'Gaussian':
                     with tf.variable_scope('gaussian'):
 
-                        obj1 = self._gaussian_log_likelihood(self.input * mask1 * (1 - mask2),
+                        obj1 = self._gaussian_log_likelihood(wc * (1 - mask2),
                                                              self.wc_obs_mean * mask1 * (1 - mask2),
                                                              self._observation_std)
-                        obj2 = self._gaussian_log_likelihood(self.input * mask1 * mask2,
+                        obj2 = self._gaussian_log_likelihood(hc,
                                                              self.hc_obs_mean * mask1 * mask2,
                                                              self._observation_std)
                 elif self._observation_distribution == 'Bernoulli':
@@ -86,7 +86,8 @@ class IFVAE(object):
             with tf.variable_scope('optimizer'):
                 optimizer = self._optimizer(learning_rate=self._learning_rate)
             with tf.variable_scope('training-step'):
-                self._train = optimizer.minimize(self._loss)
+                var_list = [self.encode_weights, self.encode_bias, self.decode_weights, self.decode_bias]
+                self._train = optimizer.minimize(self._loss, var_list=var_list)
 
             self.sess = tf.Session()
             init = tf.global_variables_initializer()
@@ -94,12 +95,12 @@ class IFVAE(object):
 
     def _network(self, x):
         with tf.variable_scope('encoder'):
-            self.encode_weights = tf.Variable(tf.truncated_normal([self._observation_dim, self._latent_dim * 2],
-                                                                   stddev=1 / 500.0),
-                                         name="Weights")
-            encode_bias = tf.Variable(tf.constant(0., shape=[self._latent_dim * 2]), name="Bias")
+            self.encode_weights = tf.get_variable("Weights", initializer=tf.truncated_normal([self._observation_dim,
+                                                                                              self._latent_dim * 2],
+                                                                                             stddev=1 / 500.0))
+            self.encode_bias = tf.get_variable("Bias", initializer=tf.constant(0., shape=[self._latent_dim * 2]))
 
-            encoded = tf.matmul(x, self.encode_weights) + encode_bias
+            encoded = tf.matmul(x, self.encode_weights) + self.encode_bias
 
         with tf.variable_scope('latent'):
             mean = tf.nn.relu(encoded[:, :self._latent_dim])
@@ -114,10 +115,10 @@ class IFVAE(object):
             z = tf.cond(self.sampling, lambda: z + std * epsilon, lambda: z)
 
         with tf.variable_scope('decoder'):
-            self.decode_weights = tf.Variable(
-                tf.truncated_normal([self._latent_dim, self._observation_dim], stddev=1 / 500.0),
-                name="Weights")
-            self.decode_bias = tf.Variable(tf.constant(0., shape=[self._observation_dim]), name="Bias")
+            self.decode_weights = tf.get_variable("Weights", initializer=tf.truncated_normal([self._latent_dim,
+                                                                                              self._observation_dim],
+                                                                                             stddev=1 / 500.0))
+            self.decode_bias = tf.get_variable("Bias", initializer=tf.constant(0., shape=[self._observation_dim]))
             decoded = tf.matmul(z, self.decode_weights) + self.decode_bias
 
             obs_mean = decoded
@@ -175,7 +176,8 @@ class IFVAE(object):
         pbar = tqdm(range(epoch))
         for i in pbar:
             for step in range(len(batches)):
-                corrupt_rate = random.uniform(0.1, 0.5)
+                corrupt_rate = random.uniform(0.1, 0.3)
+                #corrupt_rate = corruption
                 feed_dict = {self.input: batches[step].todense(), self.corruption: corrupt_rate,
                              self.sampling: True}
                 training, loss = self.sess.run([self._train, self.wc_std], feed_dict=feed_dict)
