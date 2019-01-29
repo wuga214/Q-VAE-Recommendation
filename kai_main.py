@@ -158,9 +158,23 @@ def main(args):
         index_prediction = np.dstack((index, prediction)).reshape((prediction.shape[0]*prediction.shape[1]), 2)
         index_valid = np.dstack((R_valid.nonzero()[0], R_valid.nonzero()[1]))[0]
 
+        '''
+        start_time = time.time()
         index_prediction_set = set([tuple(x) for x in index_prediction])
         index_valid_set = set([tuple(x) for x in index_valid])
         prediction_valid_intersect = np.array([x for x in index_prediction_set & index_valid_set])
+        print("Elapsed for set: {0}".format(inhour(time.time() - start_time)))
+        '''
+
+        start_time = time.time()
+        X = index_prediction
+        searched_values = index_valid
+        dims = X.max(0)+1
+        out = np.where(np.in1d(np.ravel_multi_index(X.T,dims),\
+                    np.ravel_multi_index(searched_values.T,dims)))[0]
+        out_index = [index_prediction[x] for x in out]
+        print("Elapsed for ravel: {0}".format(inhour(time.time() - start_time)))
+
         import ipdb; ipdb.set_trace()
 
         # TODO: Inverse normalization for all the data-sets
