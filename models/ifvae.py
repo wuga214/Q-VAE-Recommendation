@@ -104,6 +104,9 @@ class IFVAE(object):
         with tf.variable_scope('latent'):
             mean = tf.nn.relu(encoded[:, :self._latent_dim])
             logstd = encoded[:, self._latent_dim:]
+
+            logstd = tf.where(tf.less(-3., logstd), tf.zeros(tf.shape(logstd)), logstd)
+
             std = tf.exp(logstd)
             epsilon = tf.random_normal(tf.shape(std))
             z = mean
@@ -131,9 +134,6 @@ class IFVAE(object):
 
     @staticmethod
     def _kl_diagnormal_stdnormal(mu_1, log_std_1, mu_2=0, log_std_2=0):
-
-        log_std_2 = tf.where(tf.less(-3., log_std_2), tf.zeros(tf.shape(log_std_2)), log_std_2)
-        log_std_1 = tf.where(tf.less(-3., log_std_2), tf.zeros(tf.shape(log_std_1)), log_std_1)
 
         var_square_1 = tf.exp(2. * log_std_1)
         var_square_2 = tf.exp(2. * log_std_2)

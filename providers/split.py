@@ -78,11 +78,11 @@ def split_seed_randomly(rating_matrix, ratio=[0.5, 0.2, 0.3], threshold=70,
 
 
 def time_ordered_split(rating_matrix, timestamp_matrix, ratio=[0.5, 0.2, 0.3],
-                       implicit=True, remove_empty=True, sampling=False):
+                       implicit=True, remove_empty=True, sampling=False, percentage=0.1):
 
     if sampling:
         m, n = rating_matrix.shape
-        index = np.random.choice(m, m//10)
+        index = np.random.choice(m, int(m * percentage))
         rating_matrix = rating_matrix[index]
 
     if implicit:
