@@ -95,6 +95,7 @@ def main(args):
     else:
         # R_train = load_pandas(path=args.path, name=args.train, shape=args.shape)
         R_train = load_csv(path=args.path, name=args.train, shape=args.shape)
+    R_valid = load_numpy(path=args.path, name=args.valid)
     print("Elapsed: {0}".format(inhour(time.time() - start_time)))
 
     print("Train U-I Dimensions: {0}".format(R_train.shape))
@@ -119,41 +120,54 @@ def main(args):
                                                                                      lam=args.lamb, alpha=args.alpha, seed=args.seed, root=args.root)
         Y = Yt.T
 
-#        print('U is \n {}'.format(RQ))
-#        print('V is \n {}'.format(Y))
-#        print('B is \n {}'.format(Bias))
+        # print('U is \n {}'.format(RQ))
+        # print('V is \n {}'.format(Y))
+        # print('B is \n {}'.format(Bias))
 
         progress.section("Predict")
-        # TODO: Use the trained model with test set, get performance measures
 
         # TODO: Select ‘k’ most-informative samples based on
         # per-sample-probabilities, i.e., those that the model was most
         # uncertain about regarding their labelling.
-        prediction_scores = entropy_sampling(Gaussian_Params_mu, Gaussian_Params_sigma, R_train.shape[0])
+        # prediction_scores = entropy_sampling(Gaussian_Params_mu, Gaussian_Params_sigma, R_train.shape[0])
         prediction_scores = random_sampling(Gaussian_Params_mu, Gaussian_Params_sigma, R_train.shape[0])
-#        import ipdb; ipdb.set_trace()
+
+        print(prediction_scores)
+        prediction = sampling_predict(prediction_scores=prediction_scores,
+                                    topK=args.topk,
+                                    matrix_Train=R_train,
+                                    gpu=args.gpu)
+
+        # TODO: Use the trained model with test set, get performance measures
+        if args.validation:
+            progress.section("Create Metrics")
+            start_time = time.time()
+
+            metric_names = ['R-Precision', 'NDCG', 'Clicks', 'Recall', 'Precision', 'MAP']
+            result = evaluate(prediction, R_valid, metric_names, [args.topk])
+            print("-")
+            for metric in result.keys():
+                print("{0}:{1}".format(metric, result[metric]))
+            print("Elapsed: {0}".format(inhour(time.time() - start_time)))
+
+
+
         # TODO: Move these ‘k’ samples from the validation set to the train-set
         # and query their labels.
+        index = np.tile(np.arange(prediction.shape[0]),(prediction.shape[1],1)).T
+        index_prediction = np.dstack((index, prediction)).reshape((prediction.shape[0]*prediction.shape[1]), 2)
+        index_valid = np.dstack((R_valid.nonzero()[0], R_valid.nonzero()[1]))[0]
+
+        index_prediction_set = set([tuple(x) for x in index_prediction])
+        index_valid_set = set([tuple(x) for x in index_valid])
+        prediction_valid_intersect = np.array([x for x in index_prediction_set & index_valid_set])
+        import ipdb; ipdb.set_trace()
+
         # TODO: Inverse normalization for all the data-sets
         # TODO: Stop according to the stop criterion, otherwise normalize train
         # set.
-    print(prediction_scores)
-    prediction = sampling_predict(prediction_scores=prediction_scores,
-                                  topK=args.topk,
-                                  matrix_Train=R_train,
-                                  gpu=args.gpu)
 
-    if args.validation:
-        progress.section("Create Metrics")
-        start_time = time.time()
 
-        metric_names = ['R-Precision', 'NDCG', 'Clicks', 'Recall', 'Precision', 'MAP']
-        R_valid = load_numpy(path=args.path, name=args.valid)
-        result = evaluate(prediction, R_valid, metric_names, [args.topk])
-        print("-")
-        for metric in result.keys():
-            print("{0}:{1}".format(metric, result[metric]))
-        print("Elapsed: {0}".format(inhour(time.time() - start_time)))
 
 
 if __name__ == "__main__":
