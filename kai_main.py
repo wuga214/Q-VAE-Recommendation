@@ -10,13 +10,7 @@ from evaluation.metrics import evaluate
 
 
 # TODO: Move this to util dir eventually
-# Normalize input matrix by column
 from scipy.sparse import csr_matrix
-def normalize_matrix_by_row(matrix):
-    matrix = matrix.tobsr()
-    sum_over_row = matrix.sum(axis=1)
-    sum_over_row[sum_over_row == 0] = 1
-    return csr_matrix(matrix/sum_over_row)
 
 def entropy_sampling(mean, sigma, num_rows):
     if mean[mean >= 1].size:
@@ -85,7 +79,6 @@ def main(args):
     print("Evaluation Ranking Topk: {0}".format(args.topk))
     print('Number of Steps to Evaluate: {}'.format(args.num_steps))
     print('Number of Recommendations in Each Step: {}'.format(args.num_rec))
-    print('Normalized: {}'.format(int(args.normalized)==True))
 
     # Load Data
     progress.section("Loading Data")
@@ -106,17 +99,11 @@ def main(args):
     for i in range(args.num_steps):
         print('This is step {} \n'.format(i))
 
-        # Normalize train set
-        if int(args.normalized):
-            R_train_normalized = normalize_matrix_by_row(R_train)
-        else:
-            R_train_normalized = R_train
-
         progress.section("Train")
         # Train the model using the train set and get weights
         # TODO: Gaussian_params contains RQ. Need to be optimized here
         # TODO: Get probability per sample
-        RQ, Yt, Bias, Gaussian_Params_mu, Gaussian_Params_sigma = models[args.model](R_train_normalized, embedded_matrix=np.empty((0)),
+        RQ, Yt, Bias, Gaussian_Params_mu, Gaussian_Params_sigma = models[args.model](R_train, embedded_matrix=np.empty((0)),
                                                                                      iteration=args.iter, rank=args.rank,
                                                                                      corruption=args.corruption, gpu_on=args.gpu,
                                                                                      lam=args.lamb, alpha=args.alpha, seed=args.seed, root=args.root)
@@ -136,9 +123,9 @@ def main(args):
 
         print(prediction_scores)
         prediction = sampling_predict(prediction_scores=prediction_scores,
-                                    topK=args.topk,
-                                    matrix_Train=R_train,
-                                    gpu=args.gpu)
+                                      topK=args.topk,
+                                      matrix_Train=R_train,
+                                      gpu=args.gpu)
 
         # TODO: Use the trained model with test set, get performance measures
         if args.validation:
@@ -164,29 +151,19 @@ def main(args):
         index_prediction_set = set([tuple(x) for x in index_prediction])
         index_valid_set = set([tuple(x) for x in index_valid])
         prediction_valid_intersect = np.array([x for x in index_prediction_set & index_valid_set])
-        '''
-        X = index_prediction
-        searched_values = index_valid
-        dims = X.max(0)+1
-        out = np.where(np.in1d(np.ravel_multi_index(X.T,dims),\
-                    np.ravel_multi_index(searched_values.T,dims)))[0]
-        out_index = [index_prediction[x] for x in out]
-        # index = [*map(tuple,out_index)]
-        '''
         mask_row = np.array(prediction_valid_intersect)[:, 0]
         mask_col = np.array(prediction_valid_intersect)[:, 1]
         mask_data = np.full(len(prediction_valid_intersect), True)
         mask = csr_matrix((mask_data, (mask_row, mask_col)), shape=R_train.shape)
         R_train = R_train.tolil()
+        R_valid = R_valid.tolil()
         R_train[mask] = 1
         R_valid[mask] = 0
+        R_train = R_train.tocsr()
+        R_valid = R_valid.tocsr()
         print("Elapsed for ravel: {0}".format(inhour(time.time() - start_time)))
 
-        # TODO: Inverse normalization for all the data-sets
-        # TODO: Stop according to the stop criterion, otherwise normalize train
-        # set.
-
-    import ipdb; ipdb.set_trace()
+#    import ipdb; ipdb.set_trace()
 
 
 
@@ -205,7 +182,6 @@ if __name__ == "__main__":
     parser.add_argument('-s', dest='seed', type=check_int_positive, default=1)
     parser.add_argument('-ns', dest='num_steps', type=check_int_positive, default=1)
     parser.add_argument('-nr', dest='num_rec', type=check_int_positive, default=2)
-    parser.add_argument('-nor', dest='normalized', default=0)
     parser.add_argument('-m', dest='model', default="WRMF")
     parser.add_argument('-d', dest='path', default="datax/")
     parser.add_argument('-t', dest='train', default='Rtrain.npz')
