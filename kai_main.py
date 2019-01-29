@@ -100,6 +100,8 @@ def main(args):
 
     print("Train U-I Dimensions: {0}".format(R_train.shape))
 
+    metrics_result = []
+
     # By default, only 1 step
     for i in range(args.num_steps):
         print('This is step {} \n'.format(i))
@@ -129,8 +131,8 @@ def main(args):
         # TODO: Select ‘k’ most-informative samples based on
         # per-sample-probabilities, i.e., those that the model was most
         # uncertain about regarding their labelling.
-        # prediction_scores = entropy_sampling(Gaussian_Params_mu, Gaussian_Params_sigma, R_train.shape[0])
-        prediction_scores = random_sampling(Gaussian_Params_mu, Gaussian_Params_sigma, R_train.shape[0])
+        prediction_scores = entropy_sampling(Gaussian_Params_mu, Gaussian_Params_sigma, R_train.shape[0])
+        #prediction_scores = random_sampling(Gaussian_Params_mu, Gaussian_Params_sigma, R_train.shape[0])
 
         print(prediction_scores)
         prediction = sampling_predict(prediction_scores=prediction_scores,
@@ -150,7 +152,7 @@ def main(args):
                 print("{0}:{1}".format(metric, result[metric]))
             print("Elapsed: {0}".format(inhour(time.time() - start_time)))
 
-
+        metrics_result.append(result)
 
         # TODO: Move these ‘k’ samples from the validation set to the train-set
         # and query their labels.
@@ -158,30 +160,33 @@ def main(args):
         index_prediction = np.dstack((index, prediction)).reshape((prediction.shape[0]*prediction.shape[1]), 2)
         index_valid = np.dstack((R_valid.nonzero()[0], R_valid.nonzero()[1]))[0]
 
-        '''
         start_time = time.time()
         index_prediction_set = set([tuple(x) for x in index_prediction])
         index_valid_set = set([tuple(x) for x in index_valid])
         prediction_valid_intersect = np.array([x for x in index_prediction_set & index_valid_set])
-        print("Elapsed for set: {0}".format(inhour(time.time() - start_time)))
         '''
-
-        start_time = time.time()
         X = index_prediction
         searched_values = index_valid
         dims = X.max(0)+1
         out = np.where(np.in1d(np.ravel_multi_index(X.T,dims),\
                     np.ravel_multi_index(searched_values.T,dims)))[0]
         out_index = [index_prediction[x] for x in out]
-        index = [*map(tuple,out_index)]
+        # index = [*map(tuple,out_index)]
+        '''
+        mask_row = np.array(prediction_valid_intersect)[:, 0]
+        mask_col = np.array(prediction_valid_intersect)[:, 1]
+        mask_data = np.full(len(prediction_valid_intersect), True)
+        mask = csr_matrix((mask_data, (mask_row, mask_col)), shape=R_train.shape)
+        R_train = R_train.tolil()
+        R_train[mask] = 1
+        R_valid[mask] = 0
         print("Elapsed for ravel: {0}".format(inhour(time.time() - start_time)))
-
-        import ipdb; ipdb.set_trace()
 
         # TODO: Inverse normalization for all the data-sets
         # TODO: Stop according to the stop criterion, otherwise normalize train
         # set.
 
+    import ipdb; ipdb.set_trace()
 
 
 
