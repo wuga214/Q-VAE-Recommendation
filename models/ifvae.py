@@ -230,50 +230,28 @@ def ifvae(matrix_train, embedded_matrix=np.empty((0)), iteration=100,
     Y = model.get_Y()
     Bias = model.get_Bias()
 
-    # TODO: Instead of passing matrix_input, need to feed forward one hot
-    # encoding for all users and each item. Might need to average over all
-    # latent dimension
-
-    # Get one hot encoding vector for all users and the 1st item as the 1st
-    # iteration
-    Gaussian_Params_mu, Gaussian_Params_sigma = np.zeros(n), np.zeros(n)
-#    for i in range(n):
-    for i in tqdm(range(n)):
-        nth_item = i
+    # Get all item distribution by feedforward passing one hot encoding vector
+    # through encoder
+    item_gaussian_mu, item_gaussian_sigma = [], []
+    for nth_item in tqdm(range(n)):
 #        print(nth_item)
         one_hot_vector = create_one_hot_vector(num_classes=n, nth_item=nth_item)
 #        print(one_hot_vector)
         Gaussian_Params = model.uncertainty(one_hot_vector)
-        Gaussian_Params_mu[nth_item] = np.mean(Gaussian_Params[0], axis=1)
-        Gaussian_Params_sigma[nth_item] = np.mean(Gaussian_Params[1], axis=1)
+        item_gaussian_mu.append(Gaussian_Params[0][0])
+        item_gaussian_sigma.append(Gaussian_Params[1][0])
 
-    """
-    # Get one hot encoding matrix for all users and the 1st item as the 1st
-    # iteration
-    Gaussian_Params_mu_m, Gaussian_Params_sigma_m = np.zeros((m, n)), np.zeros((m, n))
-    for i in range(n):
-        nth_item = i
-        print(nth_item)
-
-        matrix_one_hot = create_one_hot_matrix(num_rows=m, num_classes=n, nth_item=nth_item)
-        print(matrix_one_hot)
-        print(matrix_one_hot.shape)
-
-        # Average mu and sigma for each item from gaussian parameters and store it
-        Gaussian_Params = model.uncertainty(matrix_one_hot)
-        print(Gaussian_Params)
-        print(np.count_nonzero(Gaussian_Params[0]))
-#        import ipdb; ipdb.set_trace()
-        Gaussian_Params_mu_m[:, nth_item] = np.mean(Gaussian_Params[0], axis=1)
-        Gaussian_Params_sigma_m[:, nth_item] = np.mean(Gaussian_Params[1], axis=1)
-    """
-    #import ipdb; ipdb.set_trace()
-
+    user_gaussian_mu, user_gaussian_sigma = [], []
+    for nth_user in tqdm(range(m)):
+        user_vector = matrix_input[nth_user, :]
+        Gaussian_Params = model.uncertainty(user_vector.todense())
+        user_gaussian_mu.append(Gaussian_Params[0][0])
+        user_gaussian_sigma.append(Gaussian_Params[1][0])
 
     model.sess.close()
     tf.reset_default_graph()
 
-    return RQ, Y, Bias, Gaussian_Params_mu, Gaussian_Params_sigma
+    return RQ, Y, Bias, np.array(item_gaussian_mu), np.array(item_gaussian_sigma), np.array(user_gaussian_mu), np.array(user_gaussian_sigma)
 
 def create_one_hot_vector(num_classes, nth_item):
     return np.eye(num_classes)[[nth_item]]

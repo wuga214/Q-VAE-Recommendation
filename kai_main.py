@@ -12,14 +12,24 @@ from evaluation.metrics import evaluate
 # TODO: Move this to util dir eventually
 from scipy.sparse import csr_matrix
 
-def entropy_sampling(mean, sigma, num_rows):
-    if mean[mean >= 1].size:
-        print("THERE ARE GAUSSIAN PARAMETERS GREATER OR EQUAL TO 1. CHECK!!!")
-    if mean[mean < 0].size:
-        print("THERE ARE GAUSSIAN PARAMETERS GREATER OR EQUAL TO 1. CHECK!!!")
-    entropy_scores = np.multiply(-mean, np.log2(mean))
-    entropy_scores = np.nan_to_num(entropy_scores)
-    return np.tile(entropy_scores, (num_rows, 1))
+# p(I_Mu|U_Mu, U_Sigma) -> -((x-u)^2) / (2*sigma^2)
+def calculate_multivariate_gaussian_pdf(item_mu, user_mu, user_sigma):
+    result = []
+    for user_index in range(user_mu.shape[0]):
+        user_mu_vector = user_mu[user_index]
+        user_sigma_vector = user_sigma[user_index]
+
+        negative_x_minus_u_square = np.negative(np.square(item_mu - user_mu_vector))
+        two_multiply_sigma_square = 2 * np.square(user_sigma_vector)
+        log_pdf = np.sum(np.divide(negative_x_minus_u_square, two_multiply_sigma_square), axis=1)
+        result.append(log_pdf)
+    return np.array(result)
+
+def entropy_sampling(item_mu, user_mu, user_sigma):
+    #entropy_scores = np.multiply(-mean, np.log2(mean))
+    #entropy_scores = np.nan_to_num(entropy_scores)
+    #return np.tile(entropy_scores, (num_rows, 1))
+    return calculate_multivariate_gaussian_pdf(item_mu, user_mu, user_sigma)
 
 def random_sampling(mean, sigma, num_rows):
     return np.random.random((num_rows, mean.size))
@@ -103,10 +113,10 @@ def main(args):
         # Train the model using the train set and get weights
         # TODO: Gaussian_params contains RQ. Need to be optimized here
         # TODO: Get probability per sample
-        RQ, Yt, Bias, Gaussian_Params_mu, Gaussian_Params_sigma = models[args.model](R_train, embedded_matrix=np.empty((0)),
-                                                                                     iteration=args.iter, rank=args.rank,
-                                                                                     corruption=args.corruption, gpu_on=args.gpu,
-                                                                                     lam=args.lamb, alpha=args.alpha, seed=args.seed, root=args.root)
+        RQ, Yt, Bias, item_gaussian_mu, item_gaussian_sigma, user_gaussian_mu, user_gaussian_sigma = models[args.model](R_train, embedded_matrix=np.empty((0)),
+                                                                                                                        iteration=args.iter, rank=args.rank,
+                                                                                                                        corruption=args.corruption, gpu_on=args.gpu,
+                                                                                                                        lam=args.lamb, alpha=args.alpha, seed=args.seed, root=args.root)
         Y = Yt.T
 
         # print('U is \n {}'.format(RQ))
@@ -118,7 +128,7 @@ def main(args):
         # TODO: Select ‘k’ most-informative samples based on
         # per-sample-probabilities, i.e., those that the model was most
         # uncertain about regarding their labelling.
-        prediction_scores = entropy_sampling(Gaussian_Params_mu, Gaussian_Params_sigma, R_train.shape[0])
+        prediction_scores = entropy_sampling(item_gaussian_mu, user_gaussian_mu, user_gaussian_sigma)
         #prediction_scores = random_sampling(Gaussian_Params_mu, Gaussian_Params_sigma, R_train.shape[0])
 
         print(prediction_scores)
