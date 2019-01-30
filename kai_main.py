@@ -87,6 +87,7 @@ def main(args):
     print("Lambda: {0}".format(args.lamb))
     print("SVD/Alter Iteration: {0}".format(args.iter))
     print("Evaluation Ranking Topk: {0}".format(args.topk))
+    print("GPU: {}".format(args.gpu))
     print('Number of Steps to Evaluate: {}'.format(args.num_steps))
     print('Number of Recommendations in Each Step: {}'.format(args.num_rec))
 
@@ -113,10 +114,14 @@ def main(args):
         # Train the model using the train set and get weights
         # TODO: Gaussian_params contains RQ. Need to be optimized here
         # TODO: Get probability per sample
-        RQ, Yt, Bias, item_gaussian_mu, item_gaussian_sigma, user_gaussian_mu, user_gaussian_sigma = models[args.model](R_train, embedded_matrix=np.empty((0)),
-                                                                                                                        iteration=args.iter, rank=args.rank,
-                                                                                                                        corruption=args.corruption, gpu_on=args.gpu,
-                                                                                                                        lam=args.lamb, alpha=args.alpha, seed=args.seed, root=args.root)
+        RQ, Yt, Bias, item_gaussian_mu, item_gaussian_sigma, user_gaussian_mu, \
+            user_gaussian_sigma = models[args.model](R_train, nth_step=i,
+                                                     total_steps=args.num_steps,
+                                                     embedded_matrix=np.empty((0)),
+                                                     iteration=args.iter, rank=args.rank,
+                                                     corruption=args.corruption, gpu_on=args.gpu,
+                                                     lam=args.lamb, alpha=args.alpha,
+                                                     seed=args.seed, root=args.root)
         Y = Yt.T
 
         # print('U is \n {}'.format(RQ))
@@ -129,7 +134,7 @@ def main(args):
         # per-sample-probabilities, i.e., those that the model was most
         # uncertain about regarding their labelling.
         prediction_scores = entropy_sampling(item_gaussian_mu, user_gaussian_mu, user_gaussian_sigma)
-        #prediction_scores = random_sampling(Gaussian_Params_mu, Gaussian_Params_sigma, R_train.shape[0])
+        # prediction_scores = random_sampling(Gaussian_Params_mu, Gaussian_Params_sigma, R_train.shape[0])
 
         print(prediction_scores)
         prediction = sampling_predict(prediction_scores=prediction_scores,
@@ -197,7 +202,7 @@ if __name__ == "__main__":
     parser.add_argument('-t', dest='train', default='Rtrain.npz')
     parser.add_argument('-v', dest='valid', default='Rvalid.npz')
     parser.add_argument('-k', dest='topk', type=check_int_positive, default=50)
-    parser.add_argument('-gpu', dest='gpu', action='store_true')
+    parser.add_argument('-gpu', dest='gpu', action='store_false')
     parser.add_argument('--similarity', dest='sim_measure', default='Cosine')
     parser.add_argument('--shape', help="CSR Shape", dest="shape", type=shape, nargs=2)
     args = parser.parse_args()

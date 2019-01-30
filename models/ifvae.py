@@ -213,18 +213,22 @@ class IFVAE(object):
         return self.sess.run(self.decode_bias)
 
 
-def ifvae(matrix_train, embedded_matrix=np.empty((0)), iteration=100,
-          lam=80, rank=200, corruption=0.2, optimizer="RMSProp", beta=1.0, seed=1, **unused):
+def ifvae(matrix_train, nth_step, total_steps, embedded_matrix=np.empty((0)),
+          iteration=100, lam=80, rank=200, corruption=0.2, optimizer="RMSProp",
+          beta=1.0, seed=1, **unused):
     progress = WorkSplitter()
     matrix_input = matrix_train
     if embedded_matrix.shape[0] > 0:
         matrix_input = vstack((matrix_input, embedded_matrix.T))
 
     m, n = matrix_input.shape
-    model = IFVAE(n, rank, 100, lamb=lam, beta=beta,
-                  observation_distribution="Gaussian", optimizer=Regularizer[optimizer])
 
-    model.train_model(matrix_input, corruption, iteration)
+    # if nth_step == 0:
+    model = IFVAE(n, rank, 100, lamb=lam, beta=beta,
+                    observation_distribution="Gaussian", optimizer=Regularizer[optimizer])
+
+    if nth_step == 0:
+        model.train_model(matrix_input, corruption, iteration)
 
     RQ = model.get_RQ(matrix_input)
     Y = model.get_Y()
@@ -234,9 +238,9 @@ def ifvae(matrix_train, embedded_matrix=np.empty((0)), iteration=100,
     # through encoder
     item_gaussian_mu, item_gaussian_sigma = [], []
     for nth_item in tqdm(range(n)):
-#        print(nth_item)
+        # print(nth_item)
         one_hot_vector = create_one_hot_vector(num_classes=n, nth_item=nth_item)
-#        print(one_hot_vector)
+        # print(one_hot_vector)
         Gaussian_Params = model.uncertainty(one_hot_vector)
         item_gaussian_mu.append(Gaussian_Params[0][0])
         item_gaussian_sigma.append(Gaussian_Params[1][0])
@@ -248,9 +252,12 @@ def ifvae(matrix_train, embedded_matrix=np.empty((0)), iteration=100,
         user_gaussian_mu.append(Gaussian_Params[0][0])
         user_gaussian_sigma.append(Gaussian_Params[1][0])
 
-    model.sess.close()
-    tf.reset_default_graph()
+    if nth_step + 1 == total_steps:
+        import ipdb; ipdb.set_trace()
+        model.sess.close()
+        tf.reset_default_graph()
 
+    import ipdb; ipdb.set_trace()
     return RQ, Y, Bias, np.array(item_gaussian_mu), np.array(item_gaussian_sigma), np.array(user_gaussian_mu), np.array(user_gaussian_sigma)
 
 def create_one_hot_vector(num_classes, nth_item):
@@ -259,3 +266,4 @@ def create_one_hot_vector(num_classes, nth_item):
 def create_one_hot_matrix(num_rows, num_classes, nth_item):
     target_row_index = np.full(num_rows, nth_item, dtype=int)
     return np.eye(num_classes)[target_row_index]
+
