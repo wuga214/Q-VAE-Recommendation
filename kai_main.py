@@ -9,63 +9,6 @@ from models.predictor import predict, predict_batch
 from evaluation.metrics import evaluate
 
 
-# TODO: Move this to util dir eventually
-from scipy.sparse import csr_matrix
-
-# p(I_Mu|U_Mu, U_Sigma) -> -((x-u)^2) / (2*sigma^2)
-def calculate_multivariate_gaussian_pdf(item_mu, user_mu, user_sigma):
-    result = []
-    for user_index in range(user_mu.shape[0]):
-        user_mu_vector = user_mu[user_index]
-        user_sigma_vector = user_sigma[user_index]
-
-        negative_x_minus_u_square = np.negative(np.square(item_mu - user_mu_vector))
-        two_multiply_sigma_square = 2 * np.square(user_sigma_vector)
-        log_pdf = np.sum(np.divide(negative_x_minus_u_square, two_multiply_sigma_square), axis=1)
-        result.append(log_pdf)
-    return np.array(result)
-
-def entropy_sampling(item_mu, user_mu, user_sigma):
-    #entropy_scores = np.multiply(-mean, np.log2(mean))
-    #entropy_scores = np.nan_to_num(entropy_scores)
-    #return np.tile(entropy_scores, (num_rows, 1))
-    return calculate_multivariate_gaussian_pdf(item_mu, user_mu, user_sigma)
-
-def random_sampling(mean, sigma, num_rows):
-    return np.random.random((num_rows, mean.size))
-
-
-def sampling_predict(prediction_scores, topK, matrix_Train, gpu=False):
-    prediction = []
-
-    from tqdm import tqdm
-    for user_index in tqdm(range(prediction_scores.shape[0])):
-        vector_train = matrix_Train[user_index]
-        if len(vector_train.nonzero()[0]) > 0:
-            vector_predict = sub_routine(prediction_scores[user_index], vector_train, topK=topK, gpu=gpu)
-        else:
-            vector_predict = np.zeros(topK, dtype=np.float32)
-
-        prediction.append(vector_predict)
-
-    return np.vstack(prediction)
-
-
-def sub_routine(vector_predict, vector_train, topK=500, gpu=False):
-
-    train_index = vector_train.nonzero()[1]
-    if gpu:
-        import cupy as cp
-        candidate_index = cp.argpartition(-vector_predict, topK+len(train_index))[:topK+len(train_index)]
-        vector_predict = candidate_index[vector_predict[candidate_index].argsort()[::-1]]
-        vector_predict = cp.asnumpy(vector_predict).astype(np.float32)
-    else:
-        candidate_index = np.argpartition(-vector_predict, topK+len(train_index))[:topK+len(train_index)]
-        vector_predict = candidate_index[vector_predict[candidate_index].argsort()[::-1]]
-    vector_predict = np.delete(vector_predict, np.isin(vector_predict, train_index).nonzero()[0])
-
-    return vector_predict[:topK]
-
 def main(args):
     # Progress bar
     progress = WorkSplitter()
@@ -104,81 +47,16 @@ def main(args):
 
     print("Train U-I Dimensions: {0}".format(R_train.shape))
 
-    metrics_result = []
+    metrics_result = models[args.model](R_train, R_valid, topk=args.topk,
+                                        total_steps=args.num_steps,
+                                        validation=args.validation,
+                                        embedded_matrix=np.empty((0)),
+                                        iteration=args.iter, rank=args.rank,
+                                        corruption=args.corruption, gpu_on=args.gpu,
+                                        lam=args.lamb, alpha=args.alpha,
+                                        seed=args.seed, root=args.root)
 
-    # By default, only 1 step
-    for i in range(args.num_steps):
-        print('This is step {} \n'.format(i))
-
-        progress.section("Train")
-        # Train the model using the train set and get weights
-        # TODO: Gaussian_params contains RQ. Need to be optimized here
-        # TODO: Get probability per sample
-        RQ, Yt, Bias, item_gaussian_mu, item_gaussian_sigma, user_gaussian_mu, \
-            user_gaussian_sigma = models[args.model](R_train, nth_step=i,
-                                                     total_steps=args.num_steps,
-                                                     embedded_matrix=np.empty((0)),
-                                                     iteration=args.iter, rank=args.rank,
-                                                     corruption=args.corruption, gpu_on=args.gpu,
-                                                     lam=args.lamb, alpha=args.alpha,
-                                                     seed=args.seed, root=args.root)
-        Y = Yt.T
-
-        # print('U is \n {}'.format(RQ))
-        # print('V is \n {}'.format(Y))
-        # print('B is \n {}'.format(Bias))
-
-        progress.section("Predict")
-
-        # TODO: Select ‘k’ most-informative samples based on
-        # per-sample-probabilities, i.e., those that the model was most
-        # uncertain about regarding their labelling.
-        prediction_scores = entropy_sampling(item_gaussian_mu, user_gaussian_mu, user_gaussian_sigma)
-        # prediction_scores = random_sampling(Gaussian_Params_mu, Gaussian_Params_sigma, R_train.shape[0])
-
-        print(prediction_scores)
-        prediction = sampling_predict(prediction_scores=prediction_scores,
-                                      topK=args.topk,
-                                      matrix_Train=R_train,
-                                      gpu=args.gpu)
-
-        # TODO: Use the trained model with test set, get performance measures
-        if args.validation:
-            progress.section("Create Metrics")
-            start_time = time.time()
-
-            metric_names = ['R-Precision', 'NDCG', 'Clicks', 'Recall', 'Precision', 'MAP']
-            result = evaluate(prediction, R_valid, metric_names, [args.topk])
-            print("-")
-            for metric in result.keys():
-                print("{0}:{1}".format(metric, result[metric]))
-            print("Elapsed: {0}".format(inhour(time.time() - start_time)))
-
-        metrics_result.append(result)
-
-        # TODO: Move these ‘k’ samples from the validation set to the train-set
-        # and query their labels.
-        index = np.tile(np.arange(prediction.shape[0]),(prediction.shape[1],1)).T
-        index_prediction = np.dstack((index, prediction)).reshape((prediction.shape[0]*prediction.shape[1]), 2)
-        index_valid = np.dstack((R_valid.nonzero()[0], R_valid.nonzero()[1]))[0]
-
-        start_time = time.time()
-        index_prediction_set = set([tuple(x) for x in index_prediction])
-        index_valid_set = set([tuple(x) for x in index_valid])
-        prediction_valid_intersect = np.array([x for x in index_prediction_set & index_valid_set])
-        mask_row = np.array(prediction_valid_intersect)[:, 0]
-        mask_col = np.array(prediction_valid_intersect)[:, 1]
-        mask_data = np.full(len(prediction_valid_intersect), True)
-        mask = csr_matrix((mask_data, (mask_row, mask_col)), shape=R_train.shape)
-        R_train = R_train.tolil()
-        R_valid = R_valid.tolil()
-        R_train[mask] = 1
-        R_valid[mask] = 0
-        R_train = R_train.tocsr()
-        R_valid = R_valid.tocsr()
-        print("Elapsed for ravel: {0}".format(inhour(time.time() - start_time)))
-
-#    import ipdb; ipdb.set_trace()
+    import ipdb; ipdb.set_trace()
 
 
 
