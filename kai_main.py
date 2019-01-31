@@ -20,6 +20,8 @@ def main(args):
     if args.validation:
         print("Valid File Name: {0}".format(args.valid))
     print("Algorithm: {0}".format(args.model))
+    print("Active Learning Algorithm: {0}".format(args.al_model))
+    print("Retrain Interval: {0}".format(args.retrain_interval))
     if args.item == True:
         mode = "Item-based"
     else:
@@ -31,8 +33,7 @@ def main(args):
     print("SVD/Alter Iteration: {0}".format(args.iter))
     print("Evaluation Ranking Topk: {0}".format(args.topk))
     print("GPU: {}".format(args.gpu))
-    print('Number of Steps to Evaluate: {}'.format(args.num_steps))
-    print('Number of Recommendations in Each Step: {}'.format(args.num_rec))
+    print('Number of Steps to Evaluate: {}'.format(args.total_steps))
 
     # Load Data
     progress.section("Loading Data")
@@ -48,7 +49,9 @@ def main(args):
     print("Train U-I Dimensions: {0}".format(R_train.shape))
 
     metrics_result = models[args.model](R_train, R_valid, topk=args.topk,
-                                        total_steps=args.num_steps,
+                                        al_model=args.al_model,
+                                        total_steps=args.total_steps,
+                                        retrain_interval=args.retrain_interval,
                                         validation=args.validation,
                                         embedded_matrix=np.empty((0)),
                                         iteration=args.iter, rank=args.rank,
@@ -73,9 +76,10 @@ if __name__ == "__main__":
     parser.add_argument('-f', dest='root', type=check_float_positive, default=1)
     parser.add_argument('-c', dest='corruption', type=check_float_positive, default=0.5)
     parser.add_argument('-s', dest='seed', type=check_int_positive, default=1)
-    parser.add_argument('-ns', dest='num_steps', type=check_int_positive, default=1)
-    parser.add_argument('-nr', dest='num_rec', type=check_int_positive, default=2)
+    parser.add_argument('-ts', dest='total_steps', type=check_int_positive, default=1)
     parser.add_argument('-m', dest='model', default="WRMF")
+    parser.add_argument('-alm', dest='al_model', default="Random")
+    parser.add_argument('-ri', dest='retrain_interval', type=check_int_positive, default=0)
     parser.add_argument('-d', dest='path', default="datax/")
     parser.add_argument('-t', dest='train', default='Rtrain.npz')
     parser.add_argument('-v', dest='valid', default='Rvalid.npz')

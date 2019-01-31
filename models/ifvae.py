@@ -213,7 +213,7 @@ class IFVAE(object):
         return self.sess.run(self.decode_bias)
 
 
-def ifvae(matrix_train, matrix_valid, topk, total_steps, validation, embedded_matrix=np.empty((0)),
+def ifvae(matrix_train, matrix_valid, topk, al_model, total_steps, retrain_interval, validation, embedded_matrix=np.empty((0)),
           iteration=100, lam=80, rank=200, corruption=0.2, optimizer="RMSProp",
           beta=1.0, seed=1, gpu_on=True, **unused):
     progress = WorkSplitter()
@@ -230,12 +230,15 @@ def ifvae(matrix_train, matrix_valid, topk, total_steps, validation, embedded_ma
     model = IFVAE(n, rank, 100, lamb=lam, beta=beta,
                     observation_distribution="Gaussian", optimizer=Regularizer[optimizer])
 
+    export_metrics_df_name = al_model + "_" + str(total_steps) + "steps_" + str(topk) + "items_per_step_per_user_retrain_every_" + str(retrain_interval) + "steps"
+
     for i in range(total_steps):
         print('This is step {} \n'.format(i))
         print('The number of nonzero in train set is {}'.format(len(matrix_input.nonzero()[0])))
         print('The number of nonzero in valid set is {}'.format(len(matrix_valid.nonzero()[0])))
 
-        if i % 1 == 0:
+        if i % retrain_interval == 0:
+            progress.section("Training")
             model.train_model(matrix_input, corruption, iteration)
 
             progress.section("Get Item Distribution")
@@ -264,8 +267,12 @@ def ifvae(matrix_train, matrix_valid, topk, total_steps, validation, embedded_ma
 
         progress.section("Sampling")
 
-        prediction_scores = entropy_sampling(item_gaussian_mu, user_gaussian_mu, user_gaussian_sigma)
-        # prediction_scores = random_sampling(m, n)
+        if al_model == "Entropy":
+            prediction_scores = entropy_sampling(item_gaussian_mu, user_gaussian_mu, user_gaussian_sigma)
+        elif al_model == "Random":
+            prediction_scores = random_sampling(m, n)
+        else:
+            print("Don't have this active learning approaches!")
 
         # print(prediction_scores)
 
@@ -276,7 +283,7 @@ def ifvae(matrix_train, matrix_valid, topk, total_steps, validation, embedded_ma
 
         if len(prediction) == 0:
             import pandas as pd
-            pd.DataFrame(metrics_result).to_pickle('tmp')
+            pd.DataFrame(metrics_result).to_pickle(export_metrics_df_name)
             import ipdb; ipdb.set_trace()
 
         # TODO: Use the trained model with test set, get performance measures
@@ -309,7 +316,6 @@ def ifvae(matrix_train, matrix_valid, topk, total_steps, validation, embedded_ma
         prediction_valid_zero_intersect = np.array([x for x in index_prediction_set - index_valid_nonzero_set])
         print('The number of unmasked negative data is {}'.format(len(prediction_valid_zero_intersect)))
 
-
         result['Num_Nonzero_In_Train'] = len(matrix_input.nonzero()[0])
         result['Num_Nonzero_In_Valid'] = len(matrix_valid.nonzero()[0])
         result['Num_Unmasked_Positive'] = len(prediction_valid_nonzero_intersect)
@@ -318,7 +324,7 @@ def ifvae(matrix_train, matrix_valid, topk, total_steps, validation, embedded_ma
 
         if len(prediction_valid_nonzero_intersect) + len(prediction_valid_zero_intersect) == 0:
             import pandas as pd
-            pd.DataFrame(metrics_result).to_pickle('tmp')
+            pd.DataFrame(metrics_result).to_pickle(export_metrics_df_name)
             import ipdb; ipdb.set_trace()
 
         if len(prediction_valid_nonzero_intersect) > 0:
@@ -350,7 +356,7 @@ def ifvae(matrix_train, matrix_valid, topk, total_steps, validation, embedded_ma
         print("Elapsed: {0}".format(inhour(time.time() - start_time)))
 
     import pandas as pd
-    pd.DataFrame(metrics_result).to_pickle('tmp')
+    pd.DataFrame(metrics_result).to_pickle(export_metrics_df_name)
     import ipdb; ipdb.set_trace()
 
     model.sess.close()
