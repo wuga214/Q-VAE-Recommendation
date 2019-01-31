@@ -221,6 +221,8 @@ def ifvae(matrix_train, matrix_valid, topk, total_steps, validation, embedded_ma
     if embedded_matrix.shape[0] > 0:
         matrix_input = vstack((matrix_input, embedded_matrix.T))
 
+    matrix_input_with_negative = matrix_input.copy()
+
     m, n = matrix_input.shape
 
     metrics_result = []
@@ -233,7 +235,7 @@ def ifvae(matrix_train, matrix_valid, topk, total_steps, validation, embedded_ma
         print('The number of nonzero in train set is {}'.format(len(matrix_input.nonzero()[0])))
         print('The number of nonzero in valid set is {}'.format(len(matrix_valid.nonzero()[0])))
 
-        if i % 10 == 0:
+        if i % 1 == 0:
             model.train_model(matrix_input, corruption, iteration)
 
             progress.section("Get Item Distribution")
@@ -254,7 +256,7 @@ def ifvae(matrix_train, matrix_valid, topk, total_steps, validation, embedded_ma
 
         user_gaussian_mu, user_gaussian_sigma = [], []
         for nth_user in tqdm(range(m)):
-            user_vector = matrix_input[nth_user, :]
+            user_vector = matrix_input_with_negative[nth_user, :]
             Gaussian_Params = model.uncertainty(user_vector.todense())
             user_gaussian_mu.append(Gaussian_Params[0][0])
             user_gaussian_sigma.append(Gaussian_Params[1][0])
@@ -291,7 +293,6 @@ def ifvae(matrix_train, matrix_valid, topk, total_steps, validation, embedded_ma
                 print("{0}:{1}".format(metric, result[metric]))
             print("Elapsed: {0}".format(inhour(time.time() - start_time)))
 
-        metrics_result.append(result)
 
         progress.section("Update Train Set and Valid Set Based On Sampling Results")
         start_time = time.time()
@@ -308,6 +309,13 @@ def ifvae(matrix_train, matrix_valid, topk, total_steps, validation, embedded_ma
         prediction_valid_zero_intersect = np.array([x for x in index_prediction_set - index_valid_nonzero_set])
         print('The number of unmasked negative data is {}'.format(len(prediction_valid_zero_intersect)))
 
+
+        result['Num_Nonzero_In_Train'] = len(matrix_input.nonzero()[0])
+        result['Num_Nonzero_In_Valid'] = len(matrix_valid.nonzero()[0])
+        result['Num_Unmasked_Positive'] = len(prediction_valid_nonzero_intersect)
+        result['Num_Unmasked_Negative'] = len(prediction_valid_zero_intersect)
+        metrics_result.append(result)
+
         if len(prediction_valid_nonzero_intersect) + len(prediction_valid_zero_intersect) == 0:
             import pandas as pd
             pd.DataFrame(metrics_result).to_pickle('tmp')
@@ -320,11 +328,14 @@ def ifvae(matrix_train, matrix_valid, topk, total_steps, validation, embedded_ma
             from scipy.sparse import csr_matrix
             mask = csr_matrix((mask_data, (mask_row, mask_col)), shape=matrix_input.shape)
             matrix_input = matrix_input.tolil()
+            matrix_input_with_negative = matrix_input_with_negative.tolil()
             matrix_valid = matrix_valid.tolil()
             matrix_input[mask] = 1
             matrix_valid[mask] = 0
+            matrix_input_with_negative[mask] = 1
             matrix_input = matrix_input.tocsr()
             matrix_valid = matrix_valid.tocsr()
+            matrix_input_with_negative = matrix_input_with_negative.tocsr()
 
         if len(prediction_valid_zero_intersect) > 0:
             mask_row = prediction_valid_zero_intersect[:, 0]
@@ -332,12 +343,9 @@ def ifvae(matrix_train, matrix_valid, topk, total_steps, validation, embedded_ma
             mask_data = np.full(len(prediction_valid_zero_intersect), True)
             from scipy.sparse import csr_matrix
             mask = csr_matrix((mask_data, (mask_row, mask_col)), shape=matrix_input.shape)
-            matrix_input = matrix_input.tolil()
-            # matrix_valid = matrix_valid.tolil()
-            matrix_input[mask] = -0.1
-            # matrix_valid[mask] = 0
-            matrix_input = matrix_input.tocsr()
-            # matrix_valid = matrix_valid.tocsr()
+            matrix_input_with_negative = matrix_input_with_negative.tolil()
+            matrix_input_with_negative[mask] = -0.1
+            matrix_input_with_negative = matrix_input_with_negative.tocsr()
 
         print("Elapsed: {0}".format(inhour(time.time() - start_time)))
 
