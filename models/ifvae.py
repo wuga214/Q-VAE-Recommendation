@@ -223,35 +223,33 @@ def ifvae(matrix_train, matrix_valid, topk, total_steps, validation, embedded_ma
 
     m, n = matrix_input.shape
 
+    metrics_result = []
+
     model = IFVAE(n, rank, 100, lamb=lam, beta=beta,
                     observation_distribution="Gaussian", optimizer=Regularizer[optimizer])
-
-    model.train_model(matrix_input, corruption, iteration)
-
-    RQ = model.get_RQ(matrix_input)
-    Y = model.get_Y()
-    Bias = model.get_Bias()
-
-    progress.section("Get Item Distribution")
-    # Get all item distribution by feedforward passing one hot encoding vector
-    # through encoder
-    item_gaussian_mu, item_gaussian_sigma = [], []
-    for nth_item in tqdm(range(n)):
-        # print(nth_item)
-        one_hot_vector = create_one_hot_vector(num_classes=n, nth_item=nth_item)
-        # print(one_hot_vector)
-        Gaussian_Params = model.uncertainty(one_hot_vector)
-        item_gaussian_mu.append(Gaussian_Params[0][0])
-        item_gaussian_sigma.append(Gaussian_Params[1][0])
-
-    item_gaussian_mu, item_gaussian_sigma = np.array(item_gaussian_mu), np.array(item_gaussian_sigma)
-
-    metrics_result = []
 
     for i in range(total_steps):
         print('This is step {} \n'.format(i))
         print('The number of nonzero in train set is {}'.format(len(matrix_input.nonzero()[0])))
         print('The number of nonzero in valid set is {}'.format(len(matrix_valid.nonzero()[0])))
+
+        if i % 10 == 0:
+            model.train_model(matrix_input, corruption, iteration)
+
+            progress.section("Get Item Distribution")
+            # Get all item distribution by feedforward passing one hot encoding vector
+            # through encoder
+            item_gaussian_mu, item_gaussian_sigma = [], []
+            for nth_item in tqdm(range(n)):
+                # print(nth_item)
+                one_hot_vector = create_one_hot_vector(num_classes=n, nth_item=nth_item)
+                # print(one_hot_vector)
+                Gaussian_Params = model.uncertainty(one_hot_vector)
+                item_gaussian_mu.append(Gaussian_Params[0][0])
+                item_gaussian_sigma.append(Gaussian_Params[1][0])
+
+            item_gaussian_mu, item_gaussian_sigma = np.array(item_gaussian_mu), np.array(item_gaussian_sigma)
+
         progress.section("Get User Distribution")
 
         user_gaussian_mu, user_gaussian_sigma = [], []
@@ -265,7 +263,7 @@ def ifvae(matrix_train, matrix_valid, topk, total_steps, validation, embedded_ma
         progress.section("Sampling")
 
         prediction_scores = entropy_sampling(item_gaussian_mu, user_gaussian_mu, user_gaussian_sigma)
-        # prediction_scores = random_sampling(Gaussian_Params_mu, Gaussian_Params_sigma, matrix_input.shape[0])
+        # prediction_scores = random_sampling(m, n)
 
         # print(prediction_scores)
 
@@ -273,6 +271,11 @@ def ifvae(matrix_train, matrix_valid, topk, total_steps, validation, embedded_ma
                                       topK=topk,
                                       matrix_Train=matrix_input,
                                       gpu=gpu_on)
+
+        if len(prediction) == 0:
+            import pandas as pd
+            pd.DataFrame(metrics_result).to_pickle('tmp')
+            import ipdb; ipdb.set_trace()
 
         # TODO: Use the trained model with test set, get performance measures
         if validation:
@@ -296,18 +299,24 @@ def ifvae(matrix_train, matrix_valid, topk, total_steps, validation, embedded_ma
         # and query their labels.
         index = np.tile(np.arange(prediction.shape[0]),(prediction.shape[1],1)).T
         index_prediction = np.dstack((index, prediction)).reshape((prediction.shape[0]*prediction.shape[1]), 2)
-        index_valid = np.dstack((matrix_valid.nonzero()[0], matrix_valid.nonzero()[1]))[0]
+        index_valid_nonzero = np.dstack((matrix_valid.nonzero()[0], matrix_valid.nonzero()[1]))[0]
 
         index_prediction_set = set([tuple(x) for x in index_prediction])
-        index_valid_set = set([tuple(x) for x in index_valid])
-        prediction_valid_intersect = np.array([x for x in index_prediction_set & index_valid_set])
-        print('The number of mask data is {}'.format(len(prediction_valid_intersect)))
+        index_valid_nonzero_set = set([tuple(x) for x in index_valid_nonzero])
+        prediction_valid_nonzero_intersect = np.array([x for x in index_prediction_set & index_valid_nonzero_set])
+        print('The number of unmasked positive data is {}'.format(len(prediction_valid_nonzero_intersect)))
+        prediction_valid_zero_intersect = np.array([x for x in index_prediction_set - index_valid_nonzero_set])
+        print('The number of unmasked negative data is {}'.format(len(prediction_valid_zero_intersect)))
 
-        # import ipdb; ipdb.set_trace()
-        if len(prediction_valid_intersect) > 0:
-            mask_row = prediction_valid_intersect[:, 0]
-            mask_col = prediction_valid_intersect[:, 1]
-            mask_data = np.full(len(prediction_valid_intersect), True)
+        if len(prediction_valid_nonzero_intersect) + len(prediction_valid_zero_intersect) == 0:
+            import pandas as pd
+            pd.DataFrame(metrics_result).to_pickle('tmp')
+            import ipdb; ipdb.set_trace()
+
+        if len(prediction_valid_nonzero_intersect) > 0:
+            mask_row = prediction_valid_nonzero_intersect[:, 0]
+            mask_col = prediction_valid_nonzero_intersect[:, 1]
+            mask_data = np.full(len(prediction_valid_nonzero_intersect), True)
             from scipy.sparse import csr_matrix
             mask = csr_matrix((mask_data, (mask_row, mask_col)), shape=matrix_input.shape)
             matrix_input = matrix_input.tolil()
@@ -316,14 +325,26 @@ def ifvae(matrix_train, matrix_valid, topk, total_steps, validation, embedded_ma
             matrix_valid[mask] = 0
             matrix_input = matrix_input.tocsr()
             matrix_valid = matrix_valid.tocsr()
-        else:
-            import pandas as pd
-            pd.DataFrame(metrics_result).to_pickle('tmp')
-            import ipdb; ipdb.set_trace()
+
+        if len(prediction_valid_zero_intersect) > 0:
+            mask_row = prediction_valid_zero_intersect[:, 0]
+            mask_col = prediction_valid_zero_intersect[:, 1]
+            mask_data = np.full(len(prediction_valid_zero_intersect), True)
+            from scipy.sparse import csr_matrix
+            mask = csr_matrix((mask_data, (mask_row, mask_col)), shape=matrix_input.shape)
+            matrix_input = matrix_input.tolil()
+            # matrix_valid = matrix_valid.tolil()
+            matrix_input[mask] = -0.1
+            # matrix_valid[mask] = 0
+            matrix_input = matrix_input.tocsr()
+            # matrix_valid = matrix_valid.tocsr()
+
         print("Elapsed: {0}".format(inhour(time.time() - start_time)))
 
+    import pandas as pd
+    pd.DataFrame(metrics_result).to_pickle('tmp')
+    import ipdb; ipdb.set_trace()
 
-    # import ipdb; ipdb.set_trace()
     model.sess.close()
     tf.reset_default_graph()
 
@@ -336,8 +357,8 @@ def create_one_hot_matrix(num_rows, num_classes, nth_item):
     target_row_index = np.full(num_rows, nth_item, dtype=int)
     return np.eye(num_classes)[target_row_index]
 
-def random_sampling(mean, sigma, num_rows):
-    return np.random.random((num_rows, mean.size))
+def random_sampling(num_rows, num_cols):
+    return np.random.random((num_rows, num_cols))
 
 def entropy_sampling(item_mu, user_mu, user_sigma):
     log_pdf = calculate_gaussian_log_pdf(item_mu, user_mu, user_sigma)
@@ -367,20 +388,32 @@ def sampling_predict(prediction_scores, topK, matrix_Train, gpu=False):
         else:
             vector_predict = np.zeros(topK, dtype=np.float32)
 
-        prediction.append(vector_predict)
+        # Return empty list when there is a user has less than topK items to
+        # recommend. The main program will stop.
+        if len(vector_predict) != topK:
+            import ipdb; ipdb.set_trace()
+            return []
 
+        prediction.append(vector_predict)
     return np.vstack(prediction)
 
 def sub_routine(vector_predict, vector_train, topK=500, gpu=False):
 
     train_index = vector_train.nonzero()[1]
+    sort_length = topK + len(train_index)
+    # print('original sort length is {}'.format(sort_length))
+
+    if sort_length + 1 > len(vector_predict):
+        sort_length = len(vector_predict) - 1
+    # print('modified sort length is {}'.format(sort_length))
+
     if gpu:
         import cupy as cp
-        candidate_index = cp.argpartition(-vector_predict, topK+len(train_index))[:topK+len(train_index)]
+        candidate_index = cp.argpartition(-vector_predict, sort_length)[:sort_length]
         vector_predict = candidate_index[vector_predict[candidate_index].argsort()[::-1]]
         vector_predict = cp.asnumpy(vector_predict).astype(np.float32)
     else:
-        candidate_index = np.argpartition(-vector_predict, topK+len(train_index))[:topK+len(train_index)]
+        candidate_index = np.argpartition(-vector_predict, sort_length)[:sort_length]
         vector_predict = candidate_index[vector_predict[candidate_index].argsort()[::-1]]
     vector_predict = np.delete(vector_predict, np.isin(vector_predict, train_index).nonzero()[0])
 
