@@ -280,7 +280,6 @@ def ifvae(matrix_train, matrix_valid, topk, al_model, total_steps, retrain_inter
                                       topK=topk,
                                       matrix_Train=matrix_input,
                                       gpu=gpu_on)
-
         if len(prediction) == 0:
             import pandas as pd
             pd.DataFrame(metrics_result).to_pickle(export_metrics_df_name)
@@ -294,7 +293,17 @@ def ifvae(matrix_train, matrix_valid, topk, al_model, total_steps, retrain_inter
 
             from evaluation.metrics import evaluate
             metric_names = ['R-Precision', 'NDCG', 'Clicks', 'Recall', 'Precision', 'MAP']
-            result = evaluate(prediction, matrix_valid, metric_names, [topk])
+
+            if al_model == 'Entropy':
+                evaluation_items = sampling_predict(prediction_scores=-prediction_scores,
+                                                    topK=topk,
+                                                    matrix_Train=matrix_input,
+                                                    gpu=gpu_on)
+                result = evaluate(evaluation_items, matrix_valid, metric_names, [topk])
+
+            else:
+                result = evaluate(prediction, matrix_valid, metric_names, [topk])
+
             print("-")
             for metric in result.keys():
                 print("{0}:{1}".format(metric, result[metric]))
@@ -357,12 +366,17 @@ def ifvae(matrix_train, matrix_valid, topk, al_model, total_steps, retrain_inter
 
     import pandas as pd
     pd.DataFrame(metrics_result).to_pickle(export_metrics_df_name)
-    import ipdb; ipdb.set_trace()
+    # import ipdb; ipdb.set_trace()
 
     model.sess.close()
     tf.reset_default_graph()
 
     return metrics_result
+
+
+
+
+
 
 def create_one_hot_vector(num_classes, nth_item):
     return np.eye(num_classes)[[nth_item]]
@@ -376,7 +390,8 @@ def random_sampling(num_rows, num_cols):
 
 def entropy_sampling(item_mu, user_mu, user_sigma):
     log_pdf = calculate_gaussian_log_pdf(item_mu, user_mu, user_sigma)
-    return log_pdf
+    entropy = np.negative(np.multiply(np.exp(log_pdf), (log_pdf / np.log(2))) + np.multiply(1-np.exp(log_pdf), np.log2(1-np.exp(log_pdf))))
+    return entropy
 
 import math
 # log_p(I_Mu|U_Mu, U_Sigma)

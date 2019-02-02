@@ -59,7 +59,7 @@ def main(args):
                                         lam=args.lamb, alpha=args.alpha,
                                         seed=args.seed, root=args.root)
 
-    import ipdb; ipdb.set_trace()
+    # import ipdb; ipdb.set_trace()
 
 
 
