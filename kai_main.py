@@ -64,7 +64,7 @@ def main(args):
 
     export_metrics_df_name = args.al_model + "_" + str(args.total_steps) + "steps_" + str(args.topk) + "items_per_step_per_user_retrain_every_" + str(args.retrain_interval) + "steps"
     pd.DataFrame(metrics_result).to_pickle(export_metrics_df_name)
-
+    '''
     metrics_result = models[args.model](R_train, R_valid, topk=args.topk,
                                         al_model=args.al_model,
                                         total_steps=args.total_steps,
@@ -75,7 +75,7 @@ def main(args):
                                         corruption=args.corruption, gpu_on=args.gpu,
                                         lam=args.lamb, alpha=args.alpha,
                                         seed=args.seed, root=args.root)
-
+    '''
 
 
 
