@@ -1,12 +1,14 @@
-from utils.progress import WorkSplitter, inhour
+from evaluation.metrics import evaluate
+from models.alpredictor import sampling_predict
 from models.ifvae import IFVAE
 from tqdm import tqdm
-from models.alpredictor import sampling_predict
+from utils.progress import WorkSplitter, inhour
 from utils.regularizers import Regularizer
 
 import math
 import numpy as np
 import tensorflow as tf
+import time
 
 
 class UCB1(object):
@@ -16,6 +18,57 @@ class UCB1(object):
         self.num_arms = num_arms
         self.ucb_scores = None
         self.chosen_arm = None
+
+    def set_initial_average_reward(self, average_reward):
+        self.average_reward = average_reward
+
+    def get_gaussian_parameters(self, model, size, is_item, is_user, matrix_input_with_negative=None):
+        mu, sigma = [], []
+
+        for i in tqdm(range(size)):
+            # Can only get item or user distribution at one time
+            if is_item & is_user == is_item | is_user:
+                raise ValueError('Either get item distribution or user distribution.')
+            elif is_item:
+                vector = self.create_one_hot_vector(num_classes=size, nth_item=i)
+            else:
+                vector = matrix_input_with_negative[i, :].todense()
+
+            Gaussian_Params = model.uncertainty(vector)
+            mu.append(Gaussian_Params[0][0])
+            sigma.append(Gaussian_Params[1][0])
+
+        return np.array(mu), np.array(sigma)
+
+    def create_one_hot_vector(self, num_classes, nth_item):
+        return np.eye(num_classes)[[nth_item]]
+
+    def calculate_gaussian_log_pdf(self, item_mu, user_mu, user_sigma):
+        result = []
+        for user_index in range(len(user_mu)):
+            result.append(self.multivariate_normal_log_pdf(x=item_mu, mean=user_mu[user_index], cov=np.square(user_sigma[user_index])))
+            # return np.negative(np.sum(np.divide(np.square(item_gaussian_mu-user_gaussian_mu[0]), 2 * np.square(user_gaussian_sigma[0])) + 0.5 * np.log(2 * math.pi * np.square(user_gaussian_sigma[0])), axis=1))
+            # np.log(multivariate_normal.pdf(x=item_gaussian_mu[0], mean=user_gaussian_mu[0], cov=np.square(user_gaussian_sigma[0])))
+        return result
+
+    # log_p(I_Mu|U_Mu, U_Sigma)
+    def multivariate_normal_log_pdf(self, x, mean, cov):
+        return np.negative(np.sum(np.divide(np.square(x-mean), 2 * cov) + 0.5 * np.log(2 * math.pi * cov), axis=1))
+
+    def eval(self, prediction, matrix_valid, topk):
+        start_time = time.time()
+
+        metric_names = ['R-Precision', 'NDCG', 'Clicks', 'Recall', 'Precision', 'MAP']
+
+        result = evaluate(prediction, matrix_valid, metric_names, [topk])
+
+        print("-")
+        for metric in result.keys():
+            print("{0}:{1}".format(metric, result[metric]))
+        print("Elapsed: {0}".format(inhour(time.time() - start_time)))
+
+        return result
+
 
     def predict(self):
         total_counts = np.sum(self.counts, axis=1)
@@ -35,9 +88,9 @@ class UCB1(object):
         self.average_reward[chosen_arm] = new_average_reward
 
 def ucb1(matrix_train, matrix_valid, topk, total_steps,
-         retrain_interval, validation, embedded_matrix=np.empty((0)),
-         iteration=100, rank=200, corruption=0.2, gpu_on=True, lam=80,
-         optimizer="RMSProp", beta=1.0, **unused):
+         retrain_interval,  embedded_matrix=np.empty((0)), iteration=100,
+         rank=200, corruption=0.2, gpu_on=True, lam=80, optimizer="RMSProp",
+         beta=1.0, **unused):
 
     progress = WorkSplitter()
     matrix_input = matrix_train
@@ -57,69 +110,52 @@ def ucb1(matrix_train, matrix_valid, topk, total_steps,
     progress.section("Training")
     model.train_model(matrix_input, corruption, iteration)
 
+    ucb_selection = UCB1(counts=np.ones((m, n)),
+                         average_reward=None,
+                         num_arms=n)
+
+
     progress.section("Get Item Distribution")
     # Get all item distribution by feedforward passing one hot encoding vector
     # through encoder
-    item_gaussian_mu, item_gaussian_sigma = [], []
-    for nth_item in tqdm(range(n)):
-        # print(nth_item)
-        one_hot_vector = create_one_hot_vector(num_classes=n, nth_item=nth_item)
-        # print(one_hot_vector)
-        Gaussian_Params = model.uncertainty(one_hot_vector)
-        item_gaussian_mu.append(Gaussian_Params[0][0])
-        item_gaussian_sigma.append(Gaussian_Params[1][0])
-
-    item_gaussian_mu, item_gaussian_sigma = np.array(item_gaussian_mu), np.array(item_gaussian_sigma)
+    item_gaussian_mu, item_gaussian_sigma = ucb_selection.\
+        get_gaussian_parameters(model=model, size=n,
+                                is_item=True, is_user=False)
 
     progress.section("Get User Distribution")
     # Get all user distribution by feedforward passing user vector through
     # encoder
-    user_gaussian_mu, user_gaussian_sigma = [], []
-    for nth_user in tqdm(range(m)):
-        user_vector = matrix_input_with_negative[nth_user, :]
-        Gaussian_Params = model.uncertainty(user_vector.todense())
-        user_gaussian_mu.append(Gaussian_Params[0][0])
-        user_gaussian_sigma.append(Gaussian_Params[1][0])
+    user_gaussian_mu, user_gaussian_sigma = ucb_selection.\
+        get_gaussian_parameters(model=model, size=m,
+                                is_item=False, is_user=True,
+                                matrix_input_with_negative=matrix_input_with_negative)
 
-    user_gaussian_mu, user_gaussian_sigma = np.array(user_gaussian_mu), np.array(user_gaussian_sigma)
 
     model.sess.close()
     tf.reset_default_graph()
 
     progress.section("Sampling")
-    log_prediction_scores = calculate_gaussian_log_pdf(item_gaussian_mu, user_gaussian_mu, user_gaussian_sigma)
+    log_prediction_scores = ucb_selection.calculate_gaussian_log_pdf(item_gaussian_mu, user_gaussian_mu, user_gaussian_sigma)
 
-    ucb = UCB1(counts=np.ones((m, n)),
-               average_reward=np.exp(log_prediction_scores),
-               num_arms=n)
+    ucb_selection.set_initial_average_reward(average_reward=np.exp(log_prediction_scores))
+    import ipdb; ipdb.set_trace()
 
     for i in range(total_steps):
         print('This is step {} \n'.format(i))
         print('The number of nonzero in train set is {}'.format(len(matrix_input.nonzero()[0])))
         print('The number of nonzero in valid set is {}'.format(len(matrix_valid.nonzero()[0])))
 
-        prediction_scores = ucb.predict()
+        prediction_scores = ucb_selection.predict()
 
         prediction = sampling_predict(prediction_scores=prediction_scores,
                                     topK=topk,
                                     matrix_train=matrix_input,
                                     gpu=gpu_on)
 
-        if validation:
-            progress.section("Create Metrics")
-            import time
-            start_time = time.time()
+        progress.section("Create Metrics")
+        result = ucb_selection.eval(prediction, matrix_valid, topk)
 
-            from evaluation.metrics import evaluate
-            metric_names = ['R-Precision', 'NDCG', 'Clicks', 'Recall', 'Precision', 'MAP']
-
-            result = evaluate(prediction, matrix_valid, metric_names, [topk])
-
-            print("-")
-            for metric in result.keys():
-                print("{0}:{1}".format(metric, result[metric]))
-            print("Elapsed: {0}".format(inhour(time.time() - start_time)))
-
+        import ipdb; ipdb.set_trace()
         progress.section("Update Train Set and Valid Set Based On Sampling Results")
         start_time = time.time()
         # TODO: Move these ‘k’ samples from the validation set to the train-set
@@ -181,22 +217,7 @@ def ucb1(matrix_train, matrix_valid, topk, total_steps,
 
         print("Elapsed: {0}".format(inhour(time.time() - start_time)))
 
-        ucb.update(chosen_arm=(chosen_arms_row.astype(np.int64), chosen_arms_col.astype(np.int64)), immediate_reward=immediate_reward)
+        ucb_selection.update(chosen_arm=(chosen_arms_row.astype(np.int64), chosen_arms_col.astype(np.int64)), immediate_reward=immediate_reward)
     # import ipdb; ipdb.set_trace()
     return metrics_result
-
-def create_one_hot_vector(num_classes, nth_item):
-    return np.eye(num_classes)[[nth_item]]
-
-def calculate_gaussian_log_pdf(item_mu, user_mu, user_sigma):
-    result = []
-    for user_index in range(len(user_mu)):
-        result.append(multivariate_normal_log_pdf(x=item_mu, mean=user_mu[user_index], cov=np.square(user_sigma[user_index])))
-#    return np.negative(np.sum(np.divide(np.square(item_gaussian_mu-user_gaussian_mu[0]), 2 * np.square(user_gaussian_sigma[0])) + 0.5 * np.log(2 * math.pi * np.square(user_gaussian_sigma[0])), axis=1))
-#    np.log(multivariate_normal.pdf(x=item_gaussian_mu[0], mean=user_gaussian_mu[0], cov=np.square(user_gaussian_sigma[0])))
-    return result
-
-# log_p(I_Mu|U_Mu, U_Sigma)
-def multivariate_normal_log_pdf(x, mean, cov):
-    return np.negative(np.sum(np.divide(np.square(x-mean), 2 * cov) + 0.5 * np.log(2 * math.pi * cov), axis=1))
 

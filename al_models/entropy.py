@@ -16,7 +16,7 @@ class Entropy(object):
     def __init__(self):
         return
 
-    def get_gaussian_parameters(self, model, size, is_item, is_user, matrix_input_with_negative):
+    def get_gaussian_parameters(self, model, size, is_item, is_user, matrix_input_with_negative=None):
         mu, sigma = [], []
 
         for i in tqdm(range(size)):
@@ -120,9 +120,9 @@ class Entropy(object):
         return result, matrix_input.tocsr(), matrix_valid.tocsr(), matrix_input_with_negative.tocsr()
 
 def entropy(matrix_train, matrix_valid, topk, total_steps,
-            retrain_interval, validation, embedded_matrix=np.empty((0)),
-            iteration=100, rank=200, corruption=0.2, gpu_on=True, lam=80,
-            optimizer="RMSProp", beta=1.0, **unused):
+            retrain_interval, embedded_matrix=np.empty((0)), iteration=100,
+            rank=200, corruption=0.2, gpu_on=True, lam=80, optimizer="RMSProp",
+            beta=1.0, **unused):
 
     progress = WorkSplitter()
     matrix_input = matrix_train
@@ -155,8 +155,7 @@ def entropy(matrix_train, matrix_valid, topk, total_steps,
             # through encoder
             item_gaussian_mu, item_gaussian_sigma = entropy_selection.\
                 get_gaussian_parameters(model=model, size=n,
-                                        is_item=True, is_user=False,
-                                        matrix_input_with_negative=None)
+                                        is_item=True, is_user=False)
 
 
         progress.section("Get User Distribution")
