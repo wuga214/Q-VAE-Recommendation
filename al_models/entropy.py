@@ -1,6 +1,6 @@
 from evaluation.metrics import evaluate
 from models.alpredictor import sampling_predict
-from models.ifvae import IFVAE
+from models.ifvae import IFVAE, get_gaussian_parameters
 from scipy.sparse import csr_matrix
 from tqdm import tqdm
 from utils.progress import WorkSplitter, inhour
@@ -15,27 +15,6 @@ import time
 class Entropy(object):
     def __init__(self):
         return
-
-    def get_gaussian_parameters(self, model, size, is_item, is_user, matrix_input_with_negative=None):
-        mu, sigma = [], []
-
-        for i in tqdm(range(size)):
-            # Can only get item or user distribution at one time
-            if is_item & is_user == is_item | is_user:
-                raise ValueError('Either get item distribution or user distribution.')
-            elif is_item:
-                vector = self.create_one_hot_vector(num_classes=size, nth_item=i)
-            else:
-                vector = matrix_input_with_negative[i, :].todense()
-
-            Gaussian_Params = model.uncertainty(vector)
-            mu.append(Gaussian_Params[0][0])
-            sigma.append(Gaussian_Params[1][0])
-
-        return np.array(mu), np.array(sigma)
-
-    def create_one_hot_vector(self, num_classes, nth_item):
-        return np.eye(num_classes)[[nth_item]]
 
     def predict(self, item_mu, user_mu, user_sigma):
         log_pdf = self.calculate_gaussian_log_pdf(item_mu, user_mu, user_sigma)
@@ -73,7 +52,7 @@ class Entropy(object):
 
         return result
 
-    def update(self, prediction, matrix_valid, result, matrix_input, matrix_input_with_negative):
+    def update_matrix(self, prediction, matrix_valid, result, matrix_input, matrix_input_with_negative):
         start_time = time.time()
         # Move these ‘k’ samples from the validation set to the train-set
         # and query their labels.
@@ -153,19 +132,22 @@ def entropy(matrix_train, matrix_valid, topk, total_steps,
             progress.section("Get Item Distribution")
             # Get all item distribution by feedforward passing one hot encoding vector
             # through encoder
-            item_gaussian_mu, item_gaussian_sigma = entropy_selection.\
-                get_gaussian_parameters(model=model, size=n,
-                                        is_item=True, is_user=False)
+            item_gaussian_mu, \
+                item_gaussian_sigma = get_gaussian_parameters(model=model,
+                                                              size=n,
+                                                              is_item=True,
+                                                              is_user=False)
 
 
         progress.section("Get User Distribution")
         # Get all user distribution by feedforward passing user vector through
         # encoder
-        user_gaussian_mu, user_gaussian_sigma = entropy_selection.\
-            get_gaussian_parameters(model=model, size=m,
-                                    is_item=False, is_user=True,
-                                    matrix_input_with_negative=matrix_input_with_negative)
-
+        user_gaussian_mu, \
+            user_gaussian_sigma = get_gaussian_parameters(model=model,
+                                                          size=m,
+                                                          is_item=False,
+                                                          is_user=True,
+                                                          matrix=matrix_input_with_negative)
 
         progress.section("Sampling")
         prediction_scores = entropy_selection.predict(item_gaussian_mu, user_gaussian_mu, user_gaussian_sigma)
@@ -183,7 +165,7 @@ def entropy(matrix_train, matrix_valid, topk, total_steps,
 
 
         progress.section("Update Train Set and Valid Set Based On Sampling Results")
-        result, matrix_input, matrix_valid, matrix_input_with_negative = entropy_selection.update(prediction, matrix_valid, result, matrix_input, matrix_input_with_negative)
+        result, matrix_input, matrix_valid, matrix_input_with_negative = entropy_selection.update_matrix(prediction, matrix_valid, result, matrix_input, matrix_input_with_negative)
 
         metrics_result.append(result)
 

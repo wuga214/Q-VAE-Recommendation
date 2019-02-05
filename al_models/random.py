@@ -29,7 +29,7 @@ class Random(object):
 
         return result
 
-    def update(self, prediction, matrix_valid, matrix_input, result):
+    def update_matrix(self, prediction, matrix_valid, matrix_input, result):
         start_time = time.time()
         # Move these ‘k’ samples from the validation set to the train-set
         # and query their labels.
@@ -96,7 +96,7 @@ def random(matrix_train, matrix_valid, topk, total_steps,
         result = random_selection.eval(prediction, matrix_valid, topk)
 
         progress.section("Update Train Set and Valid Set Based On Sampling Results")
-        result, matrix_input, matrix_valid = random_selection.update(prediction, matrix_valid, matrix_input, result)
+        result, matrix_input, matrix_valid = random_selection.update_matrix(prediction, matrix_valid, matrix_input, result)
 
         metrics_result.append(result)
 

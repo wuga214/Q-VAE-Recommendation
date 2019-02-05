@@ -213,6 +213,25 @@ class IFVAE(object):
         return self.sess.run(self.decode_bias)
 
 
+def get_gaussian_parameters(model, size, is_item, is_user, matrix=None):
+    mu, sigma = [], []
+
+    for i in tqdm(range(size)):
+        # Can only get item or user distribution at one time
+        if is_item & is_user == is_item | is_user:
+            raise ValueError('Either get item distribution or user distribution.')
+        elif is_item:
+            vector = create_one_hot_vector(num_classes=size, nth_item=i)
+        else:
+            vector = matrix[i, :].todense()
+
+        Gaussian_Params = model.uncertainty(vector)
+        mu.append(Gaussian_Params[0][0])
+        sigma.append(Gaussian_Params[1][0])
+
+    return np.array(mu), np.array(sigma)
+
+
 def ifvae(matrix_train, matrix_valid, topk, al_model, total_steps, retrain_interval, validation, embedded_matrix=np.empty((0)),
           iteration=100, lam=80, rank=200, corruption=0.2, optimizer="RMSProp",
           beta=1.0, seed=1, gpu_on=True, **unused):
