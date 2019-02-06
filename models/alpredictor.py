@@ -16,7 +16,7 @@ def sampling_predict(prediction_scores, topK, matrix_train, gpu=False):
         # Return empty list when there is a user has less than topK items to
         # recommend. The main program will stop.
         if len(vector_predict) != topK:
-            import ipdb; ipdb.set_trace()
+            raise ValueError('user {} has less than top {} items to recommend. Return empty list in this case.'.format(user_index, topK))
             return []
 
         prediction.append(vector_predict)

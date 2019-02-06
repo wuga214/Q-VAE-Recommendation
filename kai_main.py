@@ -51,14 +51,14 @@ def main(args):
     print("Train U-I Dimensions: {0}".format(R_train.shape))
 
     metrics_result = al_models[args.al_model](R_train, R_valid, topk=args.topk,
-                             total_steps=args.total_steps,
-                             retrain_interval=args.retrain_interval,
-                             validation=args.validation,
-                             embedded_matrix=np.empty((0)),
-                             iteration=args.iter, rank=args.rank,
-                             corruption=args.corruption, gpu_on=args.gpu,
-                             lam=args.lamb, alpha=args.alpha,
-                             seed=args.seed, root=args.root)
+                                              total_steps=args.total_steps,
+                                              retrain_interval=args.retrain_interval,
+                                              validation=args.validation,
+                                              embedded_matrix=np.empty((0)),
+                                              iteration=args.iter, rank=args.rank,
+                                              corruption=args.corruption, gpu_on=args.gpu,
+                                              lam=args.lamb, alpha=args.alpha,
+                                              seed=args.seed, root=args.root)
 
     import ipdb; ipdb.set_trace()
 
