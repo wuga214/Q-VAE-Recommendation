@@ -1,6 +1,6 @@
 from evaluation.metrics import evaluate
 from models.alpredictor import sampling_predict
-from models.ifvae import IFVAE, get_gaussian_parameters
+from models.ifvae import IFVAE, get_gaussian_parameters, calculate_gaussian_log_pdf
 from scipy.sparse import csr_matrix
 from tqdm import tqdm
 from utils.progress import WorkSplitter, inhour
@@ -17,22 +17,9 @@ class Entropy(object):
         return
 
     def predict(self, item_mu, user_mu, user_sigma):
-        log_pdf = self.calculate_gaussian_log_pdf(item_mu, user_mu, user_sigma)
+        log_pdf = calculate_gaussian_log_pdf(item_mu, user_mu, user_sigma)
         entropy = np.negative(np.multiply(np.exp(log_pdf), (log_pdf / np.log(2))) + np.multiply(1-np.exp(log_pdf), np.log2(1-np.exp(log_pdf))))
         return entropy
-
-    def calculate_gaussian_log_pdf(self, item_mu, user_mu, user_sigma):
-        result = []
-        for user_index in range(len(user_mu)):
-            result.append(self.multivariate_normal_log_pdf(x=item_mu, mean=user_mu[user_index], cov=np.square(user_sigma[user_index])))
-            # return np.negative(np.sum(np.divide(np.square(item_gaussian_mu-user_gaussian_mu[0]), 2 * np.square(user_gaussian_sigma[0])) + 0.5 * np.log(2 * math.pi * np.square(user_gaussian_sigma[0])), axis=1))
-            # np.log(multivariate_normal.pdf(x=item_gaussian_mu[0], mean=user_gaussian_mu[0], cov=np.square(user_gaussian_sigma[0])))
-        return result
-
-    # log_p(I_Mu|U_Mu, U_Sigma)
-    def multivariate_normal_log_pdf(self, x, mean, cov):
-        return np.negative(np.sum(np.divide(np.square(x-mean), 2 * cov) + 0.5 * np.log(2 * math.pi * cov), axis=1))
-
 
     def eval(self, prediction_scores, matrix_input, matrix_valid, topk, gpu_on):
         start_time = time.time()

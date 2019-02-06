@@ -1,11 +1,13 @@
 import re
 import random
+import math
 import numpy as np
 import tensorflow as tf
 from tqdm import tqdm
 from utils.progress import WorkSplitter, inhour
 from scipy.sparse import vstack, hstack
 from utils.regularizers import Regularizer
+from sklearn.preprocessing import normalize
 
 class IFVAE(object):
 
@@ -231,6 +233,21 @@ def get_gaussian_parameters(model, size, is_item, is_user, matrix=None):
 
     return np.array(mu), np.array(sigma)
 
+def get_normalized_pdf(item_gaussian_mu, user_gaussian_mu, user_gaussian_sigma):
+    log_pdf = calculate_gaussian_log_pdf(item_gaussian_mu, user_gaussian_mu, user_gaussian_sigma)
+    return normalize(np.exp(log_pdf), axis=1, norm='l1')
+
+def calculate_gaussian_log_pdf(item_mu, user_mu, user_sigma):
+    result = []
+    for user_index in range(len(user_mu)):
+        result.append(multivariate_normal_log_pdf(x=item_mu, mean=user_mu[user_index], cov=np.square(user_sigma[user_index])))
+        # return np.negative(np.sum(np.divide(np.square(item_gaussian_mu-user_gaussian_mu[0]), 2 * np.square(user_gaussian_sigma[0])) + 0.5 * np.log(2 * math.pi * np.square(user_gaussian_sigma[0])), axis=1))
+        # np.log(multivariate_normal.pdf(x=item_gaussian_mu[0], mean=user_gaussian_mu[0], cov=np.square(user_gaussian_sigma[0])))
+    return result
+
+# log_p(I_Mu|U_Mu, U_Sigma)
+def multivariate_normal_log_pdf(x, mean, cov):
+    return np.negative(np.sum(np.divide(np.square(x-mean), 2 * cov) + 0.5 * np.log(2 * math.pi * cov), axis=1))
 
 def ifvae(matrix_train, matrix_valid, topk, al_model, total_steps, retrain_interval, validation, embedded_matrix=np.empty((0)),
           iteration=100, lam=80, rank=200, corruption=0.2, optimizer="RMSProp",
@@ -396,7 +413,6 @@ def ifvae(matrix_train, matrix_valid, topk, al_model, total_steps, retrain_inter
 
 
 
-
 def create_one_hot_vector(num_classes, nth_item):
     return np.eye(num_classes)[[nth_item]]
 
@@ -412,18 +428,7 @@ def entropy_sampling(item_mu, user_mu, user_sigma):
     entropy = np.negative(np.multiply(np.exp(log_pdf), (log_pdf / np.log(2))) + np.multiply(1-np.exp(log_pdf), np.log2(1-np.exp(log_pdf))))
     return entropy
 
-import math
-# log_p(I_Mu|U_Mu, U_Sigma)
-def multivariate_normal_log_pdf(x, mean, cov):
-    return np.negative(np.sum(np.divide(np.square(x-mean), 2 * cov) + 0.5 * np.log(2 * math.pi * cov), axis=1))
 
-def calculate_gaussian_log_pdf(item_mu, user_mu, user_sigma):
-    result = []
-    for user_index in range(len(user_mu)):
-       result.append(multivariate_normal_log_pdf(x=item_mu, mean=user_mu[user_index], cov=np.square(user_sigma[user_index])))
-#    return np.negative(np.sum(np.divide(np.square(item_gaussian_mu-user_gaussian_mu[0]), 2 * np.square(user_gaussian_sigma[0])) + 0.5 * np.log(2 * math.pi * np.square(user_gaussian_sigma[0])), axis=1))
-#    np.log(multivariate_normal.pdf(x=item_gaussian_mu[0], mean=user_gaussian_mu[0], cov=np.square(user_gaussian_sigma[0])))
-    return result
 
 def sampling_predict(prediction_scores, topK, matrix_Train, gpu=False):
     prediction = []
