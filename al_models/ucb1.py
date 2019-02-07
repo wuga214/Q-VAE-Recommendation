@@ -1,6 +1,6 @@
 from evaluation.metrics import evaluate
 from models.alpredictor import sampling_predict
-from models.ifvae import IFVAE, get_gaussian_parameters, get_normalized_pdf
+from models.ifvae import IFVAE, get_gaussian_parameters, logsumexp_pdf
 from scipy.sparse import csr_matrix
 from tqdm import tqdm
 from utils.progress import WorkSplitter, inhour
@@ -32,7 +32,6 @@ class UCB1(object):
         print("Elapsed: {0}".format(inhour(time.time() - start_time)))
 
         return result
-
 
     def predict(self):
         total_counts = np.sum(self.counts, axis=1)
@@ -104,7 +103,7 @@ class UCB1(object):
         return result, matrix_input.tocsr(), matrix_valid.tocsr(), chosen_arms_row, chosen_arms_col
 
 def ucb1(matrix_train, matrix_valid, topk, total_steps,
-         retrain_interval,  embedded_matrix=np.empty((0)), iteration=100,
+         retrain_interval, embedded_matrix=np.empty((0)), iteration=100,
          rank=200, corruption=0.2, gpu_on=True, lam=80, optimizer="RMSProp",
          beta=1.0, **unused):
 
@@ -147,7 +146,7 @@ def ucb1(matrix_train, matrix_valid, topk, total_steps,
 
         progress.section("Sampling")
         # Get normalized probability
-        normalized_pdf = get_normalized_pdf(item_gaussian_mu, user_gaussian_mu, user_gaussian_sigma)
+        normalized_pdf = logsumexp_pdf(item_gaussian_mu, user_gaussian_mu, user_gaussian_sigma)
 
         if i > 0:
             ucb_selection.update(chosen_arm=(chosen_arms_row.astype(np.int64), chosen_arms_col.astype(np.int64)), immediate_reward=normalized_pdf)

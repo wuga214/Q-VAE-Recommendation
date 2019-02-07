@@ -1,6 +1,6 @@
 from evaluation.metrics import evaluate
 from models.alpredictor import sampling_predict
-from models.ifvae import IFVAE, get_gaussian_parameters, calculate_gaussian_log_pdf
+from models.ifvae import IFVAE, get_gaussian_parameters, logsumexp_pdf
 from scipy.sparse import csr_matrix
 from tqdm import tqdm
 from utils.progress import WorkSplitter, inhour
@@ -17,9 +17,10 @@ class Entropy(object):
         return
 
     def predict(self, item_mu, user_mu, user_sigma):
-        log_pdf = calculate_gaussian_log_pdf(item_mu, user_mu, user_sigma)
-        entropy = np.negative(np.multiply(np.exp(log_pdf), (log_pdf / np.log(2))) + np.multiply(1-np.exp(log_pdf), np.log2(1-np.exp(log_pdf))))
-        return entropy
+        normalized_pdf = logsumexp_pdf(item_mu, user_mu, user_sigma)
+        p_log2_p = np.multiply(normalized_pdf, np.log2(normalized_pdf))
+        one_minus_p_log2_one_minus_p = np.multiply(1-normalized_pdf, 1-np.log2(normalized_pdf))
+        return np.negative(np.nan_to_num(p_log2_p) + np.nan_to_num(one_minus_p_log2_one_minus_p))
 
     def eval(self, prediction_scores, matrix_input, matrix_valid, topk, gpu_on):
         start_time = time.time()

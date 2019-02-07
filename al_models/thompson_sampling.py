@@ -10,14 +10,21 @@ import numpy as np
 import tensorflow as tf
 import time
 
-class BestItem(object):
-    def __init__(self):
-        return
 
-    def predict(self, item_mu, user_mu, user_sigma):
-        return logsumexp_pdf(item_mu, user_mu, user_sigma)
+class ThompsonSampling(object):
+    def __init__(self, initial_reward):
+        self.alpha = 1. + initial_reward
+        self.beta = 1. + 1. - initial_reward
 
-    def eval(self, prediction, matrix_valid, topk):
+    def update(self, reward):
+        self.alpha = self.alpha + reward
+        self.beta = self.beta + 1 - reward
+
+    def predict(self):
+        return np.random.beta(self.alpha, self.beta)
+
+    @staticmethod
+    def eval(prediction, matrix_valid, topk):
         start_time = time.time()
 
         metric_names = ['R-Precision', 'NDCG', 'Clicks', 'Recall', 'Precision', 'MAP']
@@ -31,7 +38,8 @@ class BestItem(object):
 
         return result
 
-    def update_matrix(self, prediction, matrix_valid, matrix_input, result):
+    @staticmethod
+    def update_matrix(prediction, matrix_valid, matrix_input, result):
         start_time = time.time()
         # Move these ‘k’ samples from the validation set to the train-set
         # and query their labels.
@@ -46,10 +54,14 @@ class BestItem(object):
         prediction_valid_zero_intersect = np.array([x for x in index_prediction_set - index_valid_nonzero_set])
         print('The number of unmasked negative data is {}'.format(len(prediction_valid_zero_intersect)))
 
+        # np.unique(np.array(matrix_input[matrix_input.nonzero()])[0], return_counts=True)
         result['Num_Nonzero_In_Train'] = np.unique(matrix_input[matrix_input.nonzero()].A[0], return_counts=True)[1][np.where(np.unique(matrix_input[matrix_input.nonzero()].A[0], return_counts=True)[0] == 1.)][0]
         result['Num_Nonzero_In_Valid'] = len(matrix_valid.nonzero()[0])
         result['Num_Unmasked_Positive'] = len(prediction_valid_nonzero_intersect)
         result['Num_Unmasked_Negative'] = len(prediction_valid_zero_intersect)
+
+        chosen_arms_row = []
+        chosen_arms_col = []
 
         if len(prediction_valid_nonzero_intersect) > 0:
             mask_row = prediction_valid_nonzero_intersect[:, 0]
@@ -62,6 +74,9 @@ class BestItem(object):
             matrix_input[mask] = 1
             matrix_valid[mask] = 0
 
+            chosen_arms_row = np.append(chosen_arms_row, mask_row)
+            chosen_arms_col = np.append(chosen_arms_col, mask_col)
+
         if len(prediction_valid_zero_intersect) > 0:
             mask_row = prediction_valid_zero_intersect[:, 0]
             mask_col = prediction_valid_zero_intersect[:, 1]
@@ -70,15 +85,18 @@ class BestItem(object):
 
             matrix_input[mask] = -0.1
 
+            chosen_arms_row = np.append(chosen_arms_row, mask_row)
+            chosen_arms_col = np.append(chosen_arms_col, mask_col)
+
         print("Elapsed: {0}".format(inhour(time.time() - start_time)))
 
-        return result, matrix_input.tocsr(), matrix_valid.tocsr()
+        return result, matrix_input.tocsr(), matrix_valid.tocsr(), chosen_arms_row, chosen_arms_col
 
 
-def best_item(matrix_train, matrix_valid, topk, total_steps,
-            retrain_interval, embedded_matrix=np.empty((0)), iteration=100,
-            rank=200, corruption=0.2, gpu_on=True, lam=80, optimizer="RMSProp",
-            beta=1.0, **unused):
+def thompson_sampling(matrix_train, matrix_valid, topk, total_steps,
+                      retrain_interval, embedded_matrix=np.empty((0)), iteration=100,
+                      rank=200, corruption=0.2, gpu_on=True, lam=80, optimizer="RMSProp",
+                      beta=1.0, **unused):
 
     progress = WorkSplitter()
     matrix_input = matrix_train
@@ -93,38 +111,47 @@ def best_item(matrix_train, matrix_valid, topk, total_steps,
                   observation_distribution="Gaussian",
                   optimizer=Regularizer[optimizer])
 
-    best_item_selection = BestItem()
+    progress.section("Training")
+    model.train_model(matrix_input, corruption, iteration)
+
+    progress.section("Get Item Distribution")
+    # Get all item distribution by feedforward passing one hot encoding vector
+    # through encoder
+    item_gaussian_mu, \
+        item_gaussian_sigma = get_gaussian_parameters(model=model, size=n,
+                                                      is_item=True, is_user=False)
 
     for i in range(total_steps):
         print('This is step {} \n'.format(i))
-        print('The number of nonzero in train set is {}'.format(np.unique(matrix_input[matrix_input.nonzero()].A[0], return_counts=True)[1][np.where(np.unique(matrix_input[matrix_input.nonzero()].A[0], return_counts=True)[0] == 1.)][0]))
+        print("The number of nonzero in train set is {}".format(np.unique(matrix_input[matrix_input.nonzero()].A[0], return_counts=True)[1][np.where(np.unique(matrix_input[matrix_input.nonzero()].A[0], return_counts=True)[0] == 1.)][0]))
         print('The number of nonzero in valid set is {}'.format(len(matrix_valid.nonzero()[0])))
-
-        if i % retrain_interval == 0:
-            progress.section("Training")
-            model.train_model(matrix_input, corruption, iteration)
-
-            progress.section("Get Item Distribution")
-            # Get all item distribution by feedforward passing one hot encoding vector
-            # through encoder
-            item_gaussian_mu, \
-                item_gaussian_sigma = get_gaussian_parameters(model=model,
-                                                              size=n,
-                                                              is_item=True,
-                                                              is_user=False)
 
         progress.section("Get User Distribution")
         # Get all user distribution by feedforward passing user vector through
         # encoder
         user_gaussian_mu, \
-            user_gaussian_sigma = get_gaussian_parameters(model=model,
-                                                          size=m,
+            user_gaussian_sigma = get_gaussian_parameters(model=model, size=m,
                                                           is_item=False,
                                                           is_user=True,
                                                           matrix=matrix_input)
 
         progress.section("Sampling")
-        prediction_scores = best_item_selection.predict(item_gaussian_mu, user_gaussian_mu, user_gaussian_sigma)
+        # Get normalized probability
+        normalized_pdf = logsumexp_pdf(item_gaussian_mu, user_gaussian_mu, user_gaussian_sigma).ravel()
+
+        if i > 0:
+            chosen_arms_index =
+
+        # Bandits start here
+        if i == 0:
+            ts_list = []
+            prediction_scores = []
+
+            for ts_index in range(len(normalized_pdf)):
+                ts_list.append(ThompsonSampling(initial_reward=normalized_pdf[ts_index]))
+                prediction_scores.append(ts_list[ts_index].predict())
+
+        prediction_scores = np.array(prediction_scores).reshape((m, n))
 
         prediction = sampling_predict(prediction_scores=prediction_scores,
                                       topK=topk,
@@ -132,10 +159,11 @@ def best_item(matrix_train, matrix_valid, topk, total_steps,
                                       gpu=gpu_on)
 
         progress.section("Create Metrics")
-        result = best_item_selection.eval(prediction, matrix_valid, topk)
+        result = ThompsonSampling.eval(prediction, matrix_valid, topk)
 
         progress.section("Update Train Set and Valid Set Based On Sampling Results")
-        result, matrix_input, matrix_valid = best_item_selection.update_matrix(prediction, matrix_valid, matrix_input, result)
+        result, matrix_input, matrix_valid, chosen_arms_row, chosen_arms_col = ThompsonSampling.update_matrix(prediction, matrix_valid, matrix_input, result)
+        import ipdb; ipdb.set_trace()
 
         metrics_result.append(result)
 
@@ -143,4 +171,5 @@ def best_item(matrix_train, matrix_valid, topk, total_steps,
     tf.reset_default_graph()
 
     return metrics_result
+
 

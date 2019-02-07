@@ -233,6 +233,11 @@ def get_gaussian_parameters(model, size, is_item, is_user, matrix=None):
 
     return np.array(mu), np.array(sigma)
 
+def logsumexp_pdf(item_mu, user_mu, user_sigma):
+    log_pdf = calculate_gaussian_log_pdf(item_mu, user_mu, user_sigma)
+    A = np.amax(log_pdf, axis=1)
+    return np.exp(log_pdf-np.vstack(A))
+
 def get_normalized_pdf(item_gaussian_mu, user_gaussian_mu, user_gaussian_sigma):
     log_pdf = calculate_gaussian_log_pdf(item_gaussian_mu, user_gaussian_mu, user_gaussian_sigma)
     return normalize(np.exp(log_pdf), axis=1, norm='l1')
