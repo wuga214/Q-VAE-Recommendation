@@ -6,7 +6,7 @@ import time
 from utils.io import load_numpy, load_pandas, load_csv
 from utils.argcheck import check_float_positive, check_int_positive, shape
 from utils.modelnames import models
-from utils.almodelnames import al_models
+from utils.active_learning_model_names import active_learning_models
 from models.predictor import predict, predict_batch
 from evaluation.metrics import evaluate
 
@@ -21,9 +21,9 @@ def main(args):
     print("Train File Name: {0}".format(args.train))
     if args.validation:
         print("Valid File Name: {0}".format(args.valid))
+    print("Test File Name: {0}".format(args.test))
     print("Algorithm: {0}".format(args.model))
-    print("Active Learning Algorithm: {0}".format(args.al_model))
-    print("Retrain Interval: {0}".format(args.retrain_interval))
+    print("Active Learning Algorithm: {0}".format(args.active_learning_model))
     if args.item == True:
         mode = "Item-based"
     else:
@@ -45,14 +45,19 @@ def main(args):
     else:
         # R_train = load_pandas(path=args.path, name=args.train, shape=args.shape)
         R_train = load_csv(path=args.path, name=args.train, shape=args.shape)
-    R_valid = load_numpy(path=args.path, name=args.valid)
+        print("Train U-I Dimensions: {0}".format(R_train.shape))
+
+    if args.validation:
+        R_valid = load_numpy(path=args.path, name=args.valid)
+        print("Valid U-I Dimensions: {0}".format(R_valid.shape))
+
+    R_test = load_numpy(path=args.path, name=args.test)
+    print("Test U-I Dimensions: {0}".format(R_test.shape))
+
     print("Elapsed: {0}".format(inhour(time.time() - start_time)))
 
-    print("Train U-I Dimensions: {0}".format(R_train.shape))
-
-    metrics_result = al_models[args.al_model](R_train, R_valid, topk=args.topk,
+    metrics_result = active_learning_models[args.active_learning_model](R_train, R_valid, topk=args.topk,
                                               total_steps=args.total_steps,
-                                              retrain_interval=args.retrain_interval,
                                               validation=args.validation,
                                               embedded_matrix=np.empty((0)),
                                               iteration=args.iter, rank=args.rank,
@@ -62,21 +67,8 @@ def main(args):
 
     import ipdb; ipdb.set_trace()
 
-    export_metrics_df_name = args.al_model + "_" + str(args.total_steps) + "steps_" + str(args.topk) + "items_per_step_per_user_retrain_every_" + str(args.retrain_interval) + "steps"
+    export_metrics_df_name = args.active_learning_model + "_" + str(args.total_steps) + "steps_" + str(args.topk) + "items_per_step_per_user_retrain_every_" + str(args.retrain_interval) + "steps"
     pd.DataFrame(metrics_result).to_pickle(export_metrics_df_name)
-    '''
-    metrics_result = models[args.model](R_train, R_valid, topk=args.topk,
-                                        al_model=args.al_model,
-                                        total_steps=args.total_steps,
-                                        retrain_interval=args.retrain_interval,
-                                        validation=args.validation,
-                                        embedded_matrix=np.empty((0)),
-                                        iteration=args.iter, rank=args.rank,
-                                        corruption=args.corruption, gpu_on=args.gpu,
-                                        lam=args.lamb, alpha=args.alpha,
-                                        seed=args.seed, root=args.root)
-    '''
-
 
 
 if __name__ == "__main__":
@@ -94,11 +86,11 @@ if __name__ == "__main__":
     parser.add_argument('-s', dest='seed', type=check_int_positive, default=1)
     parser.add_argument('-ts', dest='total_steps', type=check_int_positive, default=1)
     parser.add_argument('-m', dest='model', default="IFVAE")
-    parser.add_argument('-alm', dest='al_model', default="Random")
-    parser.add_argument('-ri', dest='retrain_interval', type=check_int_positive, default=0)
+    parser.add_argument('-alm', dest='active_learning_model', default="Random")
     parser.add_argument('-d', dest='path', default="datax/")
-    parser.add_argument('-t', dest='train', default='Rtrain.npz')
+    parser.add_argument('-tr', dest='train', default='Rtrain.npz')
     parser.add_argument('-v', dest='valid', default='Rvalid.npz')
+    parser.add_argument('-te', dest='test', default='Rtest.npz')
     parser.add_argument('-k', dest='topk', type=check_int_positive, default=50)
     parser.add_argument('-gpu', dest='gpu', action='store_false')
     parser.add_argument('--similarity', dest='sim_measure', default='Cosine')
@@ -106,12 +98,4 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     main(args)
-
-# Will this actually hurt the performance? Maybe just uncover the rating. No
-# need to penalize low rating. Just to be consistent with the dataset
-# TODO: Pick Top 1 and 2 for each user from prediction. Convert those two picks
-# to (1, 2 -> some hyperparameter such as -0.1 & 3, 4 -> 0 & 5 -> 1) and
-# feedforward through encoder to get latent mu and sigma. Use that particular
-# sampling method to predict. And continue
-
 
