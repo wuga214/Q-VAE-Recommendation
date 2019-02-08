@@ -214,24 +214,11 @@ class IFVAE(object):
     def get_Bias(self):
         return self.sess.run(self.decode_bias)
 
+def get_gaussian_parameters(model, is_item, size=None, matrix=None):
+    if is_item:
+        matrix = np.diag(np.ones(size))
 
-def get_gaussian_parameters(model, size, is_item, is_user, matrix=None):
-    mu, sigma = [], []
-
-    for i in tqdm(range(size)):
-        # Can only get item or user distribution at one time
-        if is_item & is_user == is_item | is_user:
-            raise ValueError('Either get item distribution or user distribution.')
-        elif is_item:
-            vector = create_one_hot_vector(num_classes=size, nth_item=i)
-        else:
-            vector = matrix[i, :].todense()
-
-        Gaussian_Params = model.uncertainty(vector)
-        mu.append(Gaussian_Params[0][0])
-        sigma.append(Gaussian_Params[1][0])
-
-    return np.array(mu), np.array(sigma)
+    return model.uncertainty(matrix)
 
 def logsumexp_pdf(item_mu, user_mu, user_sigma):
     log_pdf = calculate_gaussian_log_pdf(item_mu, user_mu, user_sigma)

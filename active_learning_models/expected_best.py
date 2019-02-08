@@ -34,7 +34,7 @@ class ExpectedBest(object):
         print('The number of zeros predicted is {}'.format(len(prediction_test_zero_intersect)))
 
         result['Num_Ones_In_Train'] = len(matrix_input.nonzero()[0])
-        result['Num_Ones_In_Valid'] = len(matrix_test.nonzero()[0])
+        result['Num_Ones_In_Test'] = len(matrix_test.nonzero()[0])
         result['Num_Ones_In_Prediction'] = len(prediction_test_ones_intersect)
         result['Num_Zeros_In_Prediction'] = len(prediction_test_zero_intersect)
 
@@ -110,7 +110,7 @@ def expected_best(matrix_train, matrix_test, rec_model, topk, test_index, total_
         progress.section("Create Metrics")
         result = eval(prediction, matrix_test[:test_index], topk)
 
-        progress.section("Update Train Set and Valid Set Based On Sampling Results")
+        progress.section("Update Train Set and Test Set Based On Sampling Results")
         result, matrix_input = expected_best_selection.update_matrix(prediction, matrix_test, matrix_input, result, test_index)
 
         metrics_result.append(result)

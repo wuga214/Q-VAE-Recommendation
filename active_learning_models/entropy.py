@@ -1,4 +1,4 @@
-from evaluation.metrics import evaluate
+from evaluation.metrics import evaluate, eval
 from predict.alpredictor import sampling_predict
 from recommendation_models.ifvae import IFVAE, get_gaussian_parameters, logsumexp_pdf
 from scipy.sparse import csr_matrix
@@ -40,10 +40,10 @@ class Entropy(object):
 
         return result
 
-    def update_matrix(self, prediction, matrix_test, result, matrix_input, matrix_input_with_negative):
+    def update_matrix(self, prediction, matrix_test, result, matrix_input, result, test_index):
         start_time = time.time()
-        # Move these ‘k’ samples from the test set to the train-set
-        # and query their labels.
+        # Query ‘k’ samples's labels from the test set and mark predicted
+        # positive feedback as ones in the train set
         index = np.tile(np.arange(prediction.shape[0]),(prediction.shape[1],1)).T
         index_prediction = np.dstack((index, prediction)).reshape((prediction.shape[0]*prediction.shape[1]), 2)
         index_test_ones = np.dstack((matrix_test.nonzero()[0], matrix_test.nonzero()[1]))[0]
@@ -51,14 +51,14 @@ class Entropy(object):
         index_prediction_set = set([tuple(x) for x in index_prediction])
         index_test_ones_set = set([tuple(x) for x in index_test_ones])
         prediction_test_ones_intersect = np.array([x for x in index_prediction_set & index_test_ones_set])
-        print('The number of unmasked positive data is {}'.format(len(prediction_test_ones_intersect)))
-        prediction_test_zero_intersect = np.array([x for x in index_prediction_set - index_test_ones_set])
-        print('The number of unmasked negative data is {}'.format(len(prediction_test_zero_intersect)))
+        print('The number of ones predicted is {}'.format(len(prediction_test_ones_intersect)))
+        prediction_test_zeros_intersect = np.array([x for x in index_prediction_set - index_test_ones_set])
+        print('The number of zeros predicted is {}'.format(len(prediction_test_zeros_intersect)))
 
-        result['Num_Nonzero_In_Train'] = len(matrix_input.nonzero()[0])
-        result['Num_Nonzero_In_Valid'] = len(matrix_test.nonzero()[0])
-        result['Num_Unmasked_Positive'] = len(prediction_test_ones_intersect)
-        result['Num_Unmasked_Negative'] = len(prediction_test_zero_intersect)
+        result['Num_Ones_In_Train'] = len(matrix_input.nonzero()[0])
+        result['Num_Ones_In_Test'] = len(matrix_test.nonzero()[0])
+        result['Num_Ones_In_Prediction'] = len(prediction_test_ones_intersect)
+        result['Num_Zeros_In_Prediction'] = len(prediction_test_zeros_intersect)
 
         if len(prediction_test_ones_intersect) > 0:
             mask_row = prediction_test_ones_intersect[:, 0]
@@ -67,24 +67,11 @@ class Entropy(object):
             mask = csr_matrix((mask_data, (mask_row, mask_col)), shape=matrix_input.shape)
 
             matrix_input = matrix_input.tolil()
-            matrix_input_with_negative = matrix_input_with_negative.tolil()
-            matrix_test = matrix_test.tolil()
-
             matrix_input[mask] = 1
-            matrix_test[mask] = 0
-            matrix_input_with_negative[mask] = 1
-
-        if len(prediction_test_zero_intersect) > 0:
-            mask_row = prediction_test_zero_intersect[:, 0]
-            mask_col = prediction_test_zero_intersect[:, 1]
-            mask_data = np.full(len(prediction_test_zero_intersect), True)
-            mask = csr_matrix((mask_data, (mask_row, mask_col)), shape=matrix_input.shape)
-
-            matrix_input_with_negative[mask] = -0.1
 
         print("Elapsed: {0}".format(inhour(time.time() - start_time)))
 
-        return result, matrix_input.tocsr(), matrix_test.tocsr(), matrix_input_with_negative.tocsr()
+        return result, matrix_input.tocsr()
 
 def entropy(matrix_train, matrix_test, rec_model, topk, test_index, total_steps,
             latent, embedded_matrix=np.empty((0)), iteration=100,
@@ -104,6 +91,17 @@ def entropy(matrix_train, matrix_test, rec_model, topk, test_index, total_steps,
                   observation_distribution="Gaussian",
                   optimizer=Regularizer[optimizer])
 
+    progress.section("Training")
+    model.train_model(matrix_input[test_index:], corruption, iteration)
+
+    progress.section("Get Item Distribution")
+    # Get all item distribution by feedforward passing one hot encoding vector
+    # through encoder
+    item_gaussian_mu, \
+        item_gaussian_sigma = get_gaussian_parameters(model=model,
+                                                      is_item=True,
+                                                      size=n)
+
     entropy_selection = Entropy()
 
     for i in range(total_steps):
@@ -111,29 +109,13 @@ def entropy(matrix_train, matrix_test, rec_model, topk, test_index, total_steps,
         print('The number of nonzero in train set is {}'.format(len(matrix_input.nonzero()[0])))
         print('The number of nonzero in test set is {}'.format(len(matrix_test.nonzero()[0])))
 
-        if i % retrain_interval == 0:
-            progress.section("Training")
-            model.train_model(matrix_input, corruption, iteration)
-
-            progress.section("Get Item Distribution")
-            # Get all item distribution by feedforward passing one hot encoding vector
-            # through encoder
-            item_gaussian_mu, \
-                item_gaussian_sigma = get_gaussian_parameters(model=model,
-                                                              size=n,
-                                                              is_item=True,
-                                                              is_user=False)
-
-
         progress.section("Get User Distribution")
         # Get all user distribution by feedforward passing user vector through
         # encoder
         user_gaussian_mu, \
             user_gaussian_sigma = get_gaussian_parameters(model=model,
-                                                          size=m,
                                                           is_item=False,
-                                                          is_user=True,
-                                                          matrix=matrix_input_with_negative)
+                                                          matrix=matrix_input[:test_index].A)
 
         progress.section("Sampling")
         prediction_scores = entropy_selection.predict(item_gaussian_mu, user_gaussian_mu, user_gaussian_sigma)
@@ -142,16 +124,19 @@ def entropy(matrix_train, matrix_test, rec_model, topk, test_index, total_steps,
                                       topK=topk,
                                       matrix_train=matrix_input,
                                       gpu=gpu_on)
-
-        if len(prediction) == 0:
-            return metrics_result
+        import ipdb; ipdb.set_trace()
 
         progress.section("Create Metrics")
         result = entropy_selection.eval(prediction_scores, matrix_input, matrix_test, topk, gpu_on)
 
+        evaluation_scores = sampling_predict(prediction_scores=-prediction_scores,
+                                             topK=topk,
+                                             matrix_train=matrix_input[:test_index],
+                                             gpu=gpu_on)
+        result = eval(prediction=evaluation_scores, matrix_test[:test_index], topk)
 
-        progress.section("Update Train Set and Valid Set Based On Sampling Results")
-        result, matrix_input, matrix_test, matrix_input_with_negative = entropy_selection.update_matrix(prediction, matrix_test, result, matrix_input, matrix_input_with_negative)
+        progress.section("Update Train Set and Test Set Based On Sampling Results")
+        result, matrix_input = entropy_selection.update_matrix(prediction, matrix_test, result, matrix_input, result, test_index)
 
         metrics_result.append(result)
 
