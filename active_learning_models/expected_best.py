@@ -44,11 +44,12 @@ class ExpectedBest(object):
             mask_data = np.full(len(prediction_test_ones_intersect), True)
             mask = csr_matrix((mask_data, (mask_row, mask_col)), shape=matrix_input.shape)
 
+            matrix_input = matrix_input.tolil()
             matrix_input[mask] = 1
 
         print("Elapsed: {0}".format(inhour(time.time() - start_time)))
 
-        return result, matrix_input.tocsr(), matrix_test.tocsr()
+        return result, matrix_input.tocsr()
 
 
 def expected_best(matrix_train, matrix_test, rec_model, topk, test_index, total_steps,
@@ -70,7 +71,7 @@ def expected_best(matrix_train, matrix_test, rec_model, topk, test_index, total_
                   optimizer=Regularizer[optimizer])
 
     progress.section("Training")
-    model.train_model(matrix_input, corruption, iteration)
+    model.train_model(matrix_input[test_index:], corruption, iteration)
 
     progress.section("Get Item Distribution")
     # Get all item distribution by feedforward passing one hot encoding vector
@@ -93,13 +94,13 @@ def expected_best(matrix_train, matrix_test, rec_model, topk, test_index, total_
         # encoder
         user_gaussian_mu, \
             user_gaussian_sigma = get_gaussian_parameters(model=model,
-                                                          size=m,
+                                                          size=test_index,
                                                           is_item=False,
                                                           is_user=True,
                                                           matrix=matrix_input)
 
         progress.section("Sampling")
-        prediction_scores = expected_best_selection.predict(item_gaussian_mu, user_gaussian_mu, user_gaussian_sigma, latent=latent)[:test_index]
+        prediction_scores = expected_best_selection.predict(item_gaussian_mu, user_gaussian_mu, user_gaussian_sigma, latent=latent)
 
         prediction = sampling_predict(prediction_scores=prediction_scores,
                                       topK=topk,
@@ -107,9 +108,8 @@ def expected_best(matrix_train, matrix_test, rec_model, topk, test_index, total_
                                       gpu=gpu_on)
 
         progress.section("Create Metrics")
-        result = expected_best_selection.eval(prediction, matrix_test[:test_index], topk)
         result = eval(prediction, matrix_test[:test_index], topk)
-        import ipdb; ipdb.set_trace()
+
         progress.section("Update Train Set and Valid Set Based On Sampling Results")
         result, matrix_input = expected_best_selection.update_matrix(prediction, matrix_test, matrix_input, result, test_index)
 

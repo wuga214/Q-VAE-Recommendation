@@ -8,12 +8,11 @@ import time
 
 
 class Random(object):
-    def __init__(self, num_rows, num_cols):
-        self.num_rows = num_rows
-        self.num_cols = num_cols
+    def __init__(self):
+        return
 
-    def predict(self):
-        return np.random.random((self.num_rows, self.num_cols))
+    def predict(self, num_rows, num_cols):
+        return np.random.random((num_rows, num_cols))
 
     def update_matrix(self, prediction, matrix_test, matrix_input, result, test_index):
         start_time = time.time()
@@ -41,11 +40,12 @@ class Random(object):
             mask_data = np.full(len(prediction_test_ones_intersect), True)
             mask = csr_matrix((mask_data, (mask_row, mask_col)), shape=matrix_input.shape)
 
+            matrix_input = matrix_input.tolil()
             matrix_input[mask] = 1
 
         print("Elapsed: {0}".format(inhour(time.time() - start_time)))
 
-        return result, matrix_input
+        return result, matrix_input.tocsr()
 
 
 def random(matrix_train, matrix_test, topk, test_index, total_steps,
@@ -57,12 +57,9 @@ def random(matrix_train, matrix_test, topk, test_index, total_steps,
 
     m, n = matrix_input.shape
 
-    matrix_input = matrix_input.tolil()
-    matrix_test = matrix_test.tolil()
-
     metrics_result = []
 
-    random_selection = Random(num_rows=m, num_cols=n)
+    random_selection = Random()
 
     for i in range(total_steps):
         print('This is step {} \n'.format(i))
@@ -70,7 +67,7 @@ def random(matrix_train, matrix_test, topk, test_index, total_steps,
         print('The number of ones in test set is {}'.format(len(matrix_test.nonzero()[0])))
 
         progress.section("Sampling")
-        prediction_scores = random_selection.predict()[:test_index]
+        prediction_scores = random_selection.predict(num_rows=test_index, num_cols=n)
 
         prediction = sampling_predict(prediction_scores=prediction_scores,
                                       topK=topk,
