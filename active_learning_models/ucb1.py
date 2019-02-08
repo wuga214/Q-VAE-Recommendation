@@ -1,6 +1,6 @@
 from evaluation.metrics import evaluate
-from models.alpredictor import sampling_predict
-from models.ifvae import IFVAE, get_gaussian_parameters, logsumexp_pdf
+from predict.alpredictor import sampling_predict
+from recommendation_models.ifvae import IFVAE, get_gaussian_parameters, logsumexp_pdf
 from scipy.sparse import csr_matrix
 from tqdm import tqdm
 from utils.progress import WorkSplitter, inhour

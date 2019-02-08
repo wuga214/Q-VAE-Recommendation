@@ -1,15 +1,15 @@
-from models.pop import pop
-from models.cdae import cdae, CDAE
-from models.vae import vae_cf, VAE
-from models.ifvae import ifvae, IFVAE
-from models.autorec import autorec, AutoRec
-from models.bpr import bpr
-from models.wrmf import als
-from models.cml import cml
-from models.puresvd import puresvd
-from models.nceplrec import nceplrec
-from models.plrec import plrec
-from models.ncesvd import ncesvd
+from recommendation_models.pop import pop
+from recommendation_models.cdae import cdae, CDAE
+from recommendation_models.vae import vae_cf, VAE
+from recommendation_models.ifvae import ifvae, IFVAE
+from recommendation_models.autorec import autorec, AutoRec
+from recommendation_models.bpr import bpr
+from recommendation_models.wrmf import als
+from recommendation_models.cml import cml
+from recommendation_models.puresvd import puresvd
+from recommendation_models.nceplrec import nceplrec
+from recommendation_models.plrec import plrec
+from recommendation_models.ncesvd import ncesvd
 
 models = {
     "POP": pop,

@@ -44,6 +44,23 @@ def click(hits, **unused):
         return first_hit/10
 
 
+def eval(prediction, matrix_valid, topk):
+    import time
+    from utils.progress import inhour
+    start_time = time.time()
+
+    metric_names = ['R-Precision', 'NDCG', 'Clicks', 'Recall', 'Precision', 'MAP']
+
+    result = evaluate(prediction, matrix_valid, metric_names, [topk])
+
+    print("-")
+    for metric in result.keys():
+        print("{0}:{1}".format(metric, result[metric]))
+    print("Elapsed: {0}".format(inhour(time.time() - start_time)))
+
+    return result
+
+
 def evaluate(matrix_Predict, matrix_Test, metric_names, atK, analytical=False):
     """
     :param matrix_U: Latent representations of users, for LRecs it is RQ, for ALSs it is U

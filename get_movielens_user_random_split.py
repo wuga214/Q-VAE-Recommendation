@@ -12,18 +12,18 @@ def main(args):
     rating_matrix = load_pandas(path=args.path, name=args.name, shape=args.shape)
     timestamp_matrix = load_pandas(path=args.path, value_name='timestamp', name=args.name, shape=args.shape)
     progress.section("Split CSR Matrices")
-    rtrain, rvalid, rtest, train_index, valid_index, \
+    rtrain, rvalid, rtest, test_index, valid_index, \
         rtime = split_user_randomly(rating_matrix=rating_matrix,
                                     timestamp_matrix=timestamp_matrix,
                                     ratio=args.ratio,
                                     implicit=args.implicit)
 
-    rtrain, rvalid, _, nonzero_index, rtime = time_ordered_split(rating_matrix=rtrain,
-                                                                 timestamp_matrix=rtime,
-                                                                 ratio=[0.5, 0.5, 0.0],
-                                                                 implicit=False,
-                                                                 remove_empty=False)
-
+    rtrain, rvalid, _, nonzero_index, \
+        rtime = time_ordered_split(rating_matrix=rtrain,
+                                   timestamp_matrix=rtime,
+                                   ratio=[0.5, 0.5, 0.0],
+                                   implicit=False,
+                                   remove_empty=False)
 
     progress.section("Save NPZ")
     save_numpy(rtrain, args.path, "Rtrain")

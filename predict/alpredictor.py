@@ -8,11 +8,13 @@ def sampling_predict(prediction_scores, topK, matrix_train, gpu=False):
 
     for user_index in tqdm(range(len(prediction_scores))):
         vector_train = matrix_train[user_index]
+        vector_predict = sub_routine(prediction_scores[user_index], vector_train, topK=topK, gpu=gpu)
+        '''
         if len(vector_train.nonzero()[0]) > 0:
             vector_predict = sub_routine(prediction_scores[user_index], vector_train, topK=topK, gpu=gpu)
         else:
             vector_predict = np.zeros(topK, dtype=np.float32)
-
+        '''
         # Return empty list when there is a user has less than topK items to
         # recommend. The main program will stop.
         if len(vector_predict) != topK:
