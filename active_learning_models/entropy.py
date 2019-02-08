@@ -16,11 +16,13 @@ class Entropy(object):
     def __init__(self):
         return
 
-    def predict(self, item_mu, user_mu, user_sigma):
-        normalized_pdf = logsumexp_pdf(item_mu, user_mu, user_sigma)
-        p_log2_p = np.multiply(normalized_pdf, np.log2(normalized_pdf))
-        one_minus_p_log2_one_minus_p = np.multiply(1-normalized_pdf, 1-np.log2(normalized_pdf))
-        return np.negative(np.nan_to_num(p_log2_p) + np.nan_to_num(one_minus_p_log2_one_minus_p))
+    def predict(self, item_mu, user_mu, user_sigma, latent=True):
+        if latent:
+            normalized_pdf = logsumexp_pdf(item_mu, user_mu, user_sigma)
+            p_log2_p = np.multiply(normalized_pdf, np.log2(normalized_pdf))
+            one_minus_p_log2_one_minus_p = np.multiply(1-normalized_pdf, 1-np.log2(normalized_pdf))
+            entropy_scores = np.negative(np.nan_to_num(p_log2_p) + np.nan_to_num(one_minus_p_log2_one_minus_p))
+            return entropy_scores
 
     def eval(self, prediction_scores, matrix_input, matrix_test, topk, gpu_on):
         start_time = time.time()
@@ -40,7 +42,7 @@ class Entropy(object):
 
         return result
 
-    def update_matrix(self, prediction, matrix_test, result, matrix_input, result, test_index):
+    def update_matrix(self, prediction, matrix_test, matrix_input, result, test_index):
         start_time = time.time()
         # Query ‘k’ samples's labels from the test set and mark predicted
         # positive feedback as ones in the train set
@@ -136,7 +138,7 @@ def entropy(matrix_train, matrix_test, rec_model, topk, test_index, total_steps,
         result = eval(prediction=evaluation_scores, matrix_test[:test_index], topk)
 
         progress.section("Update Train Set and Test Set Based On Sampling Results")
-        result, matrix_input = entropy_selection.update_matrix(prediction, matrix_test, result, matrix_input, result, test_index)
+        result, matrix_input = entropy_selection.update_matrix(prediction, matrix_test, matrix_input, result, test_index)
 
         metrics_result.append(result)
 
