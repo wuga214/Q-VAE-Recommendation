@@ -29,14 +29,14 @@ class ExpectedBest(object):
         index_prediction_set = set([tuple(x) for x in index_prediction])
         index_valid_nonzero_set = set([tuple(x) for x in index_valid_nonzero])
         prediction_valid_nonzero_intersect = np.array([x for x in index_prediction_set & index_valid_nonzero_set])
-        print('The number of unmasked positive data is {}'.format(len(prediction_valid_nonzero_intersect)))
+        print('The number of ones predicted is {}'.format(len(prediction_valid_nonzero_intersect)))
         prediction_valid_zero_intersect = np.array([x for x in index_prediction_set - index_valid_nonzero_set])
-        print('The number of unmasked negative data is {}'.format(len(prediction_valid_zero_intersect)))
+        print('The number of zeros predicted is {}'.format(len(prediction_valid_zero_intersect)))
 
-        result['Num_Nonzero_In_Train'] = np.unique(matrix_input[matrix_input.nonzero()].A[0], return_counts=True)[1][np.where(np.unique(matrix_input[matrix_input.nonzero()].A[0], return_counts=True)[0] == 1.)][0]
-        result['Num_Nonzero_In_Valid'] = len(matrix_test.nonzero()[0])
-        result['Num_Unmasked_Positive'] = len(prediction_valid_nonzero_intersect)
-        result['Num_Unmasked_Negative'] = len(prediction_valid_zero_intersect)
+        result['Num_Ones_In_Train'] = len(matrix_input.nonzero()[0])
+        result['Num_Ones_In_Valid'] = len(matrix_test.nonzero()[0])
+        result['Num_Ones_In_Prediction'] = len(prediction_valid_nonzero_intersect)
+        result['Num_Zeros_In_Prediction'] = len(prediction_valid_zero_intersect)
 
         if len(prediction_valid_nonzero_intersect) > 0:
             mask_row = prediction_valid_nonzero_intersect[:, 0]
@@ -44,18 +44,7 @@ class ExpectedBest(object):
             mask_data = np.full(len(prediction_valid_nonzero_intersect), True)
             mask = csr_matrix((mask_data, (mask_row, mask_col)), shape=matrix_input.shape)
 
-            matrix_input = matrix_input.tolil()
-            matrix_test = matrix_test.tolil()
             matrix_input[mask] = 1
-            matrix_test[mask] = 0
-
-        if len(prediction_valid_zero_intersect) > 0:
-            mask_row = prediction_valid_zero_intersect[:, 0]
-            mask_col = prediction_valid_zero_intersect[:, 1]
-            mask_data = np.full(len(prediction_valid_zero_intersect), True)
-            mask = csr_matrix((mask_data, (mask_row, mask_col)), shape=matrix_input.shape)
-
-            matrix_input[mask] = -0.1
 
         print("Elapsed: {0}".format(inhour(time.time() - start_time)))
 
