@@ -20,28 +20,28 @@ class ExpectedBest(object):
 
     def update_matrix(self, prediction, matrix_test, matrix_input, result, test_index):
         start_time = time.time()
-        # Move these ‘k’ samples from the validation set to the train-set
-        # and query their labels.
+        # Query ‘k’ samples's labels from the test set and mark predicted
+        # positive feedback as ones in the train set
         index = np.tile(np.arange(prediction.shape[0]),(prediction.shape[1],1)).T
         index_prediction = np.dstack((index, prediction)).reshape((prediction.shape[0]*prediction.shape[1]), 2)
-        index_valid_nonzero = np.dstack((matrix_test.nonzero()[0], matrix_test.nonzero()[1]))[0]
+        index_test_ones = np.dstack((matrix_test.nonzero()[0], matrix_test.nonzero()[1]))[0]
 
         index_prediction_set = set([tuple(x) for x in index_prediction])
-        index_valid_nonzero_set = set([tuple(x) for x in index_valid_nonzero])
-        prediction_valid_nonzero_intersect = np.array([x for x in index_prediction_set & index_valid_nonzero_set])
-        print('The number of ones predicted is {}'.format(len(prediction_valid_nonzero_intersect)))
-        prediction_valid_zero_intersect = np.array([x for x in index_prediction_set - index_valid_nonzero_set])
-        print('The number of zeros predicted is {}'.format(len(prediction_valid_zero_intersect)))
+        index_test_ones_set = set([tuple(x) for x in index_test_ones])
+        prediction_test_ones_intersect = np.array([x for x in index_prediction_set & index_test_ones_set])
+        print('The number of ones predicted is {}'.format(len(prediction_test_ones_intersect)))
+        prediction_test_zero_intersect = np.array([x for x in index_prediction_set - index_test_ones_set])
+        print('The number of zeros predicted is {}'.format(len(prediction_test_zero_intersect)))
 
         result['Num_Ones_In_Train'] = len(matrix_input.nonzero()[0])
         result['Num_Ones_In_Valid'] = len(matrix_test.nonzero()[0])
-        result['Num_Ones_In_Prediction'] = len(prediction_valid_nonzero_intersect)
-        result['Num_Zeros_In_Prediction'] = len(prediction_valid_zero_intersect)
+        result['Num_Ones_In_Prediction'] = len(prediction_test_ones_intersect)
+        result['Num_Zeros_In_Prediction'] = len(prediction_test_zero_intersect)
 
-        if len(prediction_valid_nonzero_intersect) > 0:
-            mask_row = prediction_valid_nonzero_intersect[:, 0]
-            mask_col = prediction_valid_nonzero_intersect[:, 1]
-            mask_data = np.full(len(prediction_valid_nonzero_intersect), True)
+        if len(prediction_test_ones_intersect) > 0:
+            mask_row = prediction_test_ones_intersect[:, 0]
+            mask_col = prediction_test_ones_intersect[:, 1]
+            mask_data = np.full(len(prediction_test_ones_intersect), True)
             mask = csr_matrix((mask_data, (mask_row, mask_col)), shape=matrix_input.shape)
 
             matrix_input[mask] = 1
@@ -86,7 +86,7 @@ def expected_best(matrix_train, matrix_test, rec_model, topk, test_index, total_
     for i in range(total_steps):
         print('This is step {} \n'.format(i))
         print('The number of ones in train set is {}'.format(len(matrix_input.nonzero()[0])))
-        print('The number of ones in valid set is {}'.format(len(matrix_test.nonzero()[0])))
+        print('The number of ones in test set is {}'.format(len(matrix_test.nonzero()[0])))
 
         progress.section("Get User Distribution")
         # Get all user distribution by feedforward passing user vector through
