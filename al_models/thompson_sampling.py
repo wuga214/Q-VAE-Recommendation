@@ -139,13 +139,23 @@ def thompson_sampling(matrix_train, matrix_valid, topk, total_steps,
         # Get normalized probability
         normalized_pdf = logsumexp_pdf(item_gaussian_mu, user_gaussian_mu, user_gaussian_sigma).ravel()
 
+        prediction_scores = []
+
         if i > 0:
-            chosen_arms_index =
+            chosen_arms_index = (chosen_arms_row * n + chosen_arms_col).astype(np.int64)
+
+            for arm in chosen_arms_index[:result['Num_Unmasked_Positive']]:
+                ts_list[arm].update(normalized_pdf[arm])
+
+            for arm in chosen_arms_index[-result['Num_Unmasked_Negative']:]:
+                ts_list[arm].update(1-normalized_pdf[arm])
+
+            for ts_index in range(len(normalized_pdf)):
+                prediction_scores.append(ts_list[ts_index].predict())
 
         # Bandits start here
         if i == 0:
             ts_list = []
-            prediction_scores = []
 
             for ts_index in range(len(normalized_pdf)):
                 ts_list.append(ThompsonSampling(initial_reward=normalized_pdf[ts_index]))
@@ -163,7 +173,7 @@ def thompson_sampling(matrix_train, matrix_valid, topk, total_steps,
 
         progress.section("Update Train Set and Valid Set Based On Sampling Results")
         result, matrix_input, matrix_valid, chosen_arms_row, chosen_arms_col = ThompsonSampling.update_matrix(prediction, matrix_valid, matrix_input, result)
-        import ipdb; ipdb.set_trace()
+        # import ipdb; ipdb.set_trace()
 
         metrics_result.append(result)
 
