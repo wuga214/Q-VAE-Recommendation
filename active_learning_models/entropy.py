@@ -1,6 +1,6 @@
-from evaluation.metrics import evaluate, eval
+from evaluation.metrics import eval
 from predict.alpredictor import sampling_predict
-from recommendation_models.ifvae import IFVAE, get_gaussian_parameters, logsumexp_pdf
+from recommendation_models.ifvae import IFVAE, get_gaussian_parameters, predict_prob
 from scipy.sparse import csr_matrix
 from tqdm import tqdm
 from utils.progress import WorkSplitter, inhour
@@ -89,8 +89,8 @@ def entropy(matrix_train, matrix_test, rec_model, topk, test_index, total_steps,
 
     for i in range(total_steps):
         print('This is step {} \n'.format(i))
-        print('The number of ones in train set is {}'.format(len(matrix_input.nonzero()[0])))
-        print('The number of ones in test set is {}'.format(len(matrix_test.nonzero()[0])))
+        print('The number of ones in train set is {}'.format(len(matrix_input[:test_index].nonzero()[0])))
+        print('The number of ones in test set is {}'.format(len(matrix_test[:test_index].nonzero()[0])))
 
         progress.section("Get User Distribution")
         # Get all user distribution by feedforward passing user vector through
@@ -101,7 +101,7 @@ def entropy(matrix_train, matrix_test, rec_model, topk, test_index, total_steps,
                                                           matrix=matrix_input[:test_index].A)
 
         progress.section("Sampling")
-        prediction_scores = entropy_selection.predict(item_gaussian_mu, user_gaussian_mu, user_gaussian_sigma, latent=latent)
+        prediction_scores = predict_prob(item_gaussian_mu, user_gaussian_mu, user_gaussian_sigma, latent=latent)
 
         prediction = sampling_predict(prediction_scores=prediction_scores,
                                       topK=topk,

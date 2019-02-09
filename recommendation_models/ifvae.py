@@ -220,6 +220,10 @@ def get_gaussian_parameters(model, is_item, size=None, matrix=None):
 
     return model.uncertainty(matrix)
 
+def predict_prob(item_mu, user_mu, user_sigma, latent=True):
+    if latent:
+        return logsumexp_pdf(item_mu, user_mu, user_sigma)
+
 def logsumexp_pdf(item_mu, user_mu, user_sigma):
     log_pdf = calculate_gaussian_log_pdf(item_mu, user_mu, user_sigma)
     A = np.amax(log_pdf, axis=1)

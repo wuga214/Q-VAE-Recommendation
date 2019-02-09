@@ -1,6 +1,6 @@
-from evaluation.metrics import evaluate, eval
+from evaluation.metrics import eval
 from predict.alpredictor import sampling_predict
-from recommendation_models.ifvae import IFVAE, get_gaussian_parameters, logsumexp_pdf
+from recommendation_models.ifvae import IFVAE, get_gaussian_parameters, predict_prob
 from scipy.sparse import csr_matrix
 from tqdm import tqdm
 from utils.progress import WorkSplitter, inhour
@@ -13,10 +13,6 @@ import time
 class ExpectedBest(object):
     def __init__(self):
         return
-
-    def predict(self, item_mu, user_mu, user_sigma, latent=True):
-        if latent:
-            return logsumexp_pdf(item_mu, user_mu, user_sigma)
 
     def update_matrix(self, prediction, matrix_test, matrix_input, result, test_index):
         start_time = time.time()
@@ -33,11 +29,11 @@ class ExpectedBest(object):
         prediction_test_zeros_intersect = np.array([x for x in index_prediction_set - index_test_ones_set])
         print('The number of zeros predicted is {}'.format(len(prediction_test_zeros_intersect)))
 
-        result['Num_Ones_In_Train'] = len(matrix_input.nonzero()[0])
-        result['Num_Ones_In_Test'] = len(matrix_test.nonzero()[0])
+        result['Num_Ones_In_Train'] = len(matrix_input[:test_index].nonzero()[0])
+        result['Num_Ones_In_Test'] = len(matrix_test[:test_index].nonzero()[0])
         result['Num_Ones_In_Prediction'] = len(prediction_test_ones_intersect)
         result['Num_Zeros_In_Prediction'] = len(prediction_test_zeros_intersect)
-
+        # import ipdb; ipdb.set_trace()
         if len(prediction_test_ones_intersect) > 0:
             mask_row = prediction_test_ones_intersect[:, 0]
             mask_col = prediction_test_ones_intersect[:, 1]
@@ -85,8 +81,8 @@ def expected_best(matrix_train, matrix_test, rec_model, topk, test_index, total_
 
     for i in range(total_steps):
         print('This is step {} \n'.format(i))
-        print('The number of ones in train set is {}'.format(len(matrix_input.nonzero()[0])))
-        print('The number of ones in test set is {}'.format(len(matrix_test.nonzero()[0])))
+        print('The number of ones in train set is {}'.format(len(matrix_input[:test_index].nonzero()[0])))
+        print('The number of ones in test set is {}'.format(len(matrix_test[:test_index].nonzero()[0])))
 
         progress.section("Get User Distribution")
         # Get all user distribution by feedforward passing user vector through
@@ -97,13 +93,14 @@ def expected_best(matrix_train, matrix_test, rec_model, topk, test_index, total_
                                                           matrix=matrix_input[:test_index].A)
 
         progress.section("Sampling")
-        prediction_scores = expected_best_selection.predict(item_gaussian_mu, user_gaussian_mu, user_gaussian_sigma, latent=latent)
-
+        prediction_scores = predict_prob(item_gaussian_mu, user_gaussian_mu, user_gaussian_sigma, latent=latent)
+        print(prediction_scores)
         prediction = sampling_predict(prediction_scores=prediction_scores,
                                       topK=topk,
                                       matrix_train=matrix_train[:test_index],
                                       gpu=gpu_on)
-        print(matrix_train[:test_index].nonzero())
+        # import ipdb; ipdb.set_trace()
+        # print(matrix_train[:test_index].nonzero())
         progress.section("Create Metrics")
         result = eval(matrix_test[:test_index], topk, prediction)
 

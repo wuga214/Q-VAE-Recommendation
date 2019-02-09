@@ -1,7 +1,7 @@
-from evaluation.metrics import evaluate, eval
+from evaluation.metrics import eval
 from predict.alpredictor import sampling_predict
 from scipy.sparse import csr_matrix
-from utils.progress import WorkSplitter, inhour
+from utils.progress import inhour, WorkSplitter
 
 import numpy as np
 import time
@@ -29,8 +29,8 @@ class Random(object):
         prediction_test_zeros_intersect = np.array([x for x in index_prediction_set - index_test_ones_set])
         print('The number of zeros predicted is {}'.format(len(prediction_test_zeros_intersect)))
 
-        result['Num_Ones_In_Train'] = len(matrix_input.nonzero()[0])
-        result['Num_Ones_In_Test'] = len(matrix_test.nonzero()[0])
+        result['Num_Ones_In_Train'] = len(matrix_input[:test_index].nonzero()[0])
+        result['Num_Ones_In_Test'] = len(matrix_test[:test_index].nonzero()[0])
         result['Num_Ones_In_Prediction'] = len(prediction_test_ones_intersect)
         result['Num_Zeros_In_Prediction'] = len(prediction_test_zeros_intersect)
 
@@ -63,8 +63,8 @@ def random(matrix_train, matrix_test, topk, test_index, total_steps,
 
     for i in range(total_steps):
         print('This is step {} \n'.format(i))
-        print('The number of ones in train set is {}'.format(len(matrix_input.nonzero()[0])))
-        print('The number of ones in test set is {}'.format(len(matrix_test.nonzero()[0])))
+        print('The number of ones in train set is {}'.format(len(matrix_input[:test_index].nonzero()[0])))
+        print('The number of ones in test set is {}'.format(len(matrix_test[:test_index].nonzero()[0])))
 
         progress.section("Sampling")
         prediction_scores = random_selection.predict(num_rows=test_index, num_cols=n)
@@ -73,7 +73,7 @@ def random(matrix_train, matrix_test, topk, test_index, total_steps,
                                       topK=topk,
                                       matrix_train=matrix_train[:test_index],
                                       gpu=gpu_on)
-        print(matrix_train[:test_index].nonzero())
+
         progress.section("Create Metrics")
         result = eval(matrix_test[:test_index], topk, prediction)
 
