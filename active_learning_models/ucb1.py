@@ -53,7 +53,7 @@ class UCB1(object):
         result['Num_Ones_In_Train'] = len(matrix_input[:test_index].nonzero()[0])
         result['Num_Ones_In_Test'] = len(matrix_test[:test_index].nonzero()[0])
         result['Num_Ones_In_Prediction'] = len(prediction_test_ones_intersect)
-        result['Num_Ones_In_Prediction'] = len(prediction_test_zeros_intersect)
+        result['Num_Zeros_In_Prediction'] = len(prediction_test_zeros_intersect)
 
         chosen_arms_row = []
         chosen_arms_col = []
