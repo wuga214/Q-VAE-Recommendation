@@ -6,7 +6,6 @@ from tqdm import tqdm
 from utils.progress import WorkSplitter, inhour
 from utils.regularizers import Regularizer
 
-import math
 import numpy as np
 import tensorflow as tf
 import time
@@ -106,8 +105,9 @@ def entropy(matrix_train, matrix_test, rec_model, topk, test_index, total_steps,
 
         prediction = sampling_predict(prediction_scores=prediction_scores,
                                       topK=topk,
-                                      matrix_train=matrix_input[:test_index],
+                                      matrix_train=matrix_train[:test_index],
                                       gpu=gpu_on)
+        print(matrix_train[:test_index].nonzero())
 #        import ipdb; ipdb.set_trace()
 
         progress.section("Create Metrics")
