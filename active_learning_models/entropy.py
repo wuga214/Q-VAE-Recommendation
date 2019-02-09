@@ -38,8 +38,8 @@ class Entropy(object):
         prediction_test_zeros_intersect = np.array([x for x in index_prediction_set - index_test_ones_set])
         print('The number of zeros predicted is {}'.format(len(prediction_test_zeros_intersect)))
 
-        result['Num_Ones_In_Train'] = len(matrix_input.nonzero()[0])
-        result['Num_Ones_In_Test'] = len(matrix_test.nonzero()[0])
+        result['Num_Ones_In_Train'] = len(matrix_input[:test_index].nonzero()[0])
+        result['Num_Ones_In_Test'] = len(matrix_test[:test_index].nonzero()[0])
         result['Num_Ones_In_Prediction'] = len(prediction_test_ones_intersect)
         result['Num_Zeros_In_Prediction'] = len(prediction_test_zeros_intersect)
 

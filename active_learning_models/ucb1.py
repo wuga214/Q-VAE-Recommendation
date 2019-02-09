@@ -19,20 +19,6 @@ class UCB1(object):
         self.ucb_scores = None
         self.chosen_arm = None
 
-    def eval(self, prediction, matrix_test, topk):
-        start_time = time.time()
-
-        metric_names = ['R-Precision', 'NDCG', 'Clicks', 'Recall', 'Precision', 'MAP']
-
-        result = evaluate(prediction, matrix_test, metric_names, [topk])
-
-        print("-")
-        for metric in result.keys():
-            print("{0}:{1}".format(metric, result[metric]))
-        print("Elapsed: {0}".format(inhour(time.time() - start_time)))
-
-        return result
-
     def predict(self):
         total_counts = np.sum(self.counts, axis=1)
 
@@ -64,8 +50,8 @@ class UCB1(object):
         prediction_test_zeros_intersect = np.array([x for x in index_prediction_set - index_test_ones_set])
         print('The number of zeros predicted is {}'.format(len(prediction_test_zeros_intersect)))
 
-        result['Num_Ones_In_Train'] = len(matrix_input.nonzero()[0])
-        result['Num_Ones_In_Test'] = len(matrix_test.nonzero()[0])
+        result['Num_Ones_In_Train'] = len(matrix_input[:test_index].nonzero()[0])
+        result['Num_Ones_In_Test'] = len(matrix_test[:test_index].nonzero()[0])
         result['Num_Ones_In_Prediction'] = len(prediction_test_ones_intersect)
         result['Num_Ones_In_Prediction'] = len(prediction_test_zeros_intersect)
 
@@ -126,8 +112,8 @@ def ucb1(matrix_train, matrix_test, rec_model, topk, test_index, total_steps,
 
     for i in range(total_steps):
         print('This is step {} \n'.format(i))
-        print('The number of ones in train set is {}'.format(len(matrix_input.nonzero()[0])))
-        print('The number of ones in test set is {}'.format(len(matrix_test.nonzero()[0])))
+        print('The number of ones in train set is {}'.format(len(matrix_input[:test_index].nonzero()[0])))
+        print('The number of ones in test set is {}'.format(len(matrix_test[:test_index].nonzero()[0])))
 
         progress.section("Get User Distribution")
         # Get all user distribution by feedforward passing user vector through
@@ -158,7 +144,6 @@ def ucb1(matrix_train, matrix_test, rec_model, topk, test_index, total_steps,
                                       gpu=gpu_on)
         print(matrix_train[:test_index].nonzero())
         progress.section("Create Metrics")
-        result = ucb_selection.eval(prediction, matrix_test[:test_index], topk)
         result = eval(matrix_test[:test_index], topk, prediction)
 
         progress.section("Update Train Set and Test Set Based On Sampling Results")
