@@ -44,7 +44,7 @@ def click(hits, **unused):
         return first_hit/10
 
 
-def eval(prediction, matrix_valid, topk):
+def eval(matrix_valid, topk, prediction):
     import time
     from utils.progress import inhour
     start_time = time.time()

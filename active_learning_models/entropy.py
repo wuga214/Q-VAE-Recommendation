@@ -24,24 +24,6 @@ class Entropy(object):
             entropy_scores = np.negative(np.nan_to_num(p_log2_p) + np.nan_to_num(one_minus_p_log2_one_minus_p))
             return entropy_scores
 
-    def eval(self, prediction_scores, matrix_input, matrix_test, topk, gpu_on):
-        start_time = time.time()
-
-        metric_names = ['R-Precision', 'NDCG', 'Clicks', 'Recall', 'Precision', 'MAP']
-
-        evaluation_items = sampling_predict(prediction_scores=-prediction_scores,
-                                            topK=topk,
-                                            matrix_train=matrix_input,
-                                            gpu=gpu_on)
-        result = evaluate(evaluation_items, matrix_test, metric_names, [topk])
-
-        print("-")
-        for metric in result.keys():
-            print("{0}:{1}".format(metric, result[metric]))
-        print("Elapsed: {0}".format(inhour(time.time() - start_time)))
-
-        return result
-
     def update_matrix(self, prediction, matrix_test, matrix_input, result, test_index):
         start_time = time.time()
         # Query ‘k’ samples's labels from the test set and mark predicted
@@ -108,8 +90,8 @@ def entropy(matrix_train, matrix_test, rec_model, topk, test_index, total_steps,
 
     for i in range(total_steps):
         print('This is step {} \n'.format(i))
-        print('The number of nonzero in train set is {}'.format(len(matrix_input.nonzero()[0])))
-        print('The number of nonzero in test set is {}'.format(len(matrix_test.nonzero()[0])))
+        print('The number of ones in train set is {}'.format(len(matrix_input.nonzero()[0])))
+        print('The number of ones in test set is {}'.format(len(matrix_test.nonzero()[0])))
 
         progress.section("Get User Distribution")
         # Get all user distribution by feedforward passing user vector through
@@ -120,22 +102,20 @@ def entropy(matrix_train, matrix_test, rec_model, topk, test_index, total_steps,
                                                           matrix=matrix_input[:test_index].A)
 
         progress.section("Sampling")
-        prediction_scores = entropy_selection.predict(item_gaussian_mu, user_gaussian_mu, user_gaussian_sigma)
+        prediction_scores = entropy_selection.predict(item_gaussian_mu, user_gaussian_mu, user_gaussian_sigma, latent=latent)
 
         prediction = sampling_predict(prediction_scores=prediction_scores,
                                       topK=topk,
-                                      matrix_train=matrix_input,
+                                      matrix_train=matrix_input[:test_index],
                                       gpu=gpu_on)
-        import ipdb; ipdb.set_trace()
+#        import ipdb; ipdb.set_trace()
 
         progress.section("Create Metrics")
-        result = entropy_selection.eval(prediction_scores, matrix_input, matrix_test, topk, gpu_on)
-
         evaluation_scores = sampling_predict(prediction_scores=-prediction_scores,
                                              topK=topk,
-                                             matrix_train=matrix_input[:test_index],
+                                             matrix_train=matrix_train[:test_index],
                                              gpu=gpu_on)
-        result = eval(prediction=evaluation_scores, matrix_test[:test_index], topk)
+        result = eval(matrix_test[:test_index], topk, prediction=evaluation_scores)
 
         progress.section("Update Train Set and Test Set Based On Sampling Results")
         result, matrix_input = entropy_selection.update_matrix(prediction, matrix_test, matrix_input, result, test_index)
