@@ -147,17 +147,20 @@ def non_lin_ucb(matrix_train, matrix_test, rec_model, topk, test_index, total_st
                                       topK=topk,
                                       matrix_train=matrix_train[:test_index],
                                       gpu=gpu_on)
+        """
         from predict.predictor import predict
         RQ = model.get_RQ(matrix_input)
         Y = model.get_Y().T
         Bias = model.get_Bias()
+        one_shot = model.inference(matrix_input.A)
         pre = predict(matrix_U=RQ,
                          matrix_V=Y,
                          bias=Bias,
                          topK=50,
                          matrix_Train=matrix_input,
                          gpu=gpu_on)
-        import ipdb; ipdb.set_trace()
+        """
+        # import ipdb; ipdb.set_trace()
         print(matrix_train[:test_index].nonzero())
         progress.section("Create Metrics")
         result = eval(matrix_test[:test_index], topk, prediction)
