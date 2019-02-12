@@ -36,12 +36,15 @@ class IFVAE(object):
             self.input = tf.placeholder(tf.float32, shape=[None, self._observation_dim], name='input')
             self.corruption = tf.placeholder(tf.float32)
             self.sampling = tf.placeholder(tf.bool)
+            self.training = tf.placeholder(tf.bool)
 
             mask1 = tf.floor(tf.nn.dropout(tf.ones_like(self.input), 1-self.corruption))
             mask2 = tf.floor(tf.nn.dropout(tf.ones_like(self.input), 1-self.corruption))
 
             wc = self.input * mask1
+            wc = tf.layers.batch_normalization(wc, training=self.training)
             hc = wc * mask2
+
             with tf.variable_scope('network'):
                 self.wc_mean, wc_log_std, self.wc_obs_mean = self._network(wc)
             with tf.variable_scope('network', reuse=True):
@@ -87,7 +90,9 @@ class IFVAE(object):
 
             with tf.variable_scope('optimizer'):
                 optimizer = self._optimizer(learning_rate=self._learning_rate)
-            with tf.variable_scope('training-step'):
+                update_ops = tf.get_collection(tf.GraphKeys.UPDATE_OPS)
+            # with tf.variable_scope('training-step'):
+            with tf.control_dependencies(update_ops):
                 var_list = [self.encode_weights, self.encode_bias, self.decode_weights, self.decode_bias]
                 self._train = optimizer.minimize(self._loss, var_list=var_list)
 
@@ -161,12 +166,12 @@ class IFVAE(object):
 
     def inference(self, x):
         predict = self.sess.run(self.wc_obs_mean,
-                                feed_dict={self.input: x, self.corruption: 0, self.sampling: False})
+                                feed_dict={self.input: x, self.corruption: 0, self.sampling: False, self.training: False})
         return predict
 
     def uncertainty(self, x):
         gaussian_parameters = self.sess.run([self.wc_mean, self.wc_std],
-                                            feed_dict={self.input: x, self.corruption: 0, self.sampling: False})
+                                            feed_dict={self.input: x, self.corruption: 0, self.sampling: False, self.training: False})
 
         return gaussian_parameters
 
@@ -181,7 +186,7 @@ class IFVAE(object):
                 corrupt_rate = random.uniform(0.1, 0.3)
                 #corrupt_rate = corruption
                 feed_dict = {self.input: batches[step].todense(), self.corruption: corrupt_rate,
-                             self.sampling: True}
+                             self.sampling: True, self.training: True}
                 training, loss = self.sess.run([self._train, self.wc_std], feed_dict=feed_dict)
                 pbar.set_description("loss: {:.4f}".format(np.mean(loss)))
 
@@ -202,7 +207,7 @@ class IFVAE(object):
         batches = self.get_batches(rating_matrix, self._batch_size)
         RQ = []
         for step in range(len(batches)):
-            feed_dict = {self.input: batches[step].todense(), self.corruption: 0, self.sampling: False}
+            feed_dict = {self.input: batches[step].todense(), self.corruption: 0, self.sampling: False, self.training: False}
             embedding = self.sess.run(self.wc_mean, feed_dict=feed_dict)
             RQ.append(embedding)
 
