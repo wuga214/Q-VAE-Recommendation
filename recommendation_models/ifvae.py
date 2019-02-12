@@ -217,7 +217,6 @@ class IFVAE(object):
 def get_gaussian_parameters(model, is_item, size=None, matrix=None):
     if is_item:
         matrix = np.diag(np.ones(size))
-
     return model.uncertainty(matrix)
 
 def predict_prob(item_mu, user_mu, user_sigma, latent=True):
@@ -229,9 +228,11 @@ def logsumexp_pdf(item_mu, user_mu, user_sigma):
     A = np.amax(log_pdf, axis=1)
     return np.exp(log_pdf-np.vstack(A))
 
+"""
 def get_normalized_pdf(item_gaussian_mu, user_gaussian_mu, user_gaussian_sigma):
     log_pdf = calculate_gaussian_log_pdf(item_gaussian_mu, user_gaussian_mu, user_gaussian_sigma)
     return normalize(np.exp(log_pdf), axis=1, norm='l1')
+"""
 
 def calculate_gaussian_log_pdf(item_mu, user_mu, user_sigma):
     result = []

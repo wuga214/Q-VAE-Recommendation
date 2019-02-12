@@ -11,7 +11,7 @@ import tensorflow as tf
 import time
 
 
-class UCB1(object):
+class NonLinUCB(object):
     def __init__(self, counts, average_reward, num_arms):
         self.counts = counts
         self.average_reward = average_reward
@@ -69,6 +69,7 @@ class UCB1(object):
 
             chosen_arms_row = np.append(chosen_arms_row, mask_row)
             chosen_arms_col = np.append(chosen_arms_col, mask_col)
+        # import ipdb; ipdb.set_trace()
 
         if len(prediction_test_zeros_intersect) > 0:
             mask_row = prediction_test_zeros_intersect[:, 0]
@@ -76,12 +77,13 @@ class UCB1(object):
 
             chosen_arms_row = np.append(chosen_arms_row, mask_row)
             chosen_arms_col = np.append(chosen_arms_col, mask_col)
+        # import ipdb; ipdb.set_trace()
 
         print("Elapsed: {0}".format(inhour(time.time() - start_time)))
 
         return result, matrix_input.tocsr(), chosen_arms_row, chosen_arms_col
 
-def ucb1(matrix_train, matrix_test, rec_model, topk, test_index, total_steps,
+def non_lin_ucb(matrix_train, matrix_test, rec_model, topk, test_index, total_steps,
          latent, embedded_matrix=np.empty((0)), iteration=100,
          rank=200, corruption=0.2, gpu_on=True, lam=80, optimizer="RMSProp",
          beta=1.0, **unused):
@@ -126,15 +128,16 @@ def ucb1(matrix_train, matrix_test, rec_model, topk, test_index, total_steps,
         progress.section("Sampling")
         # Get normalized probability
         normalized_pdf = predict_prob(item_gaussian_mu, user_gaussian_mu, user_gaussian_sigma, latent=latent)
+        # import ipdb; ipdb.set_trace()
 
         if i > 0:
             ucb_selection.update(chosen_arm=(chosen_arms_row.astype(np.int64), chosen_arms_col.astype(np.int64)), immediate_reward=normalized_pdf)
 
         # The bandit starts here
         if i == 0:
-            ucb_selection = UCB1(counts=np.ones((test_index, n)),
-                                 average_reward=normalized_pdf,
-                                 num_arms=n)
+            ucb_selection = NonLinUCB(counts=np.ones((test_index, n)),
+                                      average_reward=normalized_pdf,
+                                      num_arms=n)
 
         prediction_scores = ucb_selection.predict()
 
@@ -142,6 +145,7 @@ def ucb1(matrix_train, matrix_test, rec_model, topk, test_index, total_steps,
                                       topK=topk,
                                       matrix_train=matrix_train[:test_index],
                                       gpu=gpu_on)
+
         print(matrix_train[:test_index].nonzero())
         progress.section("Create Metrics")
         result = eval(matrix_test[:test_index], topk, prediction)

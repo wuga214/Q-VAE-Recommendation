@@ -21,7 +21,6 @@ def main(args):
     print("Train File Name: {}".format(args.train))
     if args.validation:
         print("Valid File Name: {}".format(args.valid))
-    print("Test File Name: {}".format(args.test))
     print("Recommendation Model: {}".format(args.rec_model))
     print("Active Learning Algorithm: {}".format(args.active_learning_model))
     if args.item == True:
@@ -53,13 +52,10 @@ def main(args):
         R_valid = load_numpy(path=args.path, name=args.valid)
         print("Valid U-I Dimensions: {}".format(R_valid.shape))
 
-    R_test = load_numpy(path=args.path, name=args.test)
-    print("Test U-I Dimensions: {}".format(R_test.shape))
-
     print("Elapsed: {}".format(inhour(time.time() - start_time)))
 
-    metrics_result = active_learning_models[args.active_learning_model](R_train, R_test, rec_model=args.rec_model, topk=args.topk,
-                                                                        test_index=int(R_test.shape[0]*args.ratio[2]),
+    metrics_result = active_learning_models[args.active_learning_model](R_train, R_valid, rec_model=args.rec_model, topk=args.topk,
+                                                                        test_index=int(R_valid.shape[0]*args.ratio[2]),
                                                                         total_steps=args.total_steps, latent=args.latent,
                                                                         embedded_matrix=np.empty((0)),
                                                                         iteration=args.iter, rank=args.rank,
@@ -67,7 +63,7 @@ def main(args):
                                                                         lam=args.lamb, alpha=args.alpha,
                                                                         seed=args.seed, root=args.root)
 
-    # import ipdb; ipdb.set_trace()
+    import ipdb; ipdb.set_trace()
 
     export_metrics_df_name = args.active_learning_model + "_" + \
         args.rec_model + "_Latent_" + str(args.latent) + "_" + \
@@ -94,9 +90,8 @@ if __name__ == "__main__":
     parser.add_argument('-m', dest='rec_model', default="IFVAE")
     parser.add_argument('-alm', dest='active_learning_model', default="Random")
     parser.add_argument('-d', dest='path', default="datax/")
-    parser.add_argument('-tr', dest='train', default='Rtrain.npz')
+    parser.add_argument('-t', dest='train', default='Rtrain.npz')
     parser.add_argument('-v', dest='valid', default='Rvalid.npz')
-    parser.add_argument('-te', dest='test', default='Rtest.npz')
     parser.add_argument('-ratio', dest='ratio', type=ratio, default='0.5, 0.0, 0.5')
     parser.add_argument('-k', dest='topk', type=check_int_positive, default=50)
     parser.add_argument('-gpu', dest='gpu', action='store_false')
