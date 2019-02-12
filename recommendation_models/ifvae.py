@@ -242,7 +242,7 @@ def logsumexp_pdf(item_mu, user_mu, user_sigma):
     log_pdf = calculate_gaussian_log_pdf(item_mu.astype(np.float64), user_mu.astype(np.float64), user_sigma.astype(np.float64))
     from scipy.stats import multivariate_normal
     scipy_scipy = [multivariate_normal.pdf(x=item, mean=user_mu[0], cov=np.square(user_sigma[0])) for item in item_mu]
-    import ipdb; ipdb.set_trace()
+    # import ipdb; ipdb.set_trace()
     A = np.amax(log_pdf, axis=1)
     return np.exp(log_pdf-np.vstack(A))
 

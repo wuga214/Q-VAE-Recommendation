@@ -16,11 +16,13 @@ def predict(matrix_U, matrix_V, topK, matrix_Train, bias=None, measure="Cosine",
     for user_index in tqdm(range(matrix_U.shape[0])):
         vector_u = matrix_U[user_index]
         vector_train = matrix_Train[user_index]
+        vector_predict = sub_routine(vector_u, matrix_V, vector_train, bias, measure, topK=topK, gpu=gpu)
+        """
         if len(vector_train.nonzero()[0]) > 0:
             vector_predict = sub_routine(vector_u, matrix_V, vector_train, bias, measure, topK=topK, gpu=gpu)
         else:
             vector_predict = np.zeros(topK, dtype=np.float32)
-
+        """
         prediction.append(vector_predict)
 
     return np.vstack(prediction)
