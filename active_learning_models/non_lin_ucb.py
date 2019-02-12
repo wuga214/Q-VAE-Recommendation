@@ -1,6 +1,6 @@
 from evaluation.metrics import evaluate, eval
-from predict.alpredictor import sampling_predict
-from recommendation_models.ifvae import IFVAE, get_gaussian_parameters, predict_prob
+from predict.alpredictor import sampling_predict, predict_gaussian_prob, get_latent_gaussian_params
+from recommendation_models.ifvae import IFVAE
 from scipy.sparse import csr_matrix
 from tqdm import tqdm
 from utils.progress import WorkSplitter, inhour
@@ -108,7 +108,7 @@ def non_lin_ucb(matrix_train, matrix_test, rec_model, topk, test_index, total_st
     # Get all item distribution by feedforward passing one hot encoding vector
     # through encoder
     item_gaussian_mu, \
-        item_gaussian_sigma = get_gaussian_parameters(model=model,
+        item_gaussian_sigma = get_latent_gaussian_params(model=model,
                                                       is_item=True,
                                                       size=n)
 
@@ -121,13 +121,15 @@ def non_lin_ucb(matrix_train, matrix_test, rec_model, topk, test_index, total_st
         # Get all user distribution by feedforward passing user vector through
         # encoder
         user_gaussian_mu, \
-            user_gaussian_sigma = get_gaussian_parameters(model=model,
+            user_gaussian_sigma = get_latent_gaussian_params(model=model,
                                                           is_item=False,
                                                           matrix=matrix_input[:test_index].A)
 
         progress.section("Sampling")
         # Get normalized probability
-        normalized_pdf = predict_prob(item_gaussian_mu, user_gaussian_mu, user_gaussian_sigma, latent=latent)
+        # normalized_pdf = predict_prob(item_gaussian_mu, user_gaussian_mu, user_gaussian_sigma, latent=latent)
+        normalized_pdf = predict_gaussian_prob(item_gaussian_mu, user_gaussian_mu, user_gaussian_sigma, latent=latent)
+
         # import ipdb; ipdb.set_trace()
 
         if i > 0:
@@ -154,7 +156,7 @@ def non_lin_ucb(matrix_train, matrix_test, rec_model, topk, test_index, total_st
                          bias=Bias,
                          topK=50,
                          matrix_Train=matrix_input,
-                         gpu=True)
+                         gpu=gpu_on)
         import ipdb; ipdb.set_trace()
         print(matrix_train[:test_index].nonzero())
         progress.section("Create Metrics")

@@ -213,7 +213,7 @@ class IFVAE(object):
 
     def get_Bias(self):
         return self.sess.run(self.decode_bias)
-
+'''
 def get_gaussian_parameters(model, is_item, size=None, matrix=None):
     if is_item:
         matrix = np.diag(np.ones(size))
@@ -222,7 +222,8 @@ def get_gaussian_parameters(model, is_item, size=None, matrix=None):
 def predict_prob(item_mu, user_mu, user_sigma, latent=True):
     if latent:
         return logsumexp_pdf(item_mu, user_mu, user_sigma)
-
+'''
+'''
 def norm_pdf_multivariate(x, mu, sigma):
     size = len(x)
     if size == len(mu) and (size, size) == sigma.shape:
@@ -237,21 +238,22 @@ def norm_pdf_multivariate(x, mu, sigma):
         return norm_const * result
     else:
         raise NameError("The dimensions of the input don't match")
-
+'''
+'''
 def logsumexp_pdf(item_mu, user_mu, user_sigma):
     log_pdf = calculate_gaussian_log_pdf(item_mu.astype(np.float64), user_mu.astype(np.float64), user_sigma.astype(np.float64))
-    from scipy.stats import multivariate_normal
-    scipy_scipy = [multivariate_normal.pdf(x=item, mean=user_mu[0], cov=np.square(user_sigma[0])) for item in item_mu]
+    # from scipy.stats import multivariate_normal
+    # scipy_scipy = [multivariate_normal.pdf(x=item, mean=user_mu[0], cov=np.square(user_sigma[0])) for item in item_mu]
     # import ipdb; ipdb.set_trace()
     A = np.amax(log_pdf, axis=1)
     return np.exp(log_pdf-np.vstack(A))
-
+'''
 """
 def get_normalized_pdf(item_gaussian_mu, user_gaussian_mu, user_gaussian_sigma):
     log_pdf = calculate_gaussian_log_pdf(item_gaussian_mu, user_gaussian_mu, user_gaussian_sigma)
     return normalize(np.exp(log_pdf), axis=1, norm='l1')
 """
-
+'''
 def calculate_gaussian_log_pdf(item_mu, user_mu, user_sigma):
     result = []
     for user_index in range(len(user_mu)):
@@ -263,7 +265,30 @@ def calculate_gaussian_log_pdf(item_mu, user_mu, user_sigma):
 # log_p(I_Mu|U_Mu, U_Sigma)
 def multivariate_normal_log_pdf(x, mean, cov):
     return np.negative(np.sum(np.divide(np.square(x-mean), 2 * cov) + 0.5 * np.log(2 * math.pi * cov), axis=1))
+'''
 
+def ifvae(matrix_train, embedded_matrix=np.empty((0)), iteration=100,
+          lam=80, rank=200, corruption=0.2, optimizer="RMSProp", beta=1.0, seed=1, **unused):
+    progress = WorkSplitter()
+    matrix_input = matrix_train
+    if embeded_matrix.shape[0] > 0:
+        matrix_input = vstack((matrix_input, embeded_matrix.T))
+
+    m, n = matrix_input.shape
+    model = IFVAE(n, rank, 100, lamb=lam, beta=beta,
+                  observation_distribution="Gaussian", optimizer=Regularizer[optimizer])
+
+    model.train_model(matrix_input, corruption, iteration)
+
+    RQ = model.get_RQ(matrix_input)
+    Y = model.get_Y()
+    Bias = model.get_Bias()
+    model.sess.close()
+    tf.reset_default_graph()
+
+    return RQ, Y, Bias
+
+'''
 def ifvae(matrix_train, matrix_valid, topk, al_model, total_steps, retrain_interval, validation, embedded_matrix=np.empty((0)),
           iteration=100, lam=80, rank=200, corruption=0.2, optimizer="RMSProp",
           beta=1.0, seed=1, gpu_on=True, **unused):
@@ -423,11 +448,11 @@ def ifvae(matrix_train, matrix_valid, topk, al_model, total_steps, retrain_inter
     tf.reset_default_graph()
 
     return metrics_result
+'''
 
 
 
-
-
+'''
 def create_one_hot_vector(num_classes, nth_item):
     return np.eye(num_classes)[[nth_item]]
 
@@ -486,4 +511,5 @@ def sub_routine(vector_predict, vector_train, topK=500, gpu=False):
     vector_predict = np.delete(vector_predict, np.isin(vector_predict, train_index).nonzero()[0])
 
     return vector_predict[:topK]
+'''
 

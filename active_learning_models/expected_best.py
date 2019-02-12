@@ -1,6 +1,6 @@
 from evaluation.metrics import eval
-from predict.alpredictor import sampling_predict
-from recommendation_models.ifvae import IFVAE, get_gaussian_parameters, predict_prob
+from predict.alpredictor import sampling_predict, get_latent_gaussian_params, predict_gaussian_prob
+from recommendation_models.ifvae import IFVAE
 from scipy.sparse import csr_matrix
 from tqdm import tqdm
 from utils.progress import WorkSplitter, inhour
@@ -73,7 +73,7 @@ def expected_best(matrix_train, matrix_test, rec_model, topk, test_index, total_
     # Get all item distribution by feedforward passing one hot encoding vector
     # through encoder
     item_gaussian_mu, \
-        item_gaussian_sigma = get_gaussian_parameters(model=model,
+        item_gaussian_sigma = get_latent_gaussian_params(model=model,
                                                       is_item=True,
                                                       size=n)
 
@@ -88,12 +88,12 @@ def expected_best(matrix_train, matrix_test, rec_model, topk, test_index, total_
         # Get all user distribution by feedforward passing user vector through
         # encoder
         user_gaussian_mu, \
-            user_gaussian_sigma = get_gaussian_parameters(model=model,
+            user_gaussian_sigma = get_latent_gaussian_params(model=model,
                                                           is_item=False,
                                                           matrix=matrix_input[:test_index].A)
 
         progress.section("Sampling")
-        prediction_scores = predict_prob(item_gaussian_mu, user_gaussian_mu, user_gaussian_sigma, latent=latent)
+        prediction_scores = predict_gaussian_prob(item_gaussian_mu, user_gaussian_mu, user_gaussian_sigma, latent=latent)
         # print(prediction_scores)
         prediction = sampling_predict(prediction_scores=prediction_scores,
                                       topK=topk,

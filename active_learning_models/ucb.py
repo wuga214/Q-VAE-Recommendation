@@ -1,6 +1,6 @@
 from evaluation.metrics import evaluate, eval
-from predict.alpredictor import sampling_predict
-from recommendation_models.ifvae import IFVAE, get_gaussian_parameters, predict_prob
+from predict.alpredictor import sampling_predict, predict_gaussian_prob, get_latent_gaussian_params
+from recommendation_models.ifvae import IFVAE
 from scipy.sparse import csr_matrix
 from tqdm import tqdm
 from utils.progress import WorkSplitter, inhour
@@ -108,7 +108,7 @@ def ucb(matrix_train, matrix_test, rec_model, topk, test_index, total_steps,
     # Get all item distribution by feedforward passing one hot encoding vector
     # through encoder
     item_gaussian_mu, \
-        item_gaussian_sigma = get_gaussian_parameters(model=model,
+        item_gaussian_sigma = get_latent_gaussian_params(model=model,
                                                       is_item=True,
                                                       size=n)
     import ipdb; ipdb.set_trace()
@@ -122,13 +122,13 @@ def ucb(matrix_train, matrix_test, rec_model, topk, test_index, total_steps,
         # Get all user distribution by feedforward passing user vector through
         # encoder
         user_gaussian_mu, \
-            user_gaussian_sigma = get_gaussian_parameters(model=model,
+            user_gaussian_sigma = get_latent_gaussian_params(model=model,
                                                           is_item=False,
                                                           matrix=matrix_input[:test_index].A)
 
         progress.section("Sampling")
         # Get normalized probability
-        normalized_pdf = predict_prob(item_gaussian_mu, user_gaussian_mu, user_gaussian_sigma, latent=latent)
+        normalized_pdf = predict_gaussian_prob(item_gaussian_mu, user_gaussian_mu, user_gaussian_sigma, latent=latent)
         # import ipdb; ipdb.set_trace()
 
         if i > 0:

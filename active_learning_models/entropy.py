@@ -1,6 +1,6 @@
 from evaluation.metrics import eval
-from predict.alpredictor import sampling_predict
-from recommendation_models.ifvae import IFVAE, get_gaussian_parameters, logsumexp_pdf
+from predict.alpredictor import sampling_predict, get_latent_gaussian_params, predict_gaussian_prob
+from recommendation_models.ifvae import IFVAE
 from scipy.sparse import csr_matrix
 from tqdm import tqdm
 from utils.progress import WorkSplitter, inhour
@@ -17,7 +17,7 @@ class Entropy(object):
 
     def predict(self, item_mu, user_mu, user_sigma, latent=True):
         if latent:
-            normalized_pdf = logsumexp_pdf(item_mu, user_mu, user_sigma)
+            normalized_pdf = predict_gaussian_prob(item_mu, user_mu, user_sigma, latent=latent)
             p_log2_p = np.multiply(normalized_pdf, np.log2(normalized_pdf))
             one_minus_p_log2_one_minus_p = np.multiply(1-normalized_pdf, 1-np.log2(normalized_pdf))
             entropy_scores = np.negative(np.nan_to_num(p_log2_p) + np.nan_to_num(one_minus_p_log2_one_minus_p))
@@ -81,7 +81,7 @@ def entropy(matrix_train, matrix_test, rec_model, topk, test_index, total_steps,
     # Get all item distribution by feedforward passing one hot encoding vector
     # through encoder
     item_gaussian_mu, \
-        item_gaussian_sigma = get_gaussian_parameters(model=model,
+        item_gaussian_sigma = get_latent_gaussian_params(model=model,
                                                       is_item=True,
                                                       size=n)
 
@@ -96,7 +96,7 @@ def entropy(matrix_train, matrix_test, rec_model, topk, test_index, total_steps,
         # Get all user distribution by feedforward passing user vector through
         # encoder
         user_gaussian_mu, \
-            user_gaussian_sigma = get_gaussian_parameters(model=model,
+            user_gaussian_sigma = get_latent_gaussian_params(model=model,
                                                           is_item=False,
                                                           matrix=matrix_input[:test_index].A)
 

@@ -95,7 +95,7 @@ if __name__ == "__main__":
     parser.add_argument('-ratio', dest='ratio', type=ratio, default='0.5, 0.0, 0.5')
     parser.add_argument('-k', dest='topk', type=check_int_positive, default=50)
     parser.add_argument('-gpu', dest='gpu', action='store_false')
-    parser.add_argument('-latent', dest='latent', action='store_false')
+    parser.add_argument('--disable-latent', dest='latent', action='store_false')
     parser.add_argument('--similarity', dest='sim_measure', default='Cosine')
     parser.add_argument('--shape', help="CSR Shape", dest="shape", type=shape, nargs=2)
     args = parser.parse_args()
