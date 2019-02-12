@@ -11,5 +11,6 @@ active_learning_models = {
     "NonLinUCB": non_lin_ucb,
     "ExpectedBest": expected_best,
     "ThompsonSampling": thompson_sampling,
+    "UCB": ucb,
 }
 
