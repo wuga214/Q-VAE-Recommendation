@@ -57,6 +57,11 @@ similarity measurement before running with `--similarity Euclidean`
 python main.py -d datax/ -m VAE-CF -i 200 -l 0.0000001 -r 100
 ```
 
+### Single Active Learning Run
+```
+python3 active_learning_main.py -d datax/ -v Rtest.npz -r 50 -a 1 -l 0.0001 -i 300 -ts 29 -k 120 -alm NonLinUCB
+```
+
 ### Hyper-parameter Tuning and Paper Result Reproduction
 
 Split data in experiment setting, and tune hyper parameters based on yaml files in `config` folder
@@ -81,4 +86,7 @@ python reproduce_paper_results.py -p tables/movielens1m -d datax/ -v Rvalid.npz 
 python reproduce_paper_results.py
 ```
 
-
+Split data into two datasets for active learning: one for train, one for test. Note the train dataset includes validation set in previous split
+```
+python3 get_movielens_user_random_split.py --implicit --disable-cv-split -ur 0.5,0.0,0.5 -d datax/ -n ml-1m/ratings.csv
+```
