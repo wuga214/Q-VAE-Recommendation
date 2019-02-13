@@ -109,8 +109,8 @@ def non_lin_ucb(matrix_train, matrix_test, rec_model, topk, test_index, total_st
     # through encoder
     item_gaussian_mu, \
         item_gaussian_sigma = get_latent_gaussian_params(model=model,
-                                                      is_item=True,
-                                                      size=n)
+                                                         is_item=True,
+                                                         size=n)
 
     for i in range(total_steps):
         print('This is step {} \n'.format(i))
@@ -122,14 +122,24 @@ def non_lin_ucb(matrix_train, matrix_test, rec_model, topk, test_index, total_st
         # encoder
         user_gaussian_mu, \
             user_gaussian_sigma = get_latent_gaussian_params(model=model,
-                                                          is_item=False,
-                                                          matrix=matrix_input[:test_index].A)
+                                                             is_item=False,
+                                                             matrix=matrix_input[:test_index].A)
+
+        normalization_factor = matrix_input[:test_index].sum(axis=1).A
+        normalization_factor[normalization_factor == 0] = 1.
+        print(np.unique(normalization_factor.ravel(), return_counts=True))
+        # import ipdb; ipdb.set_trace()
+
+        user_gaussian_mu = user_gaussian_mu / normalization_factor
+        user_gaussian_sigma = user_gaussian_sigma / normalization_factor
 
         progress.section("Sampling")
         # Get normalized probability
         # normalized_pdf = predict_prob(item_gaussian_mu, user_gaussian_mu, user_gaussian_sigma, latent=latent)
-        normalized_pdf = predict_gaussian_prob(item_gaussian_mu, user_gaussian_mu, user_gaussian_sigma, latent=latent)
+        # normalized_pdf = predict_gaussian_prob(item_gaussian_mu, user_gaussian_mu, user_gaussian_sigma, latent=latent)
 
+        from sklearn.metrics.pairwise import cosine_similarity
+        normalized_pdf = cosine_similarity(user_gaussian_mu, item_gaussian_mu)
         # import ipdb; ipdb.set_trace()
 
         if i > 0:
@@ -152,7 +162,7 @@ def non_lin_ucb(matrix_train, matrix_test, rec_model, topk, test_index, total_st
         RQ = model.get_RQ(matrix_input)
         Y = model.get_Y().T
         Bias = model.get_Bias()
-        one_shot = model.inference(matrix_input.A)
+        user_inference = model.inference(matrix_input.A)
         pre = predict(matrix_U=RQ,
                          matrix_V=Y,
                          bias=Bias,
