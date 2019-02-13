@@ -29,11 +29,12 @@ class ExpectedBest(object):
         prediction_test_zeros_intersect = np.array([x for x in index_prediction_set - index_test_ones_set])
         print('The number of zeros predicted is {}'.format(len(prediction_test_zeros_intersect)))
 
-        # result['Num_Ones_In_Train'] = len(matrix_input[:test_index].nonzero()[0])
-        # result['Num_Ones_In_Test'] = len(matrix_test[:test_index].nonzero()[0])
-        # result['Num_Ones_In_Prediction'] = len(prediction_test_ones_intersect)
-        # result['Num_Zeros_In_Prediction'] = len(prediction_test_zeros_intersect)
+        result['Num_Ones_In_Train'] = len(matrix_input[:test_index].nonzero()[0])
+        result['Num_Ones_In_Test'] = len(matrix_test[:test_index].nonzero()[0])
+        result['Num_Ones_In_Prediction'] = len(prediction_test_ones_intersect)
+        result['Num_Zeros_In_Prediction'] = len(prediction_test_zeros_intersect)
         # import ipdb; ipdb.set_trace()
+
         if len(prediction_test_ones_intersect) > 0:
             mask_row = prediction_test_ones_intersect[:, 0]
             mask_col = prediction_test_ones_intersect[:, 1]
@@ -50,7 +51,7 @@ class ExpectedBest(object):
 
 def expected_best(matrix_train, matrix_test, rec_model, topk, test_index, total_steps,
             latent, embedded_matrix=np.empty((0)), iteration=100,
-            rank=200, corruption=0.2, gpu_on=True, lam=80, optimizer="RMSProp",
+            rank=200, corruption=0.2, gpu=True, lam=80, optimizer="RMSProp",
             beta=1.0, **unused):
 
     progress = WorkSplitter()
@@ -72,10 +73,10 @@ def expected_best(matrix_train, matrix_test, rec_model, topk, test_index, total_
     progress.section("Get Item Distribution")
     # Get all item distribution by feedforward passing one hot encoding vector
     # through encoder
-    item_gaussian_mu, \
-        item_gaussian_sigma = get_latent_gaussian_params(model=model,
-                                                      is_item=True,
-                                                      size=n)
+    item_latent_mu, \
+        item_latent_sigma = get_latent_gaussian_params(model=model,
+                                                       is_item=True,
+                                                       size=n)
 
     expected_best_selection = ExpectedBest()
 
@@ -87,20 +88,21 @@ def expected_best(matrix_train, matrix_test, rec_model, topk, test_index, total_
         progress.section("Get User Distribution")
         # Get all user distribution by feedforward passing user vector through
         # encoder
-        user_gaussian_mu, \
-            user_gaussian_sigma = get_latent_gaussian_params(model=model,
-                                                          is_item=False,
-                                                          matrix=matrix_input[:test_index].A)
+        user_latent_mu, \
+            user_latent_sigma = get_latent_gaussian_params(model=model,
+                                                           is_item=False,
+                                                           matrix=matrix_input[:test_index].A)
 
         progress.section("Sampling")
-        prediction_scores = predict_gaussian_prob(item_gaussian_mu, user_gaussian_mu, user_gaussian_sigma, latent=latent)
-        # print(prediction_scores)
+        prediction_scores = predict_gaussian_prob(item_latent_mu, user_latent_mu, user_latent_sigma, model, matrix_input[:test_index], latent=latent)
+
         prediction = sampling_predict(prediction_scores=prediction_scores,
                                       topK=topk,
                                       matrix_train=matrix_train[:test_index],
-                                      gpu=gpu_on)
+                                      gpu=gpu)
         # import ipdb; ipdb.set_trace()
-        # print(matrix_train[:test_index].nonzero())
+        print(matrix_train[:test_index].nonzero())
+
         progress.section("Create Metrics")
         result = eval(matrix_test[:test_index], topk, prediction)
 

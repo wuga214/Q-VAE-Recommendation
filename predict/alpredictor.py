@@ -52,26 +52,26 @@ def get_latent_gaussian_params(model, is_item, size=None, matrix=None):
         matrix = np.diag(np.ones(size))
     return model.uncertainty(matrix)
 
-def predict_gaussian_prob(item_mu, user_mu, user_sigma, model, matrix, latent=True):
+def predict_gaussian_prob(item_latent_mu, user_latent_mu, user_latent_sigma, model, matrix, latent=True):
     if latent:
-        return logsumexp_pdf(item_mu, user_mu, user_sigma)
+        return logsumexp_pdf(item_latent_mu, user_latent_mu, user_latent_sigma)
     else:
         return model.inference(matrix.A)
 
-def logsumexp_pdf(item_mu, user_mu, user_sigma):
-    log_pdf = calculate_gaussian_log_pdf(item_mu.astype(np.float64), user_mu.astype(np.float64), user_sigma.astype(np.float64))
+def logsumexp_pdf(item_latent_mu, user_latent_mu, user_latent_sigma):
+    log_pdf = calculate_gaussian_log_pdf(item_latent_mu.astype(np.float64), user_latent_mu.astype(np.float64), user_latent_sigma.astype(np.float64))
     # from scipy.stats import multivariate_normal
-    # scipy_scipy = [multivariate_normal.pdf(x=item, mean=user_mu[0], cov=np.square(user_sigma[0])) for item in item_mu]
+    # scipy_scipy = [multivariate_normal.pdf(x=item, mean=user_latent_mu[0], cov=np.square(user_latent_sigma[0])) for item in item_latent_mu]
     # import ipdb; ipdb.set_trace()
     A = np.amax(log_pdf, axis=1)
     return np.exp(log_pdf-np.vstack(A))
 
-def calculate_gaussian_log_pdf(item_mu, user_mu, user_sigma):
+def calculate_gaussian_log_pdf(item_latent_mu, user_latent_mu, user_latent_sigma):
     result = []
-    for user_index in range(len(user_mu)):
-        result.append(multivariate_normal_log_pdf(x=item_mu, mean=user_mu[user_index], cov=np.square(user_sigma[user_index])))
-        # return np.negative(np.sum(np.divide(np.square(item_gaussian_mu-user_gaussian_mu[0]), 2 * np.square(user_gaussian_sigma[0])) + 0.5 * np.log(2 * math.pi * np.square(user_gaussian_sigma[0])), axis=1))
-        # np.log(multivariate_normal.pdf(x=item_gaussian_mu[0], mean=user_gaussian_mu[0], cov=np.square(user_gaussian_sigma[0])))
+    for user_index in range(len(user_latent_mu)):
+        result.append(multivariate_normal_log_pdf(x=item_latent_mu, mean=user_latent_mu[user_index], cov=np.square(user_latent_sigma[user_index])))
+        # return np.negative(np.sum(np.divide(np.square(item_latent_mu-user_latent_mu[0]), 2 * np.square(user_latent_sigma[0])) + 0.5 * np.log(2 * math.pi * np.square(user_latent_sigma[0])), axis=1))
+        # np.log(multivariate_normal.pdf(x=item_latent_mu[0], mean=user_latent_mu[0], cov=np.square(user_latent_sigma[0])))
     return result
 
 # log_p(I_Mu|U_Mu, U_Sigma)

@@ -95,7 +95,7 @@ class ThompsonSampling(object):
 
 def thompson_sampling(matrix_train, matrix_valid, topk, total_steps,
                       retrain_interval, embedded_matrix=np.empty((0)), iteration=100,
-                      rank=200, corruption=0.2, gpu_on=True, lam=80, optimizer="RMSProp",
+                      rank=200, corruption=0.2, gpu=True, lam=80, optimizer="RMSProp",
                       beta=1.0, **unused):
 
     progress = WorkSplitter()
@@ -117,8 +117,8 @@ def thompson_sampling(matrix_train, matrix_valid, topk, total_steps,
     progress.section("Get Item Distribution")
     # Get all item distribution by feedforward passing one hot encoding vector
     # through encoder
-    item_gaussian_mu, \
-        item_gaussian_sigma = get_latent_gaussian_params(model=model, size=n,
+    item_latent_mu, \
+        item_latent_sigma = get_latent_gaussian_params(model=model, size=n,
                                                       is_item=True, is_user=False)
 
     for i in range(total_steps):
@@ -129,15 +129,15 @@ def thompson_sampling(matrix_train, matrix_valid, topk, total_steps,
         progress.section("Get User Distribution")
         # Get all user distribution by feedforward passing user vector through
         # encoder
-        user_gaussian_mu, \
-            user_gaussian_sigma = get_latent_gaussian_params(model=model, size=m,
+        user_latent_mu, \
+            user_latent_sigma = get_latent_gaussian_params(model=model, size=m,
                                                           is_item=False,
                                                           is_user=True,
                                                           matrix=matrix_input)
 
         progress.section("Sampling")
         # Get normalized probability
-        normalized_pdf = predict_gaussian_prob(item_gaussian_mu, user_gaussian_mu, user_gaussian_sigma, latent=latent).ravel()
+        normalized_pdf = predict_gaussian_prob(item_latent_mu, user_latent_mu, user_latent_sigma, latent=latent).ravel()
 
         prediction_scores = []
 
@@ -166,7 +166,7 @@ def thompson_sampling(matrix_train, matrix_valid, topk, total_steps,
         prediction = sampling_predict(prediction_scores=prediction_scores,
                                       topK=topk,
                                       matrix_train=matrix_input,
-                                      gpu=gpu_on)
+                                      gpu=gpu)
 
         progress.section("Create Metrics")
         result = ThompsonSampling.eval(prediction, matrix_valid, topk)

@@ -85,7 +85,7 @@ class NonLinUCB(object):
 
 def non_lin_ucb(matrix_train, matrix_test, rec_model, topk, test_index, total_steps,
          latent, embedded_matrix=np.empty((0)), iteration=100,
-         rank=200, corruption=0.2, gpu_on=True, lam=80, optimizer="RMSProp",
+         rank=200, corruption=0.2, gpu=True, lam=80, optimizer="RMSProp",
          beta=1.0, **unused):
 
     progress = WorkSplitter()
@@ -107,15 +107,17 @@ def non_lin_ucb(matrix_train, matrix_test, rec_model, topk, test_index, total_st
     progress.section("Get Item Distribution")
     # Get all item distribution by feedforward passing one hot encoding vector
     # through encoder
-    item_gaussian_mu, \
-        item_gaussian_sigma = get_latent_gaussian_params(model=model,
-                                                         is_item=True,
-                                                         size=n)
+    item_latent_mu, \
+        item_latent_sigma = get_latent_gaussian_params(model=model,
+                                                       is_item=True,
+                                                       size=n)
+
     '''
     total_pos = matrix_input[test_index:].sum()
     avg_pos = matrix_input[test_index:].sum(axis=0).A[0] / total_pos
-    item_gaussian_mu = item_gaussian_mu * avg_pos.reshape((n, 1))
+    item_latent_mu = item_latent_mu * avg_pos.reshape((n, 1))
     '''
+
     for i in range(total_steps):
         print('This is step {} \n'.format(i))
         print('The number of ones in train set is {}'.format(len(matrix_input[:test_index].nonzero()[0])))
@@ -124,10 +126,10 @@ def non_lin_ucb(matrix_train, matrix_test, rec_model, topk, test_index, total_st
         progress.section("Get User Distribution")
         # Get all user distribution by feedforward passing user vector through
         # encoder
-        user_gaussian_mu, \
-            user_gaussian_sigma = get_latent_gaussian_params(model=model,
-                                                             is_item=False,
-                                                             matrix=matrix_input[:test_index].A)
+        user_latent_mu, \
+            user_latent_sigma = get_latent_gaussian_params(model=model,
+                                                           is_item=False,
+                                                           matrix=matrix_input[:test_index].A)
         # import ipdb; ipdb.set_trace()
 
         '''
@@ -136,25 +138,20 @@ def non_lin_ucb(matrix_train, matrix_test, rec_model, topk, test_index, total_st
         print(np.unique(normalization_factor.ravel(), return_counts=True))
         # import ipdb; ipdb.set_trace()
 
-        user_gaussian_mu = user_gaussian_mu / normalization_factor
-        user_gaussian_sigma = user_gaussian_sigma / normalization_factor
+        user_latent_mu = user_latent_mu / normalization_factor
+        user_latent_sigma = user_latent_sigma / normalization_factor
         '''
         progress.section("Sampling")
-        # Get normalized probability
-        # normalized_pdf = predict_prob(item_gaussian_mu, user_gaussian_mu, user_gaussian_sigma, latent=latent)
-        normalized_pdf = predict_gaussian_prob(item_gaussian_mu, user_gaussian_mu, user_gaussian_sigma, model, matrix_input[:test_index], latent=latent)
-
-        # from sklearn.metrics.pairwise import cosine_similarity
-        # normalized_pdf = cosine_similarity(user_gaussian_mu, item_gaussian_mu)
-        # import ipdb; ipdb.set_trace()
+        # Get normalized pdf
+        predict_prob = predict_gaussian_prob(item_latent_mu, user_latent_mu, user_latent_sigma, model, matrix_input[:test_index], latent=latent)
 
         if i > 0:
-            ucb_selection.update(chosen_arm=(chosen_arms_row.astype(np.int64), chosen_arms_col.astype(np.int64)), immediate_reward=normalized_pdf)
+            ucb_selection.update(chosen_arm=(chosen_arms_row.astype(np.int64), chosen_arms_col.astype(np.int64)), immediate_reward=predict_prob)
 
         # The bandit starts here
         if i == 0:
             ucb_selection = NonLinUCB(counts=np.ones((test_index, n)),
-                                      average_reward=normalized_pdf,
+                                      average_reward=predict_prob,
                                       num_arms=n)
 
         prediction_scores = ucb_selection.predict()
@@ -162,7 +159,8 @@ def non_lin_ucb(matrix_train, matrix_test, rec_model, topk, test_index, total_st
         prediction = sampling_predict(prediction_scores=prediction_scores,
                                       topK=topk,
                                       matrix_train=matrix_train[:test_index],
-                                      gpu=gpu_on)
+                                      gpu=gpu)
+
         '''
         from predict.predictor import predict
         RQ = model.get_RQ(matrix_input)
@@ -174,9 +172,10 @@ def non_lin_ucb(matrix_train, matrix_test, rec_model, topk, test_index, total_st
                          bias=Bias,
                          topK=50,
                          matrix_Train=matrix_input,
-                         gpu=gpu_on)
-        import ipdb; ipdb.set_trace()
+                         gpu=gpu)
         '''
+        # import ipdb; ipdb.set_trace()
+
         print(matrix_train[:test_index].nonzero())
         progress.section("Create Metrics")
         result = eval(matrix_test[:test_index], topk, prediction)

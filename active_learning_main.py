@@ -59,7 +59,7 @@ def main(args):
                                                                         total_steps=args.total_steps, latent=args.latent,
                                                                         embedded_matrix=np.empty((0)),
                                                                         iteration=args.iter, rank=args.rank,
-                                                                        corruption=args.corruption, gpu_on=args.gpu,
+                                                                        corruption=args.corruption, gpu=args.gpu,
                                                                         lam=args.lamb, alpha=args.alpha,
                                                                         seed=args.seed, root=args.root)
 
@@ -79,6 +79,8 @@ if __name__ == "__main__":
 
     parser.add_argument('--disable-item-item', dest='item', action='store_false')
     parser.add_argument('--disable-validation', dest='validation', action='store_false')
+    parser.add_argument('--disable-gpu', dest='gpu', action='store_false')
+    parser.add_argument('--disable-latent', dest='latent', action='store_false')
     parser.add_argument('-i', dest='iter', type=check_int_positive, default=1)
     parser.add_argument('-a', dest='alpha', type=check_float_positive, default=100.0)
     parser.add_argument('-l', dest='lamb', type=check_float_positive, default=100)
@@ -94,8 +96,6 @@ if __name__ == "__main__":
     parser.add_argument('-v', dest='valid', default='Rvalid.npz')
     parser.add_argument('-ratio', dest='ratio', type=ratio, default='0.5, 0.0, 0.5')
     parser.add_argument('-k', dest='topk', type=check_int_positive, default=50)
-    parser.add_argument('-gpu', dest='gpu', action='store_false')
-    parser.add_argument('--disable-latent', dest='latent', action='store_false')
     parser.add_argument('--similarity', dest='sim_measure', default='Cosine')
     parser.add_argument('--shape', help="CSR Shape", dest="shape", type=shape, nargs=2)
     args = parser.parse_args()

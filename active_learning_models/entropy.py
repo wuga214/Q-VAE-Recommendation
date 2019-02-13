@@ -15,13 +15,11 @@ class Entropy(object):
     def __init__(self):
         return
 
-    def predict(self, item_mu, user_mu, user_sigma, latent=True):
-        if latent:
-            normalized_pdf = predict_gaussian_prob(item_mu, user_mu, user_sigma, latent=latent)
-            p_log2_p = np.multiply(normalized_pdf, np.log2(normalized_pdf))
-            one_minus_p_log2_one_minus_p = np.multiply(1-normalized_pdf, 1-np.log2(normalized_pdf))
-            entropy_scores = np.negative(np.nan_to_num(p_log2_p) + np.nan_to_num(one_minus_p_log2_one_minus_p))
-            return entropy_scores
+    def predict(self, predict_prob):
+        p_log2_p = np.multiply(predict_prob, np.log2(predict_prob))
+        one_minus_p_log2_one_minus_p = np.multiply(1-predict_prob, np.log2(1-predict_prob))
+        entropy_scores = np.negative(np.nan_to_num(p_log2_p) + np.nan_to_num(one_minus_p_log2_one_minus_p))
+        return entropy_scores
 
     def update_matrix(self, prediction, matrix_test, matrix_input, result, test_index):
         start_time = time.time()
@@ -38,10 +36,10 @@ class Entropy(object):
         prediction_test_zeros_intersect = np.array([x for x in index_prediction_set - index_test_ones_set])
         print('The number of zeros predicted is {}'.format(len(prediction_test_zeros_intersect)))
 
-        # result['Num_Ones_In_Train'] = len(matrix_input[:test_index].nonzero()[0])
-        # result['Num_Ones_In_Test'] = len(matrix_test[:test_index].nonzero()[0])
-        # result['Num_Ones_In_Prediction'] = len(prediction_test_ones_intersect)
-        # result['Num_Zeros_In_Prediction'] = len(prediction_test_zeros_intersect)
+        result['Num_Ones_In_Train'] = len(matrix_input[:test_index].nonzero()[0])
+        result['Num_Ones_In_Test'] = len(matrix_test[:test_index].nonzero()[0])
+        result['Num_Ones_In_Prediction'] = len(prediction_test_ones_intersect)
+        result['Num_Zeros_In_Prediction'] = len(prediction_test_zeros_intersect)
 
         if len(prediction_test_ones_intersect) > 0:
             mask_row = prediction_test_ones_intersect[:, 0]
@@ -58,7 +56,7 @@ class Entropy(object):
 
 def entropy(matrix_train, matrix_test, rec_model, topk, test_index, total_steps,
             latent, embedded_matrix=np.empty((0)), iteration=100,
-            rank=200, corruption=0.2, gpu_on=True, lam=80, optimizer="RMSProp",
+            rank=200, corruption=0.2, gpu=True, lam=80, optimizer="RMSProp",
             beta=1.0, **unused):
 
     progress = WorkSplitter()
@@ -80,10 +78,10 @@ def entropy(matrix_train, matrix_test, rec_model, topk, test_index, total_steps,
     progress.section("Get Item Distribution")
     # Get all item distribution by feedforward passing one hot encoding vector
     # through encoder
-    item_gaussian_mu, \
-        item_gaussian_sigma = get_latent_gaussian_params(model=model,
-                                                      is_item=True,
-                                                      size=n)
+    item_latent_mu, \
+        item_latent_sigma = get_latent_gaussian_params(model=model,
+                                                       is_item=True,
+                                                       size=n)
 
     entropy_selection = Entropy()
 
@@ -95,26 +93,27 @@ def entropy(matrix_train, matrix_test, rec_model, topk, test_index, total_steps,
         progress.section("Get User Distribution")
         # Get all user distribution by feedforward passing user vector through
         # encoder
-        user_gaussian_mu, \
-            user_gaussian_sigma = get_latent_gaussian_params(model=model,
-                                                          is_item=False,
-                                                          matrix=matrix_input[:test_index].A)
+        user_latent_mu, \
+            user_latent_sigma = get_latent_gaussian_params(model=model,
+                                                           is_item=False,
+                                                           matrix=matrix_input[:test_index].A)
 
         progress.section("Sampling")
-        prediction_scores = entropy_selection.predict(item_gaussian_mu, user_gaussian_mu, user_gaussian_sigma, latent=latent)
+        predict_prob = predict_gaussian_prob(item_latent_mu, user_latent_mu, user_latent_sigma, model, matrix_input[:test_index], latent=latent)
+
+        prediction_scores = entropy_selection.predict(predict_prob)
 
         prediction = sampling_predict(prediction_scores=prediction_scores,
                                       topK=topk,
                                       matrix_train=matrix_train[:test_index],
-                                      gpu=gpu_on)
-        print(matrix_train[:test_index].nonzero())
-#        import ipdb; ipdb.set_trace()
+                                      gpu=gpu)
+        # import ipdb; ipdb.set_trace()
 
         progress.section("Create Metrics")
         evaluation_scores = sampling_predict(prediction_scores=-prediction_scores,
                                              topK=topk,
                                              matrix_train=matrix_train[:test_index],
-                                             gpu=gpu_on)
+                                             gpu=gpu)
         print(matrix_train[:test_index].nonzero())
         result = eval(matrix_test[:test_index], topk, prediction=evaluation_scores)
 
