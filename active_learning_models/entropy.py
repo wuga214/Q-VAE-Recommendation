@@ -110,12 +110,12 @@ def entropy(matrix_train, matrix_test, rec_model, topk, test_index, total_steps,
         # import ipdb; ipdb.set_trace()
 
         progress.section("Create Metrics")
-        evaluation_scores = sampling_predict(prediction_scores=-prediction_scores,
-                                             topK=topk,
-                                             matrix_train=matrix_train[:test_index],
-                                             gpu=gpu)
+        evaluation_items = sampling_predict(prediction_scores=-prediction_scores,
+                                            topK=topk,
+                                            matrix_train=matrix_train[:test_index],
+                                            gpu=gpu)
         print(matrix_train[:test_index].nonzero())
-        result = eval(matrix_test[:test_index], topk, prediction=evaluation_scores)
+        result = eval(matrix_test[:test_index], topk, prediction=evaluation_items)
 
         progress.section("Update Train Set and Test Set Based On Sampling Results")
         result, matrix_input = entropy_selection.update_matrix(prediction, matrix_test, matrix_input, result, test_index)

@@ -1,4 +1,4 @@
-from evaluation.metrics import evaluate, eval
+from evaluation.metrics import eval
 from predict.alpredictor import sampling_predict, predict_gaussian_prob, get_latent_gaussian_params
 from recommendation_models.ifvae import IFVAE
 from scipy.sparse import csr_matrix
