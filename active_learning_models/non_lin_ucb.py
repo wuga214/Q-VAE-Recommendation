@@ -111,6 +111,9 @@ def non_lin_ucb(matrix_train, matrix_test, rec_model, topk, test_index, total_st
         item_gaussian_sigma = get_latent_gaussian_params(model=model,
                                                          is_item=True,
                                                          size=n)
+    total_pos = matrix_input[test_index:].sum()
+    avg_pos = matrix_input[test_index:].sum(axis=0).A[0] / total_pos
+    item_gaussian_mu = item_gaussian_mu * avg_pos.reshape((n, 1))
 
     for i in range(total_steps):
         print('This is step {} \n'.format(i))
@@ -124,7 +127,9 @@ def non_lin_ucb(matrix_train, matrix_test, rec_model, topk, test_index, total_st
             user_gaussian_sigma = get_latent_gaussian_params(model=model,
                                                              is_item=False,
                                                              matrix=matrix_input[:test_index].A)
+        # import ipdb; ipdb.set_trace()
 
+        '''
         normalization_factor = matrix_input[:test_index].sum(axis=1).A
         normalization_factor[normalization_factor == 0] = 1.
         print(np.unique(normalization_factor.ravel(), return_counts=True))
@@ -132,14 +137,14 @@ def non_lin_ucb(matrix_train, matrix_test, rec_model, topk, test_index, total_st
 
         user_gaussian_mu = user_gaussian_mu / normalization_factor
         user_gaussian_sigma = user_gaussian_sigma / normalization_factor
-
+        '''
         progress.section("Sampling")
         # Get normalized probability
         # normalized_pdf = predict_prob(item_gaussian_mu, user_gaussian_mu, user_gaussian_sigma, latent=latent)
-        # normalized_pdf = predict_gaussian_prob(item_gaussian_mu, user_gaussian_mu, user_gaussian_sigma, latent=latent)
+        normalized_pdf = predict_gaussian_prob(item_gaussian_mu, user_gaussian_mu, user_gaussian_sigma, latent=latent)
 
-        from sklearn.metrics.pairwise import cosine_similarity
-        normalized_pdf = cosine_similarity(user_gaussian_mu, item_gaussian_mu)
+        # from sklearn.metrics.pairwise import cosine_similarity
+        # normalized_pdf = cosine_similarity(user_gaussian_mu, item_gaussian_mu)
         # import ipdb; ipdb.set_trace()
 
         if i > 0:
