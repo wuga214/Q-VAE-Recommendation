@@ -111,10 +111,11 @@ def non_lin_ucb(matrix_train, matrix_test, rec_model, topk, test_index, total_st
         item_gaussian_sigma = get_latent_gaussian_params(model=model,
                                                          is_item=True,
                                                          size=n)
+    '''
     total_pos = matrix_input[test_index:].sum()
     avg_pos = matrix_input[test_index:].sum(axis=0).A[0] / total_pos
     item_gaussian_mu = item_gaussian_mu * avg_pos.reshape((n, 1))
-
+    '''
     for i in range(total_steps):
         print('This is step {} \n'.format(i))
         print('The number of ones in train set is {}'.format(len(matrix_input[:test_index].nonzero()[0])))
@@ -141,7 +142,7 @@ def non_lin_ucb(matrix_train, matrix_test, rec_model, topk, test_index, total_st
         progress.section("Sampling")
         # Get normalized probability
         # normalized_pdf = predict_prob(item_gaussian_mu, user_gaussian_mu, user_gaussian_sigma, latent=latent)
-        normalized_pdf = predict_gaussian_prob(item_gaussian_mu, user_gaussian_mu, user_gaussian_sigma, latent=latent)
+        normalized_pdf = predict_gaussian_prob(item_gaussian_mu, user_gaussian_mu, user_gaussian_sigma, model, matrix_input[:test_index], latent=latent)
 
         # from sklearn.metrics.pairwise import cosine_similarity
         # normalized_pdf = cosine_similarity(user_gaussian_mu, item_gaussian_mu)
@@ -162,7 +163,7 @@ def non_lin_ucb(matrix_train, matrix_test, rec_model, topk, test_index, total_st
                                       topK=topk,
                                       matrix_train=matrix_train[:test_index],
                                       gpu=gpu_on)
-        """
+        '''
         from predict.predictor import predict
         RQ = model.get_RQ(matrix_input)
         Y = model.get_Y().T
@@ -174,8 +175,8 @@ def non_lin_ucb(matrix_train, matrix_test, rec_model, topk, test_index, total_st
                          topK=50,
                          matrix_Train=matrix_input,
                          gpu=gpu_on)
-        """
-        # import ipdb; ipdb.set_trace()
+        import ipdb; ipdb.set_trace()
+        '''
         print(matrix_train[:test_index].nonzero())
         progress.section("Create Metrics")
         result = eval(matrix_test[:test_index], topk, prediction)

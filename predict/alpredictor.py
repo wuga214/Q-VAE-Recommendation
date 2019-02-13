@@ -52,9 +52,11 @@ def get_latent_gaussian_params(model, is_item, size=None, matrix=None):
         matrix = np.diag(np.ones(size))
     return model.uncertainty(matrix)
 
-def predict_gaussian_prob(item_mu, user_mu, user_sigma, latent=True):
+def predict_gaussian_prob(item_mu, user_mu, user_sigma, model, matrix, latent=True):
     if latent:
         return logsumexp_pdf(item_mu, user_mu, user_sigma)
+    else:
+        return model.inference(matrix.A)
 
 def logsumexp_pdf(item_mu, user_mu, user_sigma):
     log_pdf = calculate_gaussian_log_pdf(item_mu.astype(np.float64), user_mu.astype(np.float64), user_sigma.astype(np.float64))
