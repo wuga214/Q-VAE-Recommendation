@@ -38,12 +38,14 @@ class IFVAE(object):
             mask2 = tf.nn.dropout(tf.ones_like(self.input), 1-self.corruption)
 
             wc = self.input * mask1
+            wc_normalized = self._normalize_by_user(wc)
             hc = wc * mask2
+            hc_normalized = self._normalize_by_user(hc)
 
             with tf.variable_scope('network'):
-                self.wc_mean, wc_log_std, self.wc_obs_mean = self._network(wc)
+                self.wc_mean, wc_log_std, self.wc_obs_mean = self._network(wc_normalized)
             with tf.variable_scope('network', reuse=True):
-                self.hc_mean, hc_log_std, self.hc_obs_mean = self._network(hc)
+                self.hc_mean, hc_log_std, self.hc_obs_mean = self._network(hc_normalized)
 
             self.wc_std = tf.exp(wc_log_std)
 
@@ -156,6 +158,13 @@ class IFVAE(object):
         log_softmax_output = tf.nn.log_softmax(outputs)
         log_like = -tf.reduce_sum(tf.reduce_sum(log_softmax_output * target, axis=1))
         return log_like
+
+    def _normalize_by_user(self, x):
+        row_wise_sum = tf.reduce_sum(x, axis=1, keepdims=True)
+
+        x_normalized = x / row_wise_sum
+
+        return tf.where(tf.is_nan(x_normalized), tf.zeros_like(x_normalized), x_normalized)
 
     def update(self, x, corruption):
         _, loss = self.sess.run([self._train, self._loss],
