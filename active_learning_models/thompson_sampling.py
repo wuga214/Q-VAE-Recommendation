@@ -1,4 +1,4 @@
-from evaluation.metrics import evaluate
+from evaluation.metrics import eval
 from predict.alpredictor import sampling_predict, predict_gaussian_prob, get_latent_gaussian_params
 from recommendation_models.ifvae import IFVAE
 from scipy.sparse import csr_matrix
@@ -12,89 +12,100 @@ import time
 
 
 class ThompsonSampling(object):
-    def __init__(self, initial_reward):
-        self.alpha = 1. + initial_reward
-        self.beta = 1. + 1. - initial_reward
-
-    def update(self, reward):
-        self.alpha = self.alpha + reward
-        self.beta = self.beta + 1 - reward
+    def __init__(self, initial_reward, num_users, num_arms):
+        self.counts = np.ones((num_users, num_arms))
+        self.mu = initial_reward
+        self.cummulative_x = initial_reward
+        self.sigma = np.ones((num_users, num_arms))
+        self.num_arms = num_arms
 
     def predict(self):
-        return np.random.beta(self.alpha, self.beta)
+        return np.random.normal(self.mu, self.sigma)
 
-    @staticmethod
-    def eval(prediction, matrix_valid, topk):
+    def update(self, chosen_arm, current_reward):
+#        import ipdb; ipdb.set_trace()
+
+
+        self.counts[chosen_arm] = self.counts[chosen_arm] + 1
+#        import ipdb; ipdb.set_trace()
+
+        # Assume variance sigma is known as 1
+        posterior_variance = 1 / (1 / np.square(self.sigma) + self.counts / np.square(np.ones(self.counts.shape)))
+#        import ipdb; ipdb.set_trace()
+
+
+        prior_mu_divide_variance = self.mu / np.square(self.sigma)
+#        import ipdb; ipdb.set_trace()
+
+#        print(self.cummulative_x[chosen_arm])
+        self.cummulative_x[chosen_arm] = self.cummulative_x[chosen_arm] + current_reward[chosen_arm]
+#        print(self.cummulative_x[chosen_arm])
+        sum_reward_divide_variance = self.cummulative_x / np.square(np.ones(self.counts.shape))
+#        import ipdb; ipdb.set_trace()
+
+        self.mu = posterior_variance * (prior_mu_divide_variance + sum_reward_divide_variance)
+#        import ipdb; ipdb.set_trace()
+
+        self.sigma = np.sqrt(posterior_variance)
+#        import ipdb; ipdb.set_trace()
+
+#        n = self.counts[chosen_arm]
+#        average_reward = self.average_reward[chosen_arm]
+
+#        new_average_reward = np.multiply((n - 1) / n, average_reward) + np.multiply(1 / n, immediate_reward[chosen_arm])
+#        self.average_reward[chosen_arm] = new_average_reward
+
+    def update_matrix(self, prediction, matrix_test, matrix_input, result, test_index):
         start_time = time.time()
-
-        metric_names = ['R-Precision', 'NDCG', 'Clicks', 'Recall', 'Precision', 'MAP']
-
-        result = evaluate(prediction, matrix_valid, metric_names, [topk])
-
-        print("-")
-        for metric in result.keys():
-            print("{0}:{1}".format(metric, result[metric]))
-        print("Elapsed: {0}".format(inhour(time.time() - start_time)))
-
-        return result
-
-    @staticmethod
-    def update_matrix(prediction, matrix_valid, matrix_input, result):
-        start_time = time.time()
-        # Move these ‘k’ samples from the validation set to the train-set
-        # and query their labels.
+        # Query ‘k’ samples's labels from the test set and mark predicted
+        # positive feedback as ones in the train set
         index = np.tile(np.arange(prediction.shape[0]),(prediction.shape[1],1)).T
         index_prediction = np.dstack((index, prediction)).reshape((prediction.shape[0]*prediction.shape[1]), 2)
-        index_valid_nonzero = np.dstack((matrix_valid.nonzero()[0], matrix_valid.nonzero()[1]))[0]
+        index_test_ones = np.dstack((matrix_test.nonzero()[0], matrix_test.nonzero()[1]))[0]
 
         index_prediction_set = set([tuple(x) for x in index_prediction])
-        index_valid_nonzero_set = set([tuple(x) for x in index_valid_nonzero])
-        prediction_valid_nonzero_intersect = np.array([x for x in index_prediction_set & index_valid_nonzero_set])
-        print('The number of unmasked positive data is {}'.format(len(prediction_valid_nonzero_intersect)))
-        prediction_valid_zero_intersect = np.array([x for x in index_prediction_set - index_valid_nonzero_set])
-        print('The number of unmasked negative data is {}'.format(len(prediction_valid_zero_intersect)))
+        index_test_ones_set = set([tuple(x) for x in index_test_ones])
+        prediction_test_ones_intersect = np.array([x for x in index_prediction_set & index_test_ones_set])
+        print('The number of ones predicted is {}'.format(len(prediction_test_ones_intersect)))
+        prediction_test_zeros_intersect = np.array([x for x in index_prediction_set - index_test_ones_set])
+        print('The number of zeros predicted is {}'.format(len(prediction_test_zeros_intersect)))
 
-        # np.unique(np.array(matrix_input[matrix_input.nonzero()])[0], return_counts=True)
-        result['Num_Nonzero_In_Train'] = np.unique(matrix_input[matrix_input.nonzero()].A[0], return_counts=True)[1][np.where(np.unique(matrix_input[matrix_input.nonzero()].A[0], return_counts=True)[0] == 1.)][0]
-        result['Num_Nonzero_In_Valid'] = len(matrix_valid.nonzero()[0])
-        result['Num_Unmasked_Positive'] = len(prediction_valid_nonzero_intersect)
-        result['Num_Unmasked_Negative'] = len(prediction_valid_zero_intersect)
+        result['Num_Ones_In_Train'] = len(matrix_input[:test_index].nonzero()[0])
+        result['Num_Ones_In_Test'] = len(matrix_test[:test_index].nonzero()[0])
+        result['Num_Ones_In_Prediction'] = len(prediction_test_ones_intersect)
+        result['Num_Zeros_In_Prediction'] = len(prediction_test_zeros_intersect)
+        # import ipdb; ipdb.set_trace()
 
         chosen_arms_row = []
         chosen_arms_col = []
 
-        if len(prediction_valid_nonzero_intersect) > 0:
-            mask_row = prediction_valid_nonzero_intersect[:, 0]
-            mask_col = prediction_valid_nonzero_intersect[:, 1]
-            mask_data = np.full(len(prediction_valid_nonzero_intersect), True)
+        if len(prediction_test_ones_intersect) > 0:
+            mask_row = prediction_test_ones_intersect[:, 0]
+            mask_col = prediction_test_ones_intersect[:, 1]
+            mask_data = np.full(len(prediction_test_ones_intersect), True)
             mask = csr_matrix((mask_data, (mask_row, mask_col)), shape=matrix_input.shape)
 
             matrix_input = matrix_input.tolil()
-            matrix_valid = matrix_valid.tolil()
             matrix_input[mask] = 1
-            matrix_valid[mask] = 0
 
             chosen_arms_row = np.append(chosen_arms_row, mask_row)
             chosen_arms_col = np.append(chosen_arms_col, mask_col)
+        # import ipdb; ipdb.set_trace()
 
-        if len(prediction_valid_zero_intersect) > 0:
-            mask_row = prediction_valid_zero_intersect[:, 0]
-            mask_col = prediction_valid_zero_intersect[:, 1]
-            mask_data = np.full(len(prediction_valid_zero_intersect), True)
-            mask = csr_matrix((mask_data, (mask_row, mask_col)), shape=matrix_input.shape)
-
-            matrix_input[mask] = -0.1
+        if len(prediction_test_zeros_intersect) > 0:
+            mask_row = prediction_test_zeros_intersect[:, 0]
+            mask_col = prediction_test_zeros_intersect[:, 1]
 
             chosen_arms_row = np.append(chosen_arms_row, mask_row)
             chosen_arms_col = np.append(chosen_arms_col, mask_col)
+        # import ipdb; ipdb.set_trace()
 
         print("Elapsed: {0}".format(inhour(time.time() - start_time)))
 
-        return result, matrix_input.tocsr(), matrix_valid.tocsr(), chosen_arms_row, chosen_arms_col
+        return result, matrix_input.tocsr(), chosen_arms_row, chosen_arms_col
 
-
-def thompson_sampling(matrix_train, matrix_valid, topk, total_steps,
-                      retrain_interval, embedded_matrix=np.empty((0)), iteration=100,
+def thompson_sampling(matrix_train, matrix_test, rec_model, topk, test_index, total_steps,
+                      latent, embedded_matrix=np.empty((0)), iteration=100,
                       rank=200, corruption=0.2, gpu=True, lam=80, optimizer="RMSProp",
                       beta=1.0, **unused):
 
@@ -112,68 +123,77 @@ def thompson_sampling(matrix_train, matrix_valid, topk, total_steps,
                   optimizer=Regularizer[optimizer])
 
     progress.section("Training")
-    model.train_model(matrix_input, corruption, iteration)
+    model.train_model(matrix_input[test_index:], corruption, iteration)
 
     progress.section("Get Item Distribution")
     # Get all item distribution by feedforward passing one hot encoding vector
     # through encoder
     item_latent_mu, \
-        item_latent_sigma = get_latent_gaussian_params(model=model, size=n,
-                                                      is_item=True, is_user=False)
+        item_latent_sigma = get_latent_gaussian_params(model=model,
+                                                       is_item=True,
+                                                       size=n)
+
+    train_item_pop = np.array(matrix_input.sum(axis=0))[0]
+    scale = train_item_pop / train_item_pop.max()
+    scale_reshape = scale.reshape(len(scale), 1)
+    item_latent_mu = item_latent_mu * scale_reshape
+
 
     for i in range(total_steps):
         print('This is step {} \n'.format(i))
-        print("The number of nonzero in train set is {}".format(np.unique(matrix_input[matrix_input.nonzero()].A[0], return_counts=True)[1][np.where(np.unique(matrix_input[matrix_input.nonzero()].A[0], return_counts=True)[0] == 1.)][0]))
-        print('The number of nonzero in valid set is {}'.format(len(matrix_valid.nonzero()[0])))
+        print('The number of ones in train set is {}'.format(len(matrix_input[:test_index].nonzero()[0])))
+        print('The number of ones in test set is {}'.format(len(matrix_test[:test_index].nonzero()[0])))
 
         progress.section("Get User Distribution")
         # Get all user distribution by feedforward passing user vector through
         # encoder
         user_latent_mu, \
-            user_latent_sigma = get_latent_gaussian_params(model=model, size=m,
-                                                          is_item=False,
-                                                          is_user=True,
-                                                          matrix=matrix_input)
+            user_latent_sigma = get_latent_gaussian_params(model=model,
+                                                           is_item=False,
+                                                           matrix=matrix_input[:test_index].A)
+       # import ipdb; ipdb.set_trace()
 
         progress.section("Sampling")
-        # Get normalized probability
-        normalized_pdf = predict_gaussian_prob(item_latent_mu, user_latent_mu, user_latent_sigma, latent=latent).ravel()
-
-        prediction_scores = []
+        # Get normalized pdf
+        predict_prob = predict_gaussian_prob(item_latent_mu, user_latent_mu, user_latent_sigma, model, matrix_input[:test_index], latent=latent)
 
         if i > 0:
-            chosen_arms_index = (chosen_arms_row * n + chosen_arms_col).astype(np.int64)
+            ts.update(chosen_arm=(chosen_arms_row.astype(np.int64), chosen_arms_col.astype(np.int64)), current_reward=predict_prob)
 
-            for arm in chosen_arms_index[:result['Num_Unmasked_Positive']]:
-                ts_list[arm].update(normalized_pdf[arm])
-
-            for arm in chosen_arms_index[-result['Num_Unmasked_Negative']:]:
-                ts_list[arm].update(1-normalized_pdf[arm])
-
-            for ts_index in range(len(normalized_pdf)):
-                prediction_scores.append(ts_list[ts_index].predict())
-
-        # Bandits start here
+        # The bandit starts here
         if i == 0:
-            ts_list = []
+            ts = ThompsonSampling(initial_reward=predict_prob,
+                                  num_users=test_index,
+                                  num_arms=n)
 
-            for ts_index in range(len(normalized_pdf)):
-                ts_list.append(ThompsonSampling(initial_reward=normalized_pdf[ts_index]))
-                prediction_scores.append(ts_list[ts_index].predict())
-
-        prediction_scores = np.array(prediction_scores).reshape((m, n))
+        prediction_scores = ts.predict()
 
         prediction = sampling_predict(prediction_scores=prediction_scores,
                                       topK=topk,
-                                      matrix_train=matrix_input,
+                                      matrix_train=matrix_train[:test_index],
                                       gpu=gpu)
 
-        progress.section("Create Metrics")
-        result = ThompsonSampling.eval(prediction, matrix_valid, topk)
-
-        progress.section("Update Train Set and Valid Set Based On Sampling Results")
-        result, matrix_input, matrix_valid, chosen_arms_row, chosen_arms_col = ThompsonSampling.update_matrix(prediction, matrix_valid, matrix_input, result)
+        '''
+        from predict.predictor import predict
+        RQ = model.get_RQ(matrix_input)
+        Y = model.get_Y().T
+        Bias = model.get_Bias()
+        user_inference = model.inference(matrix_input.A)
+        pre = predict(matrix_U=RQ,
+                         matrix_V=Y,
+                         bias=Bias,
+                         topK=50,
+                         matrix_Train=matrix_input,
+                         gpu=gpu)
+        '''
         # import ipdb; ipdb.set_trace()
+
+        print(matrix_train[:test_index].nonzero())
+        progress.section("Create Metrics")
+        result = eval(matrix_test[:test_index], topk, prediction)
+
+        progress.section("Update Train Set and Test Set Based On Sampling Results")
+        result, matrix_input, chosen_arms_row, chosen_arms_col = ts.update_matrix(prediction, matrix_test, matrix_input, result, test_index)
 
         metrics_result.append(result)
 
@@ -181,5 +201,4 @@ def thompson_sampling(matrix_train, matrix_valid, topk, total_steps,
     tf.reset_default_graph()
 
     return metrics_result
-
 

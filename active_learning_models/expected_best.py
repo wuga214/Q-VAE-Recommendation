@@ -67,6 +67,42 @@ def expected_best(matrix_train, matrix_test, rec_model, topk, test_index, total_
                   observation_distribution="Gaussian",
                   optimizer=Regularizer[optimizer])
 
+    """
+    input, wc, wc_normalized, hc, hc_normalized = model.return_input(matrix_input.A)
+    print("check if input is the same as matrix input {}".format(np.array_equal(input, matrix_input.A)))
+    print("check if input is the same as wc {}".format(np.array_equal(input, wc)))
+    print("check if input is the same as hc {}".format(np.array_equal(input, hc)))
+    print("check if wc is the same as hc {}".format(np.array_equal(wc, hc)))
+    print("the number of positive ratings in input {}".format(input.nonzero()[0].shape))
+    print("the number of positive ratings in wc {}".format(wc.nonzero()[0].shape))
+    print("the number of positive ratings in hc {}".format(hc.nonzero()[0].shape))
+
+    wc_row_sum = np.sum(wc, axis=1)
+    wc_row_sum[wc_row_sum == 0.] = 1.
+    wc_row_sum = wc_row_sum.reshape(-1, 1)
+    python_result = wc / wc_row_sum
+
+
+    wc_row_sum_dim = np.sum(wc, axis=1, keepdims=True)
+    wc_row_sum_dim[wc_row_sum_dim == 0.] = 1.
+    result = wc / wc_row_sum_dim
+
+    hc_row_sum = np.sum(hc, axis=1)
+    hc_row_sum[hc_row_sum == 0.] = 1.
+    hc_row_sum = hc_row_sum.reshape(-1, 1)
+    python_result2 = hc / hc_row_sum
+
+
+    hc_row_sum_dim = np.sum(hc, axis=1, keepdims=True)
+    hc_row_sum_dim[hc_row_sum_dim == 0.] = 1.
+    result2 = hc / hc_row_sum_dim
+
+    print("wc normalized result {}, {}".format(np.array_equal(wc_normalized, python_result), np.array_equal(python_result, result)))
+    print("hc normalized result {}, {}".format(np.array_equal(hc_normalized, python_result2), np.array_equal(python_result2, result2)))
+
+    import ipdb; ipdb.set_trace()
+    """
+
     progress.section("Training")
     model.train_model(matrix_input[test_index:], corruption, iteration)
 
@@ -77,6 +113,18 @@ def expected_best(matrix_train, matrix_test, rec_model, topk, test_index, total_
         item_latent_sigma = get_latent_gaussian_params(model=model,
                                                        is_item=True,
                                                        size=n)
+
+    # Normalize item mu by max positive ratings by an item
+    """
+    # import ipdb; ipdb.set_trace()
+
+    train_item_pop = np.array(matrix_input.sum(axis=0))[0]
+    scale = train_item_pop / train_item_pop.max()
+    scale_reshape = scale.reshape(len(scale), 1)
+    item_latent_mu = item_latent_mu * scale_reshape
+#    import ipdb; ipdb.set_trace()
+    """
+
 
     expected_best_selection = ExpectedBest()
 
@@ -93,9 +141,16 @@ def expected_best(matrix_train, matrix_test, rec_model, topk, test_index, total_
                                                            is_item=False,
                                                            matrix=matrix_input[:test_index].A)
 
+#        train_item_pop = np.array(matrix_input.sum(axis=0))[0]
+#        item_latent_mu_pop = np.column_stack((item_latent_mu, train_item_pop))
+#        np.save('item_mu_pop.npy', item_latent_mu_pop)
+#        d = np.load('test3.npy')
+
+#        import ipdb; ipdb.set_trace()
+
         progress.section("Sampling")
         prediction_scores = predict_gaussian_prob(item_latent_mu, user_latent_mu, user_latent_sigma, model, matrix_input[:test_index], latent=latent)
-
+#        import ipdb; ipdb.set_trace()
         prediction = sampling_predict(prediction_scores=prediction_scores,
                                       topK=topk,
                                       matrix_train=matrix_train[:test_index],

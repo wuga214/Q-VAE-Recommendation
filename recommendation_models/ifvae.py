@@ -40,12 +40,35 @@ class IFVAE(object):
             mask1 = tf.floor(tf.nn.dropout(tf.ones_like(self.input), 1-self.corruption))
             mask2 = tf.floor(tf.nn.dropout(tf.ones_like(self.input), 1-self.corruption))
 
+
             wc = self.input * mask1
             hc = wc * mask2
+
             with tf.variable_scope('network'):
+                # change wc to wc_nor
                 self.wc_mean, wc_log_std, self.wc_obs_mean = self._network(wc)
             with tf.variable_scope('network', reuse=True):
+                # change hc to hc_nor
                 self.hc_mean, hc_log_std, self.hc_obs_mean = self._network(hc)
+
+
+            # Input layer user-wise normalization
+            """
+
+            wc = self.input * mask1
+            wc_normalized = self._normalize_by_user(wc)
+            hc = wc * mask2
+            hc_normalized = self._normalize_by_user(hc)
+
+            with tf.variable_scope('network'):
+                # change wc to wc_nor
+                self.wc_mean, wc_log_std, self.wc_obs_mean = self._network(wc_normalized)
+            with tf.variable_scope('network', reuse=True):
+                # change hc to hc_nor
+                self.hc_mean, hc_log_std, self.hc_obs_mean = self._network(hc_normalized)
+            """
+
+
 
             self.wc_std = tf.exp(wc_log_std)
 
@@ -89,6 +112,7 @@ class IFVAE(object):
                 optimizer = self._optimizer(learning_rate=self._learning_rate)
             with tf.variable_scope('training-step'):
                 var_list = [self.encode_weights, self.encode_bias, self.decode_weights, self.decode_bias]
+#                var_list = [self.encode_weights, self.decode_weights, self.decode_bias]
                 self._train = optimizer.minimize(self._loss, var_list=var_list)
 
             self.sess = tf.Session()
@@ -103,6 +127,7 @@ class IFVAE(object):
             self.encode_bias = tf.get_variable("Bias", initializer=tf.constant(0., shape=[self._latent_dim * 2]))
 
             encoded = tf.matmul(x, self.encode_weights) + self.encode_bias
+#            encoded = tf.matmul(x, self.encode_weights)
 
         with tf.variable_scope('latent'):
             mean = tf.nn.relu(encoded[:, :self._latent_dim])
@@ -153,6 +178,19 @@ class IFVAE(object):
         log_softmax_output = tf.nn.log_softmax(outputs)
         log_like = -tf.reduce_sum(tf.reduce_sum(log_softmax_output * target, axis=1))
         return log_like
+
+    def _normalize_by_user(self, x):
+        row_wise_sum = tf.reduce_sum(x, axis=1, keepdims=True)
+
+        x_normalized = x / row_wise_sum
+
+        return tf.where(tf.is_nan(x_normalized), tf.zeros_like(x_normalized), x_normalized)
+
+    def return_input(self, x):
+        input, wc, wc_normalized, hc, hc_normalized = self.sess.run([self.input, self.wc, self.wc_normalized, self.hc, self.hc_normalized],
+                                                                    feed_dict={self.input: x, self.corruption: random.uniform(0.1, 0.3), self.sampling: False})
+
+        return input, wc, wc_normalized, hc, hc_normalized
 
     def update(self, x, corruption):
         _, loss = self.sess.run([self._train, self._loss],
@@ -213,59 +251,7 @@ class IFVAE(object):
 
     def get_Bias(self):
         return self.sess.run(self.decode_bias)
-'''
-def get_gaussian_parameters(model, is_item, size=None, matrix=None):
-    if is_item:
-        matrix = np.diag(np.ones(size))
-    return model.uncertainty(matrix)
 
-def predict_prob(item_mu, user_mu, user_sigma, latent=True):
-    if latent:
-        return logsumexp_pdf(item_mu, user_mu, user_sigma)
-'''
-'''
-def norm_pdf_multivariate(x, mu, sigma):
-    size = len(x)
-    if size == len(mu) and (size, size) == sigma.shape:
-        det = linalg.det(sigma)
-        if det == 0:
-            raise NameError("The covariance matrix can't be singular")
-
-        norm_const = 1.0/ ( math.pow((2*pi),float(size)/2) * math.pow(det,1.0/2) )
-        x_mu = matrix(x - mu)
-        inv = sigma.I
-        result = math.pow(math.e, -0.5 * (x_mu * inv * x_mu.T))
-        return norm_const * result
-    else:
-        raise NameError("The dimensions of the input don't match")
-'''
-'''
-def logsumexp_pdf(item_mu, user_mu, user_sigma):
-    log_pdf = calculate_gaussian_log_pdf(item_mu.astype(np.float64), user_mu.astype(np.float64), user_sigma.astype(np.float64))
-    # from scipy.stats import multivariate_normal
-    # scipy_scipy = [multivariate_normal.pdf(x=item, mean=user_mu[0], cov=np.square(user_sigma[0])) for item in item_mu]
-    # import ipdb; ipdb.set_trace()
-    A = np.amax(log_pdf, axis=1)
-    return np.exp(log_pdf-np.vstack(A))
-'''
-"""
-def get_normalized_pdf(item_gaussian_mu, user_gaussian_mu, user_gaussian_sigma):
-    log_pdf = calculate_gaussian_log_pdf(item_gaussian_mu, user_gaussian_mu, user_gaussian_sigma)
-    return normalize(np.exp(log_pdf), axis=1, norm='l1')
-"""
-'''
-def calculate_gaussian_log_pdf(item_mu, user_mu, user_sigma):
-    result = []
-    for user_index in range(len(user_mu)):
-        result.append(multivariate_normal_log_pdf(x=item_mu, mean=user_mu[user_index], cov=np.square(user_sigma[user_index])))
-        # return np.negative(np.sum(np.divide(np.square(item_gaussian_mu-user_gaussian_mu[0]), 2 * np.square(user_gaussian_sigma[0])) + 0.5 * np.log(2 * math.pi * np.square(user_gaussian_sigma[0])), axis=1))
-        # np.log(multivariate_normal.pdf(x=item_gaussian_mu[0], mean=user_gaussian_mu[0], cov=np.square(user_gaussian_sigma[0])))
-    return result
-
-# log_p(I_Mu|U_Mu, U_Sigma)
-def multivariate_normal_log_pdf(x, mean, cov):
-    return np.negative(np.sum(np.divide(np.square(x-mean), 2 * cov) + 0.5 * np.log(2 * math.pi * cov), axis=1))
-'''
 
 def ifvae(matrix_train, embedded_matrix=np.empty((0)), iteration=100,
           lam=80, rank=200, corruption=0.2, optimizer="RMSProp", beta=1.0, seed=1, **unused):
@@ -287,229 +273,4 @@ def ifvae(matrix_train, embedded_matrix=np.empty((0)), iteration=100,
     tf.reset_default_graph()
 
     return RQ, Y, Bias
-
-'''
-def ifvae(matrix_train, matrix_valid, topk, al_model, total_steps, retrain_interval, validation, embedded_matrix=np.empty((0)),
-          iteration=100, lam=80, rank=200, corruption=0.2, optimizer="RMSProp",
-          beta=1.0, seed=1, gpu_on=True, **unused):
-    progress = WorkSplitter()
-    matrix_input = matrix_train
-    if embedded_matrix.shape[0] > 0:
-        matrix_input = vstack((matrix_input, embedded_matrix.T))
-
-    matrix_input_with_negative = matrix_input.copy()
-
-    m, n = matrix_input.shape
-
-    metrics_result = []
-
-    model = IFVAE(n, rank, 100, lamb=lam, beta=beta,
-                    observation_distribution="Gaussian", optimizer=Regularizer[optimizer])
-
-    export_metrics_df_name = al_model + "_" + str(total_steps) + "steps_" + str(topk) + "items_per_step_per_user_retrain_every_" + str(retrain_interval) + "steps"
-
-    for i in range(total_steps):
-        print('This is step {} \n'.format(i))
-        print('The number of nonzero in train set is {}'.format(len(matrix_input.nonzero()[0])))
-        print('The number of nonzero in valid set is {}'.format(len(matrix_valid.nonzero()[0])))
-
-        if i % retrain_interval == 0:
-            progress.section("Training")
-            model.train_model(matrix_input, corruption, iteration)
-
-            progress.section("Get Item Distribution")
-            # Get all item distribution by feedforward passing one hot encoding vector
-            # through encoder
-            item_gaussian_mu, item_gaussian_sigma = [], []
-            for nth_item in tqdm(range(n)):
-                # print(nth_item)
-                one_hot_vector = create_one_hot_vector(num_classes=n, nth_item=nth_item)
-                # print(one_hot_vector)
-                Gaussian_Params = model.uncertainty(one_hot_vector)
-                item_gaussian_mu.append(Gaussian_Params[0][0])
-                item_gaussian_sigma.append(Gaussian_Params[1][0])
-
-            item_gaussian_mu, item_gaussian_sigma = np.array(item_gaussian_mu), np.array(item_gaussian_sigma)
-
-        progress.section("Get User Distribution")
-
-        user_gaussian_mu, user_gaussian_sigma = [], []
-        for nth_user in tqdm(range(m)):
-            user_vector = matrix_input_with_negative[nth_user, :]
-            Gaussian_Params = model.uncertainty(user_vector.todense())
-            user_gaussian_mu.append(Gaussian_Params[0][0])
-            user_gaussian_sigma.append(Gaussian_Params[1][0])
-        user_gaussian_mu, user_gaussian_sigma = np.array(user_gaussian_mu), np.array(user_gaussian_sigma)
-
-        progress.section("Sampling")
-
-        if al_model == "Entropy":
-            prediction_scores = entropy_sampling(item_gaussian_mu, user_gaussian_mu, user_gaussian_sigma)
-        elif al_model == "Random":
-            prediction_scores = random_sampling(m, n)
-        else:
-            print("Don't have this active learning approaches!")
-
-        # print(prediction_scores)
-
-        prediction = sampling_predict(prediction_scores=prediction_scores,
-                                      topK=topk,
-                                      matrix_Train=matrix_input,
-                                      gpu=gpu_on)
-        if len(prediction) == 0:
-            import pandas as pd
-            pd.DataFrame(metrics_result).to_pickle(export_metrics_df_name)
-            import ipdb; ipdb.set_trace()
-
-        # TODO: Use the trained model with test set, get performance measures
-        if validation:
-            progress.section("Create Metrics")
-            import time
-            start_time = time.time()
-
-            from evaluation.metrics import evaluate
-            metric_names = ['R-Precision', 'NDCG', 'Clicks', 'Recall', 'Precision', 'MAP']
-
-            if al_model == 'Entropy':
-                evaluation_items = sampling_predict(prediction_scores=-prediction_scores,
-                                                    topK=topk,
-                                                    matrix_Train=matrix_input,
-                                                    gpu=gpu_on)
-                result = evaluate(evaluation_items, matrix_valid, metric_names, [topk])
-
-            else:
-                result = evaluate(prediction, matrix_valid, metric_names, [topk])
-
-            print("-")
-            for metric in result.keys():
-                print("{0}:{1}".format(metric, result[metric]))
-            print("Elapsed: {0}".format(inhour(time.time() - start_time)))
-
-
-        progress.section("Update Train Set and Valid Set Based On Sampling Results")
-        start_time = time.time()
-        # TODO: Move these ‘k’ samples from the validation set to the train-set
-        # and query their labels.
-        index = np.tile(np.arange(prediction.shape[0]),(prediction.shape[1],1)).T
-        index_prediction = np.dstack((index, prediction)).reshape((prediction.shape[0]*prediction.shape[1]), 2)
-        index_valid_nonzero = np.dstack((matrix_valid.nonzero()[0], matrix_valid.nonzero()[1]))[0]
-
-        index_prediction_set = set([tuple(x) for x in index_prediction])
-        index_valid_nonzero_set = set([tuple(x) for x in index_valid_nonzero])
-        prediction_valid_nonzero_intersect = np.array([x for x in index_prediction_set & index_valid_nonzero_set])
-        print('The number of unmasked positive data is {}'.format(len(prediction_valid_nonzero_intersect)))
-        prediction_valid_zero_intersect = np.array([x for x in index_prediction_set - index_valid_nonzero_set])
-        print('The number of unmasked negative data is {}'.format(len(prediction_valid_zero_intersect)))
-
-        result['Num_Nonzero_In_Train'] = len(matrix_input.nonzero()[0])
-        result['Num_Nonzero_In_Valid'] = len(matrix_valid.nonzero()[0])
-        result['Num_Unmasked_Positive'] = len(prediction_valid_nonzero_intersect)
-        result['Num_Unmasked_Negative'] = len(prediction_valid_zero_intersect)
-        metrics_result.append(result)
-
-        if len(prediction_valid_nonzero_intersect) + len(prediction_valid_zero_intersect) == 0:
-            import pandas as pd
-            pd.DataFrame(metrics_result).to_pickle(export_metrics_df_name)
-            import ipdb; ipdb.set_trace()
-
-        if len(prediction_valid_nonzero_intersect) > 0:
-            mask_row = prediction_valid_nonzero_intersect[:, 0]
-            mask_col = prediction_valid_nonzero_intersect[:, 1]
-            mask_data = np.full(len(prediction_valid_nonzero_intersect), True)
-            from scipy.sparse import csr_matrix
-            mask = csr_matrix((mask_data, (mask_row, mask_col)), shape=matrix_input.shape)
-            matrix_input = matrix_input.tolil()
-            matrix_input_with_negative = matrix_input_with_negative.tolil()
-            matrix_valid = matrix_valid.tolil()
-            matrix_input[mask] = 1
-            matrix_valid[mask] = 0
-            matrix_input_with_negative[mask] = 1
-            matrix_input = matrix_input.tocsr()
-            matrix_valid = matrix_valid.tocsr()
-            matrix_input_with_negative = matrix_input_with_negative.tocsr()
-
-        if len(prediction_valid_zero_intersect) > 0:
-            mask_row = prediction_valid_zero_intersect[:, 0]
-            mask_col = prediction_valid_zero_intersect[:, 1]
-            mask_data = np.full(len(prediction_valid_zero_intersect), True)
-            from scipy.sparse import csr_matrix
-            mask = csr_matrix((mask_data, (mask_row, mask_col)), shape=matrix_input.shape)
-            matrix_input_with_negative = matrix_input_with_negative.tolil()
-            matrix_input_with_negative[mask] = -0.1
-            matrix_input_with_negative = matrix_input_with_negative.tocsr()
-
-        print("Elapsed: {0}".format(inhour(time.time() - start_time)))
-
-    import pandas as pd
-    pd.DataFrame(metrics_result).to_pickle(export_metrics_df_name)
-    # import ipdb; ipdb.set_trace()
-
-    model.sess.close()
-    tf.reset_default_graph()
-
-    return metrics_result
-'''
-
-
-
-'''
-def create_one_hot_vector(num_classes, nth_item):
-    return np.eye(num_classes)[[nth_item]]
-
-def create_one_hot_matrix(num_rows, num_classes, nth_item):
-    target_row_index = np.full(num_rows, nth_item, dtype=int)
-    return np.eye(num_classes)[target_row_index]
-
-def random_sampling(num_rows, num_cols):
-    return np.random.random((num_rows, num_cols))
-
-def entropy_sampling(item_mu, user_mu, user_sigma):
-    log_pdf = calculate_gaussian_log_pdf(item_mu, user_mu, user_sigma)
-    entropy = np.negative(np.multiply(np.exp(log_pdf), (log_pdf / np.log(2))) + np.multiply(1-np.exp(log_pdf), np.log2(1-np.exp(log_pdf))))
-    return entropy
-
-
-
-def sampling_predict(prediction_scores, topK, matrix_Train, gpu=False):
-    prediction = []
-
-    from tqdm import tqdm
-    for user_index in tqdm(range(len(prediction_scores))):
-        vector_train = matrix_Train[user_index]
-        if len(vector_train.nonzero()[0]) > 0:
-            vector_predict = sub_routine(prediction_scores[user_index], vector_train, topK=topK, gpu=gpu)
-        else:
-            vector_predict = np.zeros(topK, dtype=np.float32)
-
-        # Return empty list when there is a user has less than topK items to
-        # recommend. The main program will stop.
-        if len(vector_predict) != topK:
-            import ipdb; ipdb.set_trace()
-            return []
-
-        prediction.append(vector_predict)
-    return np.vstack(prediction)
-
-def sub_routine(vector_predict, vector_train, topK=500, gpu=False):
-
-    train_index = vector_train.nonzero()[1]
-    sort_length = topK + len(train_index)
-    # print('original sort length is {}'.format(sort_length))
-
-    if sort_length + 1 > len(vector_predict):
-        sort_length = len(vector_predict) - 1
-    # print('modified sort length is {}'.format(sort_length))
-
-    if gpu:
-        import cupy as cp
-        candidate_index = cp.argpartition(-vector_predict, sort_length)[:sort_length]
-        vector_predict = candidate_index[vector_predict[candidate_index].argsort()[::-1]]
-        vector_predict = cp.asnumpy(vector_predict).astype(np.float32)
-    else:
-        candidate_index = np.argpartition(-vector_predict, sort_length)[:sort_length]
-        vector_predict = candidate_index[vector_predict[candidate_index].argsort()[::-1]]
-    vector_predict = np.delete(vector_predict, np.isin(vector_predict, train_index).nonzero()[0])
-
-    return vector_predict[:topK]
-'''
 

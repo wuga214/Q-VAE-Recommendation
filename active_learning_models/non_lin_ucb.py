@@ -101,6 +101,44 @@ def non_lin_ucb(matrix_train, matrix_test, rec_model, topk, test_index, total_st
                   observation_distribution="Gaussian",
                   optimizer=Regularizer[optimizer])
 
+    """
+    input, wc, wc_normalized, hc, hc_normalized = model.return_input(matrix_input.A)
+    print("check if input is the same as matrix input {}".format(np.array_equal(input, matrix_input.A)))
+    print("check if input is the same as wc {}".format(np.array_equal(input, wc)))
+    print("check if input is the same as hc {}".format(np.array_equal(input, hc)))
+    print("check if wc is the same as hc {}".format(np.array_equal(wc, hc)))
+    print("the number of positive ratings in input {}".format(input.nonzero()[0].shape))
+    print("the number of positive ratings in wc {}".format(wc.nonzero()[0].shape))
+    print("the number of positive ratings in hc {}".format(hc.nonzero()[0].shape))
+
+
+    wc_row_sum = np.sum(wc, axis=1)
+    wc_row_sum[wc_row_sum == 0.] = 1.
+    wc_row_sum = wc_row_sum.reshape(-1, 1)
+    python_result = wc / wc_row_sum
+
+
+    wc_row_sum_dim = np.sum(wc, axis=1, keepdims=True)
+    wc_row_sum_dim[wc_row_sum_dim == 0.] = 1.
+    result = wc / wc_row_sum_dim
+
+    hc_row_sum = np.sum(hc, axis=1)
+    hc_row_sum[hc_row_sum == 0.] = 1.
+    hc_row_sum = hc_row_sum.reshape(-1, 1)
+    python_result2 = hc / hc_row_sum
+
+
+    hc_row_sum_dim = np.sum(hc, axis=1, keepdims=True)
+    hc_row_sum_dim[hc_row_sum_dim == 0.] = 1.
+    result2 = hc / hc_row_sum_dim
+
+    print("wc normalized result {}, {}".format(np.array_equal(wc_normalized, python_result), np.array_equal(python_result, result)))
+    print("hc normalized result {}, {}".format(np.array_equal(hc_normalized, python_result2), np.array_equal(python_result2, result2)))
+
+    import ipdb; ipdb.set_trace()
+    """
+
+
     progress.section("Training")
     model.train_model(matrix_input[test_index:], corruption, iteration)
 
@@ -111,12 +149,6 @@ def non_lin_ucb(matrix_train, matrix_test, rec_model, topk, test_index, total_st
         item_latent_sigma = get_latent_gaussian_params(model=model,
                                                        is_item=True,
                                                        size=n)
-
-    '''
-    total_pos = matrix_input[test_index:].sum()
-    avg_pos = matrix_input[test_index:].sum(axis=0).A[0] / total_pos
-    item_latent_mu = item_latent_mu * avg_pos.reshape((n, 1))
-    '''
 
     for i in range(total_steps):
         print('This is step {} \n'.format(i))
@@ -132,18 +164,11 @@ def non_lin_ucb(matrix_train, matrix_test, rec_model, topk, test_index, total_st
                                                            matrix=matrix_input[:test_index].A)
         # import ipdb; ipdb.set_trace()
 
-        '''
-        normalization_factor = matrix_input[:test_index].sum(axis=1).A
-        normalization_factor[normalization_factor == 0] = 1.
-        print(np.unique(normalization_factor.ravel(), return_counts=True))
-        # import ipdb; ipdb.set_trace()
-
-        user_latent_mu = user_latent_mu / normalization_factor
-        user_latent_sigma = user_latent_sigma / normalization_factor
-        '''
         progress.section("Sampling")
         # Get normalized pdf
         predict_prob = predict_gaussian_prob(item_latent_mu, user_latent_mu, user_latent_sigma, model, matrix_input[:test_index], latent=latent)
+
+        import ipdb; ipdb.set_trace()
 
         if i > 0:
             ucb_selection.update(chosen_arm=(chosen_arms_row.astype(np.int64), chosen_arms_col.astype(np.int64)), immediate_reward=predict_prob)
