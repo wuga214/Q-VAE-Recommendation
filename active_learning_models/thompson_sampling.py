@@ -133,11 +133,14 @@ def thompson_sampling(matrix_train, matrix_test, rec_model, topk, test_index, to
                                                        is_item=True,
                                                        size=n)
 
+    # Normalize item mu with the max number of positive ratings in train for an
+    # item
+    """
     train_item_pop = np.array(matrix_input.sum(axis=0))[0]
     scale = train_item_pop / train_item_pop.max()
     scale_reshape = scale.reshape(len(scale), 1)
     item_latent_mu = item_latent_mu * scale_reshape
-
+    """
 
     for i in range(total_steps):
         print('This is step {} \n'.format(i))
