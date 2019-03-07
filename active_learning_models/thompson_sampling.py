@@ -3,6 +3,7 @@ from predict.alpredictor import sampling_predict, predict_gaussian_prob, get_lat
 from recommendation_models.ifvae import IFVAE
 from scipy.sparse import csr_matrix
 from tqdm import tqdm
+from utils.modelnames import vaes
 from utils.progress import WorkSplitter, inhour
 from utils.regularizers import Regularizer
 
@@ -105,9 +106,9 @@ class ThompsonSampling(object):
         return result, matrix_input.tocsr(), chosen_arms_row, chosen_arms_col
 
 def thompson_sampling(matrix_train, matrix_test, rec_model, topk, test_index, total_steps,
-                      latent, embedded_matrix=np.empty((0)), iteration=100,
+                      latent, sampling, evaluation_range, embedded_matrix=np.empty((0)), iteration=100,
                       rank=200, corruption=0.2, gpu=True, lam=80, optimizer="RMSProp",
-                      beta=1.0, **unused):
+                      **unused):
 
     progress = WorkSplitter()
     matrix_input = matrix_train
@@ -118,9 +119,11 @@ def thompson_sampling(matrix_train, matrix_test, rec_model, topk, test_index, to
 
     metrics_result = []
 
-    model = IFVAE(n, rank, 100, lamb=lam, beta=beta,
-                  observation_distribution="Gaussian",
-                  optimizer=Regularizer[optimizer])
+    user_case = []
+#    import ipdb; ipdb.set_trace()
+
+
+    model = vaes[rec_model](n, rank, 100, lamb=lam, optimizer=Regularizer[optimizer])
 
     progress.section("Training")
     model.train_model(matrix_input[test_index:], corruption, iteration)
@@ -132,6 +135,8 @@ def thompson_sampling(matrix_train, matrix_test, rec_model, topk, test_index, to
         item_latent_sigma = get_latent_gaussian_params(model=model,
                                                        is_item=True,
                                                        size=n)
+
+
 
     # Normalize item mu with the max number of positive ratings in train for an
     # item
@@ -158,7 +163,7 @@ def thompson_sampling(matrix_train, matrix_test, rec_model, topk, test_index, to
 
         progress.section("Sampling")
         # Get normalized pdf
-        predict_prob = predict_gaussian_prob(item_latent_mu, user_latent_mu, user_latent_sigma, model, matrix_input[:test_index], latent=latent)
+        predict_prob = predict_gaussian_prob(item_latent_mu, user_latent_mu, user_latent_sigma, model, matrix_input[:test_index], latent=latent, sampling=sampling)
 
         if i > 0:
             ts.update(chosen_arm=(chosen_arms_row.astype(np.int64), chosen_arms_col.astype(np.int64)), current_reward=predict_prob)
@@ -197,11 +202,14 @@ def thompson_sampling(matrix_train, matrix_test, rec_model, topk, test_index, to
 
         progress.section("Update Train Set and Test Set Based On Sampling Results")
         result, matrix_input, chosen_arms_row, chosen_arms_col = ts.update_matrix(prediction, matrix_test, matrix_input, result, test_index)
-
+#        import ipdb; ipdb.set_trace()
+        result['active_learning_iteration'] = i + 1
         metrics_result.append(result)
+
+        user_case.append({"357": prediction[357][0], "52": prediction[52][0], "314": prediction[314][0], "2456": prediction[2456][0], "1804": prediction[1804][0], "331": prediction[331][0]})
 
     model.sess.close()
     tf.reset_default_graph()
 
-    return metrics_result
+    return metrics_result, user_case
 

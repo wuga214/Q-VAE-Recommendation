@@ -35,8 +35,10 @@ def main(args):
     print("Evaluation Ranking Topk: {}".format(args.topk))
     print("GPU: {}".format(args.gpu))
     print("Latent: {}".format(args.latent))
+    print("Inference Sampling from Gaussian: {}".format(args.sampling))
     print("Number of Steps to Evaluate: {}".format(args.total_steps))
     print("Train Valid Test Split Ratio: {}".format(args.ratio))
+    print("Evaluation on Users Have {} Positive Ratings in Train Set".format("[" + args.evaluation_range + ")"))
 
     # Load Data
     progress.section("Loading Data")
@@ -54,23 +56,55 @@ def main(args):
 
     print("Elapsed: {}".format(inhour(time.time() - start_time)))
 
-    metrics_result = active_learning_models[args.active_learning_model](R_train, R_valid, rec_model=args.rec_model, topk=args.topk,
+    metrics_result, user_case = active_learning_models[args.active_learning_model](R_train, R_valid, rec_model=args.rec_model, topk=args.topk,
                                                                         test_index=int(R_valid.shape[0]*args.ratio[2]),
                                                                         total_steps=args.total_steps, latent=args.latent,
+                                                                        sampling=args.sampling, evaluation_range=args.evaluation_range,
                                                                         embedded_matrix=np.empty((0)),
                                                                         iteration=args.iter, rank=args.rank,
                                                                         corruption=args.corruption, gpu=args.gpu,
                                                                         lam=args.lamb, alpha=args.alpha,
                                                                         seed=args.seed, root=args.root)
 
+    # import ipdb; ipdb.set_trace()
+
+#    user_study_df_name = "RecsysPlots/user_study_sampling_" + str(args.sampling) + ".csv"
+#    user_study_df = pd.DataFrame(user_case)
+#    user_study_df.to_csv(user_study_df_name, sep='\t', encoding='utf-8', index=False)
+
+
+    export_metrics_df_name = "RecsysPlots/" + args.rec_model + ".csv"
+
+    result_df = pd.DataFrame(metrics_result)
+    result_df['active_learning_model'] = args.active_learning_model
+    result_df['rec_model'] = args.rec_model
+    result_df['rank'] = args.rank
+    result_df['alpha'] = args.alpha
+    result_df['lambda'] = args.lamb
+    result_df['iter'] = args.iter
+    result_df['corruption'] = args.corruption
+    result_df['root'] = args.root
+    result_df['alpha'] = args.alpha
+    result_df['lambda'] = args.lamb
+    result_df['sampling'] = args.sampling
+    result_df['total_num_active_learning_iteration'] = args.total_steps
+
+#    result_df.to_csv(export_metrics_df_name, sep='\t', encoding='utf-8', index=False)
+
     import ipdb; ipdb.set_trace()
+
+    previous_df = pd.read_csv(export_metrics_df_name, sep='\t', encoding='utf-8')
+    result_df = pd.concat([previous_df, result_df])
+    result_df.to_csv(export_metrics_df_name, sep='\t', encoding='utf-8', index=False)
+
+    """
+    result_df.to_pickle(export_metrics_df_name)
 
     export_metrics_df_name = args.active_learning_model + "_" + \
         args.rec_model + "_Latent_" + str(args.latent) + "_" + \
         str(args.total_steps) + "steps_" + \
         str(args.topk) + "items_per_step_per_user"
-
-    pd.DataFrame(metrics_result).to_pickle(export_metrics_df_name)
+    """
 
 
 if __name__ == "__main__":
@@ -81,6 +115,7 @@ if __name__ == "__main__":
     parser.add_argument('--disable-validation', dest='validation', action='store_false')
     parser.add_argument('--disable-gpu', dest='gpu', action='store_false')
     parser.add_argument('--disable-latent', dest='latent', action='store_false')
+    parser.add_argument('--disable-sampling', dest='sampling', action='store_false')
     parser.add_argument('-i', dest='iter', type=check_int_positive, default=1)
     parser.add_argument('-a', dest='alpha', type=check_float_positive, default=100.0)
     parser.add_argument('-l', dest='lamb', type=check_float_positive, default=100)
@@ -95,6 +130,7 @@ if __name__ == "__main__":
     parser.add_argument('-t', dest='train', default='Rtrain.npz')
     parser.add_argument('-v', dest='valid', default='Rvalid.npz')
     parser.add_argument('-ratio', dest='ratio', type=ratio, default='0.5, 0.0, 0.5')
+    parser.add_argument('-range', dest='evaluation_range', default='0, 10')
     parser.add_argument('-k', dest='topk', type=check_int_positive, default=50)
     parser.add_argument('--similarity', dest='sim_measure', default='Cosine')
     parser.add_argument('--shape', help="CSR Shape", dest="shape", type=shape, nargs=2)

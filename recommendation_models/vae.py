@@ -124,9 +124,10 @@ class VAE(object):
         log_like = -tf.reduce_mean(tf.reduce_sum(log_softmax_output * target, axis=1))
         return log_like
 
-    def inference(self, x):
+    def inference(self, x, sampling):
         predict = self.sess.run(self.obs_mean,
-                                 feed_dict={self.input: x, self.corruption: 0, self.sampling: False})
+                                feed_dict={self.input: x, self.corruption: 0, self.sampling: sampling})
+
         return predict
 
     def uncertainty(self, x):
@@ -176,12 +177,12 @@ class VAE(object):
         return self.sess.run(self.decode_bias)
 
 
-def vae_cf(matrix_train, embeded_matrix=np.empty((0)),
+def vae_cf(matrix_train, embedded_matrix=np.empty((0)),
            iteration=100, lam=80, rank=200, corruption=0.5, optimizer="RMSProp", seed=1, **unused):
     progress = WorkSplitter()
     matrix_input = matrix_train
-    if embeded_matrix.shape[0] > 0:
-        matrix_input = vstack((matrix_input, embeded_matrix.T))
+    if embedded_matrix.shape[0] > 0:
+        matrix_input = vstack((matrix_input, embedded_matrix.T))
 
     m, n = matrix_input.shape
     model = VAE(n, rank, 100, lamb=lam, observation_distribution="Multinomial", optimizer=Regularizer[optimizer])

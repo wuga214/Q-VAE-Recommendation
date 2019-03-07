@@ -5,7 +5,7 @@ import numpy as np
 import pandas as pd
 from tqdm import tqdm
 import pickle
-import yaml
+#import yaml
 import stat
 from os import listdir
 from os.path import isfile, join
@@ -111,12 +111,14 @@ def load_pickle(path, name):
     return data
 
 
+"""
 def load_yaml(path, key='parameters'):
     with open(path, 'r') as stream:
         try:
             return yaml.load(stream)[key]
         except yaml.YAMLError as exc:
             print(exc)
+"""
 
 
 def find_best_hyperparameters(folder_path, meatric):
