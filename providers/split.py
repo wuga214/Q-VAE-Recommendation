@@ -113,7 +113,6 @@ def time_ordered_split(rating_matrix, timestamp_matrix, ratio=[0.5, 0.2, 0.3],
     rvalid = []
     rtest = []
 
-    # for i in tqdm(xrange(user_num)):
     for i in tqdm(range(user_num)):
         item_indexes = rating_matrix[i].nonzero()[1]
         data = rating_matrix[i].data
@@ -190,25 +189,26 @@ def split_user_randomly(rating_matrix, timestamp_matrix, ratio=[0.5, 0.0, 0.5],
     nonzero_row, nonzero_col = rating_matrix.nonzero()
     nonzero_data = rating_matrix.data
 
-    user_test_index = int(user_num * ratio[2])
-    test_index = np.where(nonzero_row==user_test_index)[0][0]
-    user_valid_index = int(user_num * (ratio[1] + ratio[2]))
+    user_train_index = int(user_num * ratio[0])
+    train_index = np.where(nonzero_row==user_train_index)[0][0]
+
+    user_valid_index = int(user_num * (ratio[0] + ratio[1]))
     valid_index = np.where(nonzero_row==user_valid_index)[0][0]
 
-    rtrain = sparse.csr_matrix((nonzero_data[valid_index:],
-                                (nonzero_row[valid_index:],
-                                 nonzero_col[valid_index:])),
+    rtrain = sparse.csr_matrix((nonzero_data[:train_index],
+                                (nonzero_row[:train_index],
+                                 nonzero_col[:train_index])),
                                shape=(user_num, item_num), dtype=np.float32)
 
-    rvalid = sparse.csr_matrix((nonzero_data[test_index:valid_index],
-                                (nonzero_row[test_index:valid_index],
-                                 nonzero_col[test_index:valid_index])),
+    rvalid = sparse.csr_matrix((nonzero_data[train_index:valid_index],
+                                (nonzero_row[train_index:valid_index],
+                                 nonzero_col[train_index:valid_index])),
                                shape=(user_num, item_num), dtype=np.float32)
 
-    rtest = sparse.csr_matrix((nonzero_data[:test_index],
-                               (nonzero_row[:test_index],
-                                nonzero_col[:test_index])),
+    rtest = sparse.csr_matrix((nonzero_data[valid_index:],
+                               (nonzero_row[valid_index:],
+                                nonzero_col[valid_index:])),
                               shape=(user_num, item_num), dtype=np.float32)
 
-    return rtrain, rvalid, rtest, test_index, valid_index, timestamp_matrix
+    return rtrain, rvalid, rtest, train_index, valid_index, timestamp_matrix
 
