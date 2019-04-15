@@ -1,4 +1,4 @@
-Inference Friendly Variational Auto-encoder for Recommendation
+Queryable Variational Auto-encoder for Recommendation
 ==============================================================
 ![](https://img.shields.io/badge/linux-ubuntu-red.svg)
 ![](https://img.shields.io/badge/Mac-OS-red.svg)
@@ -24,7 +24,7 @@ Please Disable GPU usage in `main.py` if needed.
 
 
 # Algorithm Implemented
-1. Inference Friendly Variational Autoencoder(IFVAE)
+1. Queryable Variational Autoencoder(IFVAE)
 2. Variational Autoencoder for Collaborative Filtering(VAE-CF)
 3. Collaborative Metric Learning(CML)
 4. Auto-encoder Recommender(AutoRec)
